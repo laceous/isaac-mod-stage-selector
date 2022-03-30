@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<metadata>
+    <name>Stage Selector</name>
+    <directory>stage selector</directory>
+    <id>2787032335</id>
+    <description>This mod integrates with Mod Config Menu to provide a stage selector for normal and greed mode. You can choose from all stages on the normal path as well as the pre-ascent and ascent. You can also choose between normal first stages and XL stages. There's no way to force XL ascent stages. The game will simply use whatever you had for that floor earlier in your run.
+
+There's options to restart the game, kick off a victory lap, and reseed the current stage.
+
+You can use this to test or practice certain parts of the game. There's options to give yourself the polaroid, the negative, key pieces, knife pieces, the mind, or a chest full of pickups. You can also toggle a couple debug options: infinite HP and high damage.
+
+This mod is enabled for challenges, but can likely break them.
+
+Forcing XL happens via a callback so it's possible for another mod to break that functionality.</description>
+    <version>1.1</version>
+    <visibility>Public</visibility>
+    <tag id="Lua"/>
+    <tag id="Floors"/>
+    <tag id="Tweaks"/>
+</metadata>
