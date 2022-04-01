@@ -7,16 +7,16 @@
 
 Forcing XL happens via a callback so it's possible for other mods to break this functionality. Picking up Black Candle will disable XL floors.
 
-You can use this mod to test or practice certain parts of the game.
-
 There's options to:
 [list]
-    [*]restart the game
-    [*]kick off a victory lap
-    [*]reseed the current stage
+    [*]Restart the game
+    [*]Kick off a victory lap
+    [*]Reseed the current stage
 [/list]
 
-You can increase the following stats:
+You can use this mod to test or practice certain parts of the game.
+
+You can tweak the following stats:
 [list]
     [*]Speed
     [*]Tears
@@ -39,13 +39,13 @@ There's options to give yourself:
     [*]Cracked Key: single-use Red Key (creates red rooms)
 [/list]
 
-You can also toggle a debug option:
+You can also toggle the following debug options:
 [list]
-    [*]Infinite HP: taking damage won't hurt you
+    [*]Infinite HP: taking damage won't hurt you (debug 3)
 [/list]
 
 This mod is enabled for challenges, but can likely break them.</description>
-    <version>1.3</version>
+    <version>1.4</version>
     <visibility>Public</visibility>
     <tag id="Lua"/>
     <tag id="Floors"/>

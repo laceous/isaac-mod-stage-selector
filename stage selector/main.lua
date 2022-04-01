@@ -23,12 +23,12 @@ mod.greedStage6Options = { 'The Shop' }
 mod.greedStage7Options = { 'Ultra Greed' }
 mod.restartGameOptions = { 'Restart', 'Victory Lap' }
 mod.restartLevelOptions = { 'Reseed' }
-mod.speedOptions = { 0.0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1.0, 1.1, 1.2, 1.3, 1.4, 1.5, 1.6, 1.7, 1.8, 1.9, 2.0 }
-mod.tearsOptions = { 0.0, 5.0, 10.0, 15.0, 20.0, 25.0, 30.0, 35.0, 40.0, 45.0, 50.0, 55.0, 60.0, 65.0, 70.0, 75.0, 80.0, 85.0, 90.0, 95.0, 100.0 }
-mod.damageOptions = { 0.0, 5.0, 10.0, 15.0, 20.0, 25.0, 30.0, 35.0, 40.0, 45.0, 50.0, 55.0, 60.0, 65.0, 70.0, 75.0, 80.0, 85.0, 90.0, 95.0, 100.0 }
-mod.rangeOptions = { 0.0, 0.5, 1.0, 1.5, 2.0, 2.5, 3.0, 3.5, 4.0, 4.5, 5.0, 5.5, 6.0, 6.5, 7.0, 7.5, 8.0, 8.5, 9.0, 9.5, 10.0 }
-mod.shotSpeedOptions = { 0.0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1.0, 1.1, 1.2, 1.3, 1.4, 1.5, 1.6, 1.7, 1.8, 1.9, 2.0 }
-mod.luckOptions = { 0.0, 5.0, 10.0, 15.0, 20.0, 25.0, 30.0, 35.0, 40.0, 45.0, 50.0, 55.0, 60.0, 65.0, 70.0, 75.0, 80.0, 85.0, 90.0, 95.0, 100.0 }
+mod.speedOptions = { -1.0, -0.9, -0.8, -0.7, -0.6, -0.5, -0.4, -0.3, -0.2, -0.1, 0.0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1.0, 1.1, 1.2, 1.3, 1.4, 1.5, 1.6, 1.7, 1.8, 1.9, 2.0 }
+mod.tearsOptions = { -50.0, -45.0, -40.0, -35.0, -30.0, -25.0, -20.0, -15.0, -10.0, -5.0, 0.0, 5.0, 10.0, 15.0, 20.0, 25.0, 30.0, 35.0, 40.0, 45.0, 50.0, 55.0, 60.0, 65.0, 70.0, 75.0, 80.0, 85.0, 90.0, 95.0, 100.0 }
+mod.damageOptions = { -50.0, -45.0, -40.0, -35.0, -30.0, -25.0, -20.0, -15.0, -10.0, -5.0, 0.0, 5.0, 10.0, 15.0, 20.0, 25.0, 30.0, 35.0, 40.0, 45.0, 50.0, 55.0, 60.0, 65.0, 70.0, 75.0, 80.0, 85.0, 90.0, 95.0, 100.0 }
+mod.rangeOptions = { -5.0, -4.5, -4.0, -3.5, -3.0, -2.5, -2.0, -1.5, -1.0, -0.5, 0.0, 0.5, 1.0, 1.5, 2.0, 2.5, 3.0, 3.5, 4.0, 4.5, 5.0, 5.5, 6.0, 6.5, 7.0, 7.5, 8.0, 8.5, 9.0, 9.5, 10.0 }
+mod.shotSpeedOptions = { -1.0, -0.9, -0.8, -0.7, -0.6, -0.5, -0.4, -0.3, -0.2, -0.1, 0.0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1.0, 1.1, 1.2, 1.3, 1.4, 1.5, 1.6, 1.7, 1.8, 1.9, 2.0 }
+mod.luckOptions = { -50.0, -45.0, -40.0, -35.0, -30.0, -25.0, -20.0, -15.0, -10.0, -5.0, 0.0, 5.0, 10.0, 15.0, 20.0, 25.0, 30.0, 35.0, 40.0, 45.0, 50.0, 55.0, 60.0, 65.0, 70.0, 75.0, 80.0, 85.0, 90.0, 95.0, 100.0 }
 mod.itemOptions = { 'The Polaroid', 'The Negative', 'Key Piece 1', 'Key Piece 2', 'Knife Piece 1', 'Knife Piece 2', 'The Mind', '0 - The Fool', 'VIII - Justice', 'Cracked Key' }
 mod.debugOptions = { 'Infinite HP' }
 
@@ -54,12 +54,12 @@ mod.greedStage6Option = {1}
 mod.greedStage7Option = {1}
 mod.restartGameOption = {1}
 mod.restartLevelOption = {1}
-mod.speedOption = {1}
-mod.tearsOption = {1}
-mod.damageOption = {1}
-mod.rangeOption = {1}
-mod.shotSpeedOption = {1}
-mod.luckOption = {1}
+mod.speedOption = {11}
+mod.tearsOption = {11}
+mod.damageOption = {11}
+mod.rangeOption = {11}
+mod.shotSpeedOption = {11}
+mod.luckOption = {11}
 mod.itemOption = {1}
 mod.debugOption = {1}
 
@@ -69,12 +69,12 @@ mod.toggleText = ''
 mod.toggleTextTime = 0
 
 function mod:onGameExit()
-  mod.speedOption[1] = 1
-  mod.tearsOption[1] = 1
-  mod.damageOption[1] = 1
-  mod.rangeOption[1] = 1
-  mod.shotSpeedOption[1] = 1
-  mod.luckOption[1] = 1
+  mod.speedOption[1] = 11
+  mod.tearsOption[1] = 11
+  mod.damageOption[1] = 11
+  mod.rangeOption[1] = 11
+  mod.shotSpeedOption[1] = 11
+  mod.luckOption[1] = 11
   
   mod.forceXL = nil
   mod.showLevelName = false
@@ -115,6 +115,8 @@ function mod:onCacheEval(player, cacheFlag)
     local speed = player.MoveSpeed + mod.speedOptions[mod.speedOption[1]]
     if speed > 2.0 then
       speed = 2.0
+    elseif speed < 0.1 then
+      speed = 0.1
     end
     player.MoveSpeed = speed
   end
@@ -123,20 +125,34 @@ function mod:onCacheEval(player, cacheFlag)
     local tears = (30 / (player.MaxFireDelay + 1)) + mod.tearsOptions[mod.tearsOption[1]]
     if tears > 120.0 then
       tears = 120.0
+    elseif tears < 1.0 then -- not a hard limit, but keep this above zero
+      tears = 1.0
     end
     player.MaxFireDelay = (30 / tears) - 1
   end
   
   if cacheFlag & CacheFlag.CACHE_DAMAGE == CacheFlag.CACHE_DAMAGE then
-    player.Damage = player.Damage + mod.damageOptions[mod.damageOption[1]]
+    local damage = player.Damage + mod.damageOptions[mod.damageOption[1]]
+    if damage < 0.5 then
+      damage = 0.5
+    end
+    player.Damage = damage
   end
   
   if cacheFlag & CacheFlag.CACHE_RANGE == CacheFlag.CACHE_RANGE then
-    player.TearRange = ((player.TearRange / 40) + mod.rangeOptions[mod.rangeOption[1]]) * 40
+    local range = (player.TearRange / 40) + mod.rangeOptions[mod.rangeOption[1]]
+    if range < 1.0 then
+      range = 1.0
+    end
+    player.TearRange = range * 40
   end
   
   if cacheFlag & CacheFlag.CACHE_SHOTSPEED == CacheFlag.CACHE_SHOTSPEED then
-    player.ShotSpeed = player.ShotSpeed + mod.shotSpeedOptions[mod.shotSpeedOption[1]]
+    local shotSpeed = player.ShotSpeed + mod.shotSpeedOptions[mod.shotSpeedOption[1]]
+    if shotSpeed < 0.6 then
+      shotSpeed = 0.6
+    end
+    player.ShotSpeed = shotSpeed
   end
   
   if cacheFlag & CacheFlag.CACHE_LUCK == CacheFlag.CACHE_LUCK then
@@ -796,7 +812,9 @@ function mod:setupModConfigMenu()
         Minimum = 1,
         Maximum = #v.options,
         Display = function()
-          return v.name .. ': +' .. string.format('%.2f', v.options[v.option[1]])
+          local val = v.options[v.option[1]]
+          local sign = val < 0.0 and '' or '+'
+          return v.name .. ': ' .. sign .. string.format('%.2f', val)
         end,
         OnChange = function(n)
           v.option[1] = n
