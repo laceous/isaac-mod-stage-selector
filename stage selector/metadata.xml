@@ -45,7 +45,7 @@ You can also toggle a debug option:
 [/list]
 
 This mod is enabled for challenges, but can likely break them.</description>
-    <version>1.2</version>
+    <version>1.3</version>
     <visibility>Public</visibility>
     <tag id="Lua"/>
     <tag id="Floors"/>

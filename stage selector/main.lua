@@ -120,11 +120,11 @@ function mod:onCacheEval(player, cacheFlag)
   end
   
   if cacheFlag & CacheFlag.CACHE_FIREDELAY == CacheFlag.CACHE_FIREDELAY then
-    local tears = (30 / ((30 / (player.MaxFireDelay + 1)) + mod.tearsOptions[mod.tearsOption[1]])) - 1
+    local tears = (30 / (player.MaxFireDelay + 1)) + mod.tearsOptions[mod.tearsOption[1]]
     if tears > 120.0 then
       tears = 120.0
     end
-    player.MaxFireDelay = tears
+    player.MaxFireDelay = (30 / tears) - 1
   end
   
   if cacheFlag & CacheFlag.CACHE_DAMAGE == CacheFlag.CACHE_DAMAGE then
