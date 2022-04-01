@@ -5,14 +5,47 @@
     <id>2787032335</id>
     <description>This mod integrates with Mod Config Menu to provide a stage selector for normal and greed mode. You can choose from all stages on the normal path as well as the pre-ascent and ascent. You can also choose between normal first stages and XL stages. There's no way to force XL ascent stages. The game will simply use whatever you had for that floor earlier in your run.
 
-There's options to restart the game, kick off a victory lap, and reseed the current stage.
+Forcing XL happens via a callback so it's possible for other mods to break this functionality. Picking up Black Candle will disable XL floors.
 
-You can use this to test or practice certain parts of the game. There's options to give yourself the polaroid, the negative, key pieces, knife pieces, the mind, or a chest full of pickups. You can also toggle a couple debug options: infinite HP and high damage.
+You can use this mod to test or practice certain parts of the game.
 
-This mod is enabled for challenges, but can likely break them.
+There's options to:
+[list]
+    [*]restart the game
+    [*]kick off a victory lap
+    [*]reseed the current stage
+[/list]
 
-Forcing XL happens via a callback so it's possible for another mod to break that functionality.</description>
-    <version>1.1</version>
+You can increase the following stats:
+[list]
+    [*]Speed
+    [*]Tears
+    [*]Damage
+    [*]Range
+    [*]Shot Speed
+    [*]Luck
+[/list]
+
+There's options to give yourself:
+[list]
+    [*]The Polaroid: allows access to the Chest and the ascent
+    [*]The Negative: allows access to the Dark Room and the ascent
+    [*]Key Pieces 1 and 2: allows access to Mega Satan
+    [*]Knife Piece 1: causes the mines escape sequence to spawn
+    [*]Knife Piece 2: together with Knife Piece 1 allows access to the Mausoleum Heart and the Corpse
+    [*]The Mind: gives full mapping
+    [*]0 - The Fool: card that teleports you to the starting room
+    [*]VIII - Justice: card that drops random heart/key/bomb/coin
+    [*]Cracked Key: single-use Red Key (creates red rooms)
+[/list]
+
+You can also toggle a debug option:
+[list]
+    [*]Infinite HP: taking damage won't hurt you
+[/list]
+
+This mod is enabled for challenges, but can likely break them.</description>
+    <version>1.2</version>
     <visibility>Public</visibility>
     <tag id="Lua"/>
     <tag id="Floors"/>
