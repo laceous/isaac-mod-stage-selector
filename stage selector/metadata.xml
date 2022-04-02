@@ -33,9 +33,9 @@ There's options to give yourself:
     [*]Key Pieces 1 and 2: allows access to Mega Satan
     [*]Knife Piece 1: causes the mines escape sequence to spawn
     [*]Knife Piece 2: together with Knife Piece 1 allows access to the Mausoleum Heart and the Corpse
-    [*]The Mind: gives full mapping
     [*]0 - The Fool: card that teleports you to the starting room
     [*]VIII - Justice: card that drops random heart/key/bomb/coin
+    [*]Rune of Ansuz: rune that gives full mapping for the current floor
     [*]Cracked Key: single-use Red Key (creates red rooms)
 [/list]
 
@@ -45,7 +45,7 @@ You can also toggle the following debug options:
 [/list]
 
 This mod is enabled for challenges, but can likely break them.</description>
-    <version>1.4</version>
+    <version>1.5</version>
     <visibility>Public</visibility>
     <tag id="Lua"/>
     <tag id="Floors"/>
