@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<challenges version="1">
+    <!-- https://wofsauge.github.io/IsaacDocs/rep/xml/challenges.html -->
+    <!-- Start as Isaac w/ D6 -->
+    <challenge id="1" name="Stage Selector (Normal)"   playertype="0" startingitems="105" endstage="1" difficulty="0" />
+    <challenge id="2" name="Stage Selector (Hard)"     playertype="0" startingitems="105" endstage="1" difficulty="1" />
+    <challenge id="3" name="Stage Selector (Greed)"    playertype="0" startingitems="105" endstage="1" difficulty="2" />
+    <challenge id="4" name="Stage Selector (Greedier)" playertype="0" startingitems="105" endstage="1" difficulty="3" />
+</challenges>

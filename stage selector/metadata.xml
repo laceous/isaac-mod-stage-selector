@@ -16,7 +16,7 @@ There's options to:
 
 You can use this mod to test or practice certain parts of the game.
 
-You can tweak the following stats:
+You can tweak the following stats to help you play catchup if you skip to later parts of the game:
 [list]
     [*]Speed
     [*]Tears
@@ -39,13 +39,21 @@ There's options to give yourself:
     [*]Cracked Key: single-use Red Key (creates red rooms)
 [/list]
 
-You can also toggle the following debug options:
+You can also toggle the following debug option:
 [list]
     [*]Infinite HP: taking damage won't hurt you (debug 3)
 [/list]
 
-This mod is enabled for challenges, but can likely break them.</description>
-    <version>1.5</version>
+There's 4 challenges included that you can use as a playground. All of them end after the first stage so you need to use the menu to go to the next stage if that's what you want to do. You'll start as Isaac with the D6.
+[list]
+    [*]Stage Selector (Normal)
+    [*]Stage Selector (Hard)
+    [*]Stage Selector (Greed)
+    [*]Stage Selector (Greedier)
+[/list]
+
+This mod is enabled for other challenges too, but can likely break them.</description>
+    <version>1.6</version>
     <visibility>Public</visibility>
     <tag id="Lua"/>
     <tag id="Floors"/>

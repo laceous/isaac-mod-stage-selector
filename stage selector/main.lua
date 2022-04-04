@@ -109,6 +109,15 @@ function mod:onNewLevel()
   end
 end
 
+function mod:onNewRoom()
+  local level = game:GetLevel()
+  local room = level:GetCurrentRoom()
+  
+  if mod:isChallenge() and not game:IsGreedMode() and level:GetStage() == LevelStage.STAGE6 and level:GetCurrentRoomIndex() == level:GetStartingRoomIndex() then
+    room:TrySpawnMegaSatanRoomDoor(true)
+  end
+end
+
 -- thanks to the Stat Change Commands mod for help figuring some of this out
 function mod:onCacheEval(player, cacheFlag)
   if cacheFlag & CacheFlag.CACHE_SPEED == CacheFlag.CACHE_SPEED then
@@ -590,6 +599,14 @@ function mod:toggleDebug(name)
   end
 end
 
+function mod:isChallenge()
+  local challenge = Isaac.GetChallenge()
+  return challenge == Isaac.GetChallengeIdByName('Stage Selector (Normal)') or
+         challenge == Isaac.GetChallengeIdByName('Stage Selector (Hard)') or
+         challenge == Isaac.GetChallengeIdByName('Stage Selector (Greed)') or
+         challenge == Isaac.GetChallengeIdByName('Stage Selector (Greedier)')
+end
+
 function mod:setupModConfigMenu()
   for i, v in ipairs({
                        { title = 'Stage 1-1', options = mod.stage11Options, option = mod.stage11Option },
@@ -915,6 +932,7 @@ end
 mod:AddCallback(ModCallbacks.MC_PRE_GAME_EXIT, mod.onGameExit)
 mod:AddCallback(ModCallbacks.MC_POST_CURSE_EVAL, mod.onCurseEval)
 mod:AddCallback(ModCallbacks.MC_POST_NEW_LEVEL, mod.onNewLevel)
+mod:AddCallback(ModCallbacks.MC_POST_NEW_ROOM, mod.onNewRoom)
 mod:AddCallback(ModCallbacks.MC_EVALUATE_CACHE , mod.onCacheEval)
 
 if ModConfigMenu then
