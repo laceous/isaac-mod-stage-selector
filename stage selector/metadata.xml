@@ -53,7 +53,7 @@ There's 4 challenges included that you can use as a playground. All of them end 
 [/list]
 
 This mod is enabled for other challenges too, but can likely break them.</description>
-    <version>1.6</version>
+    <version>1.7</version>
     <visibility>Public</visibility>
     <tag id="Lua"/>
     <tag id="Floors"/>

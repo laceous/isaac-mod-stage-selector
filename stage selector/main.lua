@@ -1,14 +1,22 @@
 local mod = RegisterMod('Stage Selector', 1)
 local game = Game()
 
-mod.stage11Options = { 'Basement 1', 'Cellar 1', 'Burning Basement 1', 'Downpour 1', 'Dross 1', 'Basement XL', 'Cellar XL', 'Burning Basement XL', 'Downpour XL', 'Dross XL', 'Basement 1 (Ascent)', 'Cellar 1 (Ascent)', 'Burning Basement 1 (Ascent)', 'Downpour 1 (Ascent)', 'Dross 1 (Ascent)' }
-mod.stage12Options = { 'Basement 2', 'Cellar 2', 'Burning Basement 2', 'Downpour 2', 'Dross 2', 'Basement 2 (Ascent)', 'Cellar 2 (Ascent)', 'Burning Basement 2 (Ascent)', 'Downpour 2 (Ascent)', 'Dross 2 (Ascent)' }
-mod.stage21Options = { 'Caves 1', 'Catacombs 1', 'Flooded Caves 1', 'Mines 1', 'Ashpit 1', 'Caves XL', 'Catacombs XL', 'Flooded Caves XL', 'Mines XL', 'Ashpit XL', 'Caves 1 (Ascent)', 'Catacombs 1 (Ascent)', 'Flooded Caves 1 (Ascent)', 'Mines 1 (Ascent)', 'Ashpit 1 (Ascent)' }
-mod.stage22Options = { 'Caves 2', 'Catacombs 2', 'Flooded Caves 2', 'Mines 2', 'Ashpit 2', 'Caves 2 (Ascent)', 'Catacombs 2 (Ascent)', 'Flooded Caves 2 (Ascent)', 'Mines 2 (Ascent)', 'Ashpit 2 (Ascent)' }
-mod.stage31Options = { 'Depths 1', 'Necropolis 1', 'Dank Depths 1', 'Mausoleum 1', 'Gehenna 1', 'Depths XL', 'Necropolis XL', 'Dank Depths XL', 'Mausoleum XL', 'Gehenna XL', 'Depths 1 (Ascent)', 'Necropolis 1 (Ascent)', 'Dank Depths 1 (Ascent)', 'Mausoleum 1 (Ascent)', 'Gehenna 1 (Ascent)' }
-mod.stage32Options = { 'Depths 2', 'Necropolis 2', 'Dank Depths 2', 'Mausoleum 2', 'Gehenna 2', 'Mausoleum 2 (PreAscent)', 'Gehenna 2 (PreAscent)', 'Depths 2 (Ascent)', 'Necropolis 2 (Ascent)', 'Dank Depths 2 (Ascent)', 'Mausoleum 2 (Ascent)', 'Gehenna 2 (Ascent)' }
-mod.stage41Options = { 'Womb 1', 'Utero 1', 'Scarred Womb 1', 'Corpse 1', 'Womb XL', 'Utero XL', 'Scarred Womb XL', 'Corpse XL' }
-mod.stage42Options = { 'Womb 2', 'Utero 2', 'Scarred Womb 2', 'Corpse 2' }
+mod.stage11Options = { 'Basement 1', 'Cellar 1', 'Burning Basement 1', 'Basement XL', 'Cellar XL', 'Burning Basement XL', 'Basement 1 (Ascent)', 'Cellar 1 (Ascent)', 'Burning Basement 1 (Ascent)' }
+mod.stage11AltOptions = { 'Downpour 1', 'Dross 1', 'Downpour XL', 'Dross XL', 'Downpour 1 (Ascent)', 'Dross 1 (Ascent)' }
+mod.stage12Options = { 'Basement 2', 'Cellar 2', 'Burning Basement 2', 'Basement 2 (Ascent)', 'Cellar 2 (Ascent)', 'Burning Basement 2 (Ascent)' }
+mod.stage12AltOptions = { 'Downpour 2', 'Dross 2', 'Downpour 2 (Ascent)', 'Dross 2 (Ascent)' }
+mod.stage21Options = { 'Caves 1', 'Catacombs 1', 'Flooded Caves 1', 'Caves XL', 'Catacombs XL', 'Flooded Caves XL', 'Caves 1 (Ascent)', 'Catacombs 1 (Ascent)', 'Flooded Caves 1 (Ascent)' }
+mod.stage21AltOptions = { 'Mines 1', 'Ashpit 1', 'Mines XL', 'Ashpit XL', 'Mines 1 (Ascent)', 'Ashpit 1 (Ascent)' }
+mod.stage22Options = { 'Caves 2', 'Catacombs 2', 'Flooded Caves 2', 'Caves 2 (Ascent)', 'Catacombs 2 (Ascent)', 'Flooded Caves 2 (Ascent)' }
+mod.stage22AltOptions = { 'Mines 2', 'Ashpit 2', 'Mines 2 (Ascent)', 'Ashpit 2 (Ascent)' }
+mod.stage31Options = { 'Depths 1', 'Necropolis 1', 'Dank Depths 1', 'Depths XL', 'Necropolis XL', 'Dank Depths XL', 'Depths 1 (Ascent)', 'Necropolis 1 (Ascent)', 'Dank Depths 1 (Ascent)' }
+mod.stage31AltOptions = { 'Mausoleum 1', 'Gehenna 1', 'Mausoleum XL', 'Gehenna XL', 'Mausoleum 1 (Ascent)', 'Gehenna 1 (Ascent)' }
+mod.stage32Options = { 'Depths 2', 'Necropolis 2', 'Dank Depths 2', 'Depths 2 (Ascent)', 'Necropolis 2 (Ascent)', 'Dank Depths 2 (Ascent)' }
+mod.stage32AltOptions = { 'Mausoleum 2', 'Gehenna 2', 'Mausoleum 2 (PreAscent)', 'Gehenna 2 (PreAscent)', 'Mausoleum 2 (Ascent)', 'Gehenna 2 (Ascent)' }
+mod.stage41Options = { 'Womb 1', 'Utero 1', 'Scarred Womb 1', 'Womb XL', 'Utero XL', 'Scarred Womb XL' }
+mod.stage41AltOptions = { 'Corpse 1', 'Corpse XL' }
+mod.stage42Options = { 'Womb 2', 'Utero 2', 'Scarred Womb 2' }
+mod.stage42AltOptions = { 'Corpse 2' }
 mod.stage43Options = { 'Blue Womb' }
 mod.stage5Options = { 'Sheol', 'Cathedral' }
 mod.stage6Options = { 'Dark Room', 'Chest' }
@@ -24,22 +32,30 @@ mod.greedStage7Options = { 'Ultra Greed' }
 mod.restartGameOptions = { 'Restart', 'Victory Lap' }
 mod.restartLevelOptions = { 'Reseed' }
 mod.speedOptions = { -1.0, -0.9, -0.8, -0.7, -0.6, -0.5, -0.4, -0.3, -0.2, -0.1, 0.0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1.0, 1.1, 1.2, 1.3, 1.4, 1.5, 1.6, 1.7, 1.8, 1.9, 2.0 }
-mod.tearsOptions = { -50.0, -45.0, -40.0, -35.0, -30.0, -25.0, -20.0, -15.0, -10.0, -5.0, 0.0, 5.0, 10.0, 15.0, 20.0, 25.0, 30.0, 35.0, 40.0, 45.0, 50.0, 55.0, 60.0, 65.0, 70.0, 75.0, 80.0, 85.0, 90.0, 95.0, 100.0 }
-mod.damageOptions = { -50.0, -45.0, -40.0, -35.0, -30.0, -25.0, -20.0, -15.0, -10.0, -5.0, 0.0, 5.0, 10.0, 15.0, 20.0, 25.0, 30.0, 35.0, 40.0, 45.0, 50.0, 55.0, 60.0, 65.0, 70.0, 75.0, 80.0, 85.0, 90.0, 95.0, 100.0 }
+mod.tearsOptions = { -50.0, -45.0, -40.0, -35.0, -30.0, -25.0, -20.0, -15.0, -10.0, -9.5, -9.0, -8.5, -8.0, -7.5, -7.0, -6.5, -6.0, -5.5, -5.0, -4.5, -4.0, -3.5, -3.0, -2.5, -2.0, -1.5, -1.0, -0.5, 0.0, 0.5, 1.0, 1.5, 2.0, 2.5, 3.0, 3.5, 4.0, 4.5, 5.0, 5.5, 6.0, 6.5, 7.0, 7.5, 8.0, 8.5, 9.0, 9.5, 10.0, 15.0, 20.0, 25.0, 30.0, 35.0, 40.0, 45.0, 50.0, 55.0, 60.0, 65.0, 70.0, 75.0, 80.0, 85.0, 90.0, 95.0, 100.0 }
+mod.damageOptions = { -50.0, -45.0, -40.0, -35.0, -30.0, -25.0, -20.0, -15.0, -10.0, -9.5, -9.0, -8.5, -8.0, -7.5, -7.0, -6.5, -6.0, -5.5, -5.0, -4.5, -4.0, -3.5, -3.0, -2.5, -2.0, -1.5, -1.0, -0.5, 0.0, 0.5, 1.0, 1.5, 2.0, 2.5, 3.0, 3.5, 4.0, 4.5, 5.0, 5.5, 6.0, 6.5, 7.0, 7.5, 8.0, 8.5, 9.0, 9.5, 10.0, 15.0, 20.0, 25.0, 30.0, 35.0, 40.0, 45.0, 50.0, 55.0, 60.0, 65.0, 70.0, 75.0, 80.0, 85.0, 90.0, 95.0, 100.0 }
 mod.rangeOptions = { -5.0, -4.5, -4.0, -3.5, -3.0, -2.5, -2.0, -1.5, -1.0, -0.5, 0.0, 0.5, 1.0, 1.5, 2.0, 2.5, 3.0, 3.5, 4.0, 4.5, 5.0, 5.5, 6.0, 6.5, 7.0, 7.5, 8.0, 8.5, 9.0, 9.5, 10.0 }
 mod.shotSpeedOptions = { -1.0, -0.9, -0.8, -0.7, -0.6, -0.5, -0.4, -0.3, -0.2, -0.1, 0.0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1.0, 1.1, 1.2, 1.3, 1.4, 1.5, 1.6, 1.7, 1.8, 1.9, 2.0 }
-mod.luckOptions = { -50.0, -45.0, -40.0, -35.0, -30.0, -25.0, -20.0, -15.0, -10.0, -5.0, 0.0, 5.0, 10.0, 15.0, 20.0, 25.0, 30.0, 35.0, 40.0, 45.0, 50.0, 55.0, 60.0, 65.0, 70.0, 75.0, 80.0, 85.0, 90.0, 95.0, 100.0 }
+mod.luckOptions = { -50.0, -45.0, -40.0, -35.0, -30.0, -25.0, -20.0, -15.0, -10.0, -9.5, -9.0, -8.5, -8.0, -7.5, -7.0, -6.5, -6.0, -5.5, -5.0, -4.5, -4.0, -3.5, -3.0, -2.5, -2.0, -1.5, -1.0, -0.5, 0.0, 0.5, 1.0, 1.5, 2.0, 2.5, 3.0, 3.5, 4.0, 4.5, 5.0, 5.5, 6.0, 6.5, 7.0, 7.5, 8.0, 8.5, 9.0, 9.5, 10.0, 15.0, 20.0, 25.0, 30.0, 35.0, 40.0, 45.0, 50.0, 55.0, 60.0, 65.0, 70.0, 75.0, 80.0, 85.0, 90.0, 95.0, 100.0 }
 mod.itemOptions = { 'The Polaroid', 'The Negative', 'Key Piece 1', 'Key Piece 2', 'Knife Piece 1', 'Knife Piece 2', '0 - The Fool', 'VIII - Justice', 'Rune of Ansuz', 'Cracked Key' }
 mod.debugOptions = { 'Infinite HP' }
 
 mod.stage11Option = {1}
+mod.stage11AltOption = {1}
 mod.stage12Option = {1}
+mod.stage12AltOption = {1}
 mod.stage21Option = {1}
+mod.stage21AltOption = {1}
 mod.stage22Option = {1}
+mod.stage22AltOption = {1}
 mod.stage31Option = {1}
+mod.stage31AltOption = {1}
 mod.stage32Option = {1}
+mod.stage32AltOption = {1}
 mod.stage41Option = {1}
+mod.stage41AltOption = {1}
 mod.stage42Option = {1}
+mod.stage42AltOption = {1}
 mod.stage43Option = {1}
 mod.stage5Option = {1}
 mod.stage6Option = {1}
@@ -55,11 +71,11 @@ mod.greedStage7Option = {1}
 mod.restartGameOption = {1}
 mod.restartLevelOption = {1}
 mod.speedOption = {11}
-mod.tearsOption = {11}
-mod.damageOption = {11}
+mod.tearsOption = {29}
+mod.damageOption = {29}
 mod.rangeOption = {11}
 mod.shotSpeedOption = {11}
-mod.luckOption = {11}
+mod.luckOption = {29}
 mod.itemOption = {1}
 mod.debugOption = {1}
 
@@ -70,11 +86,11 @@ mod.toggleTextTime = 0
 
 function mod:onGameExit()
   mod.speedOption[1] = 11
-  mod.tearsOption[1] = 11
-  mod.damageOption[1] = 11
+  mod.tearsOption[1] = 29
+  mod.damageOption[1] = 29
   mod.rangeOption[1] = 11
   mod.shotSpeedOption[1] = 11
-  mod.luckOption[1] = 11
+  mod.luckOption[1] = 29
   
   mod.forceXL = nil
   mod.showLevelName = false
@@ -609,19 +625,27 @@ end
 
 function mod:setupModConfigMenu()
   for i, v in ipairs({
-                       { title = 'Stage 1-1', options = mod.stage11Options, option = mod.stage11Option },
-                       { title = 'Stage 1-2', options = mod.stage12Options, option = mod.stage12Option },
-                       { title = 'Stage 2-1', options = mod.stage21Options, option = mod.stage21Option },
-                       { title = 'Stage 2-2', options = mod.stage22Options, option = mod.stage22Option },
-                       { title = 'Stage 3-1', options = mod.stage31Options, option = mod.stage31Option },
-                       { title = 'Stage 3-2', options = mod.stage32Options, option = mod.stage32Option },
-                       { title = 'Stage 4-1', options = mod.stage41Options, option = mod.stage41Option },
-                       { title = 'Stage 4-2', options = mod.stage42Options, option = mod.stage42Option },
-                       { title = 'Stage 4-3', options = mod.stage43Options, option = mod.stage43Option },
-                       { title = 'Stage 5',   options = mod.stage5Options,  option = mod.stage5Option },
-                       { title = 'Stage 6',   options = mod.stage6Options,  option = mod.stage6Option },
-                       { title = 'Stage 7',   options = mod.stage7Options,  option = mod.stage7Option },
-                       { title = 'Stage 8',   options = mod.stage8Options,  option = mod.stage8Option }
+                       { title = 'Stage 1-1 (Main)', options = mod.stage11Options,    option = mod.stage11Option },
+                       { title = 'Stage 1-1 (Alt)',  options = mod.stage11AltOptions, option = mod.stage11AltOption },
+                       { title = 'Stage 1-2 (Main)', options = mod.stage12Options,    option = mod.stage12Option },
+                       { title = 'Stage 1-2 (Alt)',  options = mod.stage12AltOptions, option = mod.stage12AltOption },
+                       { title = 'Stage 2-1 (Main)', options = mod.stage21Options,    option = mod.stage21Option },
+                       { title = 'Stage 2-1 (Alt)',  options = mod.stage21AltOptions, option = mod.stage21AltOption },
+                       { title = 'Stage 2-2 (Main)', options = mod.stage22Options,    option = mod.stage22Option },
+                       { title = 'Stage 2-2 (Alt)',  options = mod.stage22AltOptions, option = mod.stage22AltOption },
+                       { title = 'Stage 3-1 (Main)', options = mod.stage31Options,    option = mod.stage31Option },
+                       { title = 'Stage 3-1 (Alt)',  options = mod.stage31AltOptions, option = mod.stage31AltOption },
+                       { title = 'Stage 3-2 (Main)', options = mod.stage32Options,    option = mod.stage32Option },
+                       { title = 'Stage 3-2 (Alt)',  options = mod.stage32AltOptions, option = mod.stage32AltOption },
+                       { title = 'Stage 4-1 (Main)', options = mod.stage41Options,    option = mod.stage41Option },
+                       { title = 'Stage 4-1 (Alt)',  options = mod.stage41AltOptions, option = mod.stage41AltOption },
+                       { title = 'Stage 4-2 (Main)', options = mod.stage42Options,    option = mod.stage42Option },
+                       { title = 'Stage 4-2 (Alt)',  options = mod.stage42AltOptions, option = mod.stage42AltOption },
+                       { title = 'Stage 4-3',        options = mod.stage43Options,    option = mod.stage43Option },
+                       { title = 'Stage 5',          options = mod.stage5Options,     option = mod.stage5Option },
+                       { title = 'Stage 6',          options = mod.stage6Options,     option = mod.stage6Option },
+                       { title = 'Stage 7',          options = mod.stage7Options,     option = mod.stage7Option },
+                       { title = 'Stage 8',          options = mod.stage8Options,     option = mod.stage8Option }
                     })
   do
     if i ~= 1 then
