@@ -3,9 +3,9 @@
     <name>Stage Selector</name>
     <directory>stage selector</directory>
     <id>2787032335</id>
-    <description>This mod integrates with Mod Config Menu to provide a stage selector for normal and greed mode. You can choose from all stages on the normal path as well as the pre-ascent and ascent. You can also choose between normal first stages and XL stages. There's no way to force XL ascent stages. The game will simply use whatever you had for that floor earlier in your run.
+    <description>This mod integrates with Mod Config Menu to provide a stage selector for normal and greed mode. You can choose from all stages on the normal path as well as the pre-ascent and ascent.
 
-Forcing XL happens via a callback so it's possible for other mods to break this functionality. Picking up Black Candle will disable XL floors.
+You can choose between normal first floors and XL floors. There's no way to force XL ascent floors. The game will simply use whatever you had for that floor earlier in your run. Forcing XL happens via a callback so it's possible for other mods to break this functionality. Picking up Black Candle will disable XL floors.
 
 There's options to:
 [list]
@@ -34,12 +34,15 @@ There's options to give yourself:
     [*]Knife Piece 1: causes the mines escape sequence to spawn
     [*]Knife Piece 2: together with Knife Piece 1 allows access to the Mausoleum Heart and the Corpse
     [*]0 - The Fool: card that teleports you to the starting room
+    [*]V - The Hierophant: card that drops 2 blue hearts
+    [*]V - The Hierophant?: card that drops 2 bone hearts
+    [*]VI - The Lovers: card that drops 2 red hearts
     [*]VIII - Justice: card that drops random heart/key/bomb/coin
     [*]Rune of Ansuz: rune that gives full mapping for the current floor
     [*]Cracked Key: single-use Red Key (creates red rooms)
 [/list]
 
-You can also toggle the following debug option:
+You can toggle the following debug option:
 [list]
     [*]Infinite HP: taking damage won't hurt you (debug 3)
 [/list]
@@ -52,8 +55,10 @@ There's 4 challenges included that you can use as a playground. All of them end 
     [*]Stage Selector (Greedier)
 [/list]
 
-This mod is enabled for other challenges too, but can likely break them.</description>
-    <version>1.7</version>
+This mod is enabled for other challenges too, but can likely break them.
+
+There's an option to practice against individual bosses from each level. This works by moving you to the appropriate stage 1 and using the goto command which takes you to a boss room that's off the map. Story bosses aren't included here since it's easy enough to trigger them by going to the appropriate level. Be aware that the goto command can cause a crash if you try to quit and continue. You can generally work around this by going down to the next level (or reseeding) before quitting your run.</description>
+    <version>1.8</version>
     <visibility>Public</visibility>
     <tag id="Lua"/>
     <tag id="Floors"/>

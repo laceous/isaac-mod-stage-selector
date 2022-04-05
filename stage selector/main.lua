@@ -1,6 +1,8 @@
 local mod = RegisterMod('Stage Selector', 1)
 local game = Game()
 
+mod.rng = RNG()
+
 mod.stage11Options = { 'Basement 1', 'Cellar 1', 'Burning Basement 1', 'Basement XL', 'Cellar XL', 'Burning Basement XL', 'Basement 1 (Ascent)', 'Cellar 1 (Ascent)', 'Burning Basement 1 (Ascent)' }
 mod.stage11AltOptions = { 'Downpour 1', 'Dross 1', 'Downpour XL', 'Dross XL', 'Downpour 1 (Ascent)', 'Dross 1 (Ascent)' }
 mod.stage12Options = { 'Basement 2', 'Cellar 2', 'Burning Basement 2', 'Basement 2 (Ascent)', 'Cellar 2 (Ascent)', 'Burning Basement 2 (Ascent)' }
@@ -37,8 +39,28 @@ mod.damageOptions = { -50.0, -45.0, -40.0, -35.0, -30.0, -25.0, -20.0, -15.0, -1
 mod.rangeOptions = { -5.0, -4.5, -4.0, -3.5, -3.0, -2.5, -2.0, -1.5, -1.0, -0.5, 0.0, 0.5, 1.0, 1.5, 2.0, 2.5, 3.0, 3.5, 4.0, 4.5, 5.0, 5.5, 6.0, 6.5, 7.0, 7.5, 8.0, 8.5, 9.0, 9.5, 10.0 }
 mod.shotSpeedOptions = { -1.0, -0.9, -0.8, -0.7, -0.6, -0.5, -0.4, -0.3, -0.2, -0.1, 0.0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1.0, 1.1, 1.2, 1.3, 1.4, 1.5, 1.6, 1.7, 1.8, 1.9, 2.0 }
 mod.luckOptions = { -50.0, -45.0, -40.0, -35.0, -30.0, -25.0, -20.0, -15.0, -10.0, -9.5, -9.0, -8.5, -8.0, -7.5, -7.0, -6.5, -6.0, -5.5, -5.0, -4.5, -4.0, -3.5, -3.0, -2.5, -2.0, -1.5, -1.0, -0.5, 0.0, 0.5, 1.0, 1.5, 2.0, 2.5, 3.0, 3.5, 4.0, 4.5, 5.0, 5.5, 6.0, 6.5, 7.0, 7.5, 8.0, 8.5, 9.0, 9.5, 10.0, 15.0, 20.0, 25.0, 30.0, 35.0, 40.0, 45.0, 50.0, 55.0, 60.0, 65.0, 70.0, 75.0, 80.0, 85.0, 90.0, 95.0, 100.0 }
-mod.itemOptions = { 'The Polaroid', 'The Negative', 'Key Piece 1', 'Key Piece 2', 'Knife Piece 1', 'Knife Piece 2', '0 - The Fool', 'VIII - Justice', 'Rune of Ansuz', 'Cracked Key' }
+mod.itemOptions = { 'The Polaroid', 'The Negative', 'Key Piece 1', 'Key Piece 2', 'Knife Piece 1', 'Knife Piece 2', '0 - The Fool', 'V - The Hierophant', 'V - The Hierophant?', 'VI - The Lovers', 'VIII - Justice', 'Rune of Ansuz', 'Cracked Key' }
 mod.debugOptions = { 'Infinite HP' }
+
+mod.basementBosses = { 'Baby Plum', 'Dangle', 'Dingle', 'Famine', 'Gemini', 'Gurglings', 'Larry Jr.', 'Little Horn', 'Monstro', 'Steven', 'The Duke of Flies', 'The Headless Horseman', 'Turdlings' }
+mod.cellarBosses = { 'Baby Plum', 'Blighted Ovum', 'Famine', 'Little Horn', 'Pin', 'Rag Man', 'The Duke of Flies', 'The Haunt', 'The Headless Horseman', 'Widow' }
+mod.burningBasementBosses = { 'Baby Plum', 'Dangle', 'Dingle', 'Famine', 'Gemini', 'Gurglings', 'Larry Jr.', 'Little Horn', 'Monstro', 'Rag Man', 'Steven', 'The Duke of Flies', 'The Headless Horseman', 'Turdlings' }
+mod.downpourBosses = { 'Lil Blub', 'Min-Min', 'The Rainmaker', 'Wormwood' }
+mod.drossBosses = { 'Clog', 'Colostomia', 'Lil Blub', 'Turdlet', 'Wormwood' }
+mod.cavesBosses = { 'Big Horn', 'Bumbino', 'C.H.A.D.', 'Chub', 'Fistula', 'Gurdy', 'Gurdy Jr.', 'Mega Fatty', 'Mega Maw', 'Peep', 'Pestilence', 'Rag Mega', 'The Fallen', 'The Headless Horseman', 'The Stain' }
+mod.catacombsBosses = { 'Big Horn', 'Bumbino', 'Carrion Queen', 'Dark One', 'Gurdy Jr.', 'Peep', 'Pestilence', 'Polycephalus', 'Rag Mega', 'The Fallen', 'The Forsaken', 'The Frail', 'The Headless Horseman', 'The Hollow', 'The Husk', 'The Wretched' }
+mod.floodedCavesBosses = { 'Big Horn', 'Bumbino', 'C.H.A.D.', 'Chub', 'Fistula', 'Gurdy', 'Gurdy Jr.', 'Mega Fatty', 'Mega Maw', 'Peep', 'Pestilence', 'Rag Mega', 'The Fallen', 'The Forsaken', 'The Frail', 'The Headless Horseman', 'The Stain' }
+mod.minesBosses = { 'Great Gideon', 'Hornfel', 'Reap Creep', 'Tuff Twins' }
+mod.ashpitBosses = { 'Clutch', 'Great Gideon', 'Singe', 'The Pile', 'The Shell' }
+mod.depthsBosses = { 'Brownie', 'Gish', 'Loki', 'Monstro II', 'Reap Creep', 'Sisters Vis', 'The Cage', 'The Fallen', 'The Gate', 'The Headless Horseman', 'War' }
+mod.necropolisBosses = { 'Brownie', 'Loki', 'Mask of Infamy', 'Sisters Vis', 'The Adversary', 'The Bloat', 'The Fallen', 'The Headless Horseman', 'The Pile', 'War' }
+mod.dankDepthsBosses = { 'Brownie', 'Gish', 'Loki', 'Monstro II', 'Reap Creep', 'Sisters Vis', 'The Cage', 'The Fallen', 'The Gate', 'The Headless Horseman', 'War' }
+mod.mausoleumBosses = { 'The Heretic', 'The Siren'  }
+mod.gehennaBosses = { 'Horny Boys', 'The Visage' }
+mod.wombBosses = { 'Blastocyst', 'Conquest', 'Death', 'Lokii', 'Mama Gurdy', 'Mr. Fred', 'Scolex', 'The Fallen', 'The Headless Horseman', 'The Matriarch' }
+mod.uteroBosses = { 'Conquest', 'Daddy Long Legs', 'Death', 'Lokii', 'Teratoma', 'The Bloat', 'The Fallen', 'The Headless Horseman', 'Triachnid' }
+mod.scarredWombBosses = { 'Blastocyst', 'Conquest', 'Death', 'Lokii', 'Mama Gurdy', 'Mr. Fred', 'Scolex', 'The Fallen', 'The Headless Horseman', 'The Matriarch', 'Triachnid' }
+mod.corpseBosses = { 'Chimera', 'Rotgut', 'The Scourge' }
 
 mod.stage11Option = {1}
 mod.stage11AltOption = {1}
@@ -79,6 +101,26 @@ mod.luckOption = {29}
 mod.itemOption = {1}
 mod.debugOption = {1}
 
+mod.basementBoss = {1}
+mod.cellarBoss = {1}
+mod.burningBasementBoss = {1}
+mod.downpourBoss = {1}
+mod.drossBoss = {1}
+mod.cavesBoss = {1}
+mod.catacombsBoss = {1}
+mod.floodedCavesBoss = {1}
+mod.minesBoss = {1}
+mod.ashpitBoss = {1}
+mod.depthsBoss = {1}
+mod.necropolisBoss = {1}
+mod.dankDepthsBoss = {1}
+mod.mausoleumBoss = {1}
+mod.gehennaBoss = {1}
+mod.wombBoss = {1}
+mod.uteroBoss = {1}
+mod.scarredWombBoss = {1}
+mod.corpseBoss = {1}
+
 mod.forceXL = nil -- 3 state: true, false, nil
 mod.showLevelName = false
 mod.toggleText = ''
@@ -96,6 +138,8 @@ function mod:onGameExit()
   mod.showLevelName = false
   mod.toggleText = ''
   mod.toggleTextTime = 0
+  
+  mod:seedRng()
 end
 
 function mod:onCurseEval(curses)
@@ -185,9 +229,10 @@ function mod:onCacheEval(player, cacheFlag)
   end
 end
 
-function mod:reseed()
+function mod:reseed(showLevelName)
   mod.forceXL = mod:isCurseOfTheLabyrinth()
-  mod.showLevelName = true
+  mod.showLevelName = showLevelName
+  game:SetStateFlag(GameStateFlag.STATE_MAUSOLEUM_HEART_KILLED, false)
   Isaac.ExecuteCommand('reseed')
 end
 
@@ -499,7 +544,7 @@ function mod:goToStage(name)
     game:SetStateFlag(GameStateFlag.STATE_BACKWARDS_PATH, backwardsPath)
     
     Isaac.ExecuteCommand('stage ' .. stage)
-    mod:reseed()
+    mod:reseed(true)
   end
 end
 
@@ -554,7 +599,198 @@ function mod:goToGreedStage(name)
   
   if stage then
     Isaac.ExecuteCommand('stage ' .. stage)
-    mod:reseed()
+    mod:reseed(true)
+  end
+end
+
+function mod:goToBoss(name, stage)
+  local bossRooms
+  
+  if name == 'The Duke of Flies' then
+    bossRooms = { '2010', '2011', '2012', '2013', '2014', '2015', '2016', '2017', '2018' }
+  elseif name == 'Famine' then
+    bossRooms = { '4010', '4012', '4013', '4014' }
+  elseif name == 'Little Horn' then
+    bossRooms = { '1088', '1089', '1095', '1096' }
+  elseif name == 'Baby Plum' then
+    bossRooms = { '5160', '5161', '5162', '5163', '5164', '5165', }
+  elseif name == 'Monstro' then
+    bossRooms = { '1010', '1011', '1012', '1013', '1014', '1015', '1016', '1017', '1018', '1037', '1038', '1039', '1045', '1123' }
+  elseif name == 'Gemini' then
+    bossRooms = { '2050', '2051', '2052', '2053' }
+  elseif name == 'Steven' then
+    bossRooms = { '2070', '2071', '2072', '2073' }
+  elseif name == 'Larry Jr.' then
+    bossRooms = { '1020', '1021', '1022', '1023', '1024', '1025', '1026', '1027', '1028', '1046', '1047', '1048', '1049', '1124', '1125' }
+  elseif name == 'Dingle' then
+    bossRooms = { '5020', '5021', '5022', '5023', '5024', '5025' }
+  elseif name == 'Dangle' then
+    bossRooms = { '1117', '1118', '1119', '1120', '1121' }
+  elseif name == 'Gurglings' then
+    bossRooms = { '5140', '5141', '5142', '5143', '5144' }
+  elseif name == 'Turdlings' then
+    bossRooms = { '5146', '5147', '5148', '5149', '5150', '5151' }
+  elseif name == 'The Headless Horseman' then
+    bossRooms = { '4050', '4051', '4052' }
+  elseif name == 'Blighted Ovum' then
+    bossRooms = { '3320', '3321', '3322', '3323' }
+  elseif name == 'Widow' then
+    bossRooms = { '3340', '3341', '3342', '3343', '3344', '3345' }
+  elseif name == 'Pin' then
+    bossRooms = { '3370', '3371', '3372', '3373', '3374', '3375', '3376', '3377', '3378' }
+  elseif name == 'The Haunt' then
+    bossRooms = { '5010', '5011', '5012', '5013', '5014' }
+  elseif name == 'Rag Man' then
+    bossRooms = { '1019', '1029', '1035', '1036', '1128', '1129' }
+  elseif name == 'Wormwood' then
+    bossRooms = { '5180', '5181', '5182', '5183', '5184' }
+  elseif name == 'Lil Blub' then
+    bossRooms = { '5170', '5171', '5172', '5173', '5174', '5175' }
+  elseif name == 'Rainmaker' then
+    bossRooms = { '5230', '5231', '5232' }
+  elseif name == 'Min-Min' then
+    bossRooms = { '5280', '5281', '5282' }
+  elseif name == 'Clog' then
+    bossRooms = { '5190', '5191', '5192', '5193', '5194' }
+  elseif name == 'Colostomia' then
+    bossRooms = { '5330' }
+  elseif name == 'Turdlet' then
+    bossRooms = { '5320', '5321', '5322' }
+  elseif name == 'Peep' then
+    bossRooms = { '2020', '2021', '2022', '2023', '2024', '2025' }
+  elseif name == 'Gurdy Jr.' then
+    bossRooms = { '3280', '3281', '3282', '3283' }
+  elseif name == 'Pestilence' then
+    bossRooms = { '4020', '4021', '4022' }
+  elseif name == 'Rag Mega' then
+    bossRooms = { '3398', '3399', '3404', '3405' }
+  elseif name == 'Big Horn' then
+    bossRooms = { '3394', '3395', '3396', '3397' }
+  elseif name == 'Bumbino' then
+    bossRooms = { '5270', '5271', '5272', '5273', '5274' }
+  elseif name == 'Bumbino' then
+    bossRooms = { '5270', '5271', '5272', '5273', '5274' }
+  elseif name == 'Chub' then
+    bossRooms = { '1030', '1031', '1032', '1033', '1034', '1055', '1056', '1057', '1126', '1127' }
+  elseif name == 'C.H.A.D.' then
+    bossRooms = { '1100', '1101', '1102', '1103', '1104' }
+  elseif name == 'Gurdy' then
+    bossRooms = { '1040', '1041', '1042', '1043', '1044', '1058', '1059', '1065', '1066', '1130', '1131' }
+  elseif name == 'Fistula' then
+    bossRooms = { '2060', '2061', '2062', '2063', '2064' }
+  elseif name == 'Mega Maw' then
+    bossRooms = { '5030', '5031', '5032', '5033', '5034' }
+  elseif name == 'Mega Fatty' then
+    bossRooms = { '5050', '5051', '5052', '5054' }
+  elseif name == 'The Stain' then
+    bossRooms = { '1106', '1107', '1108', '1109', '1115' }
+  elseif name == 'Carrion Queen' then
+    bossRooms = { '3270', '3271', '3272', '3273' }
+  elseif name == 'The Hollow' then
+    bossRooms = { '3260', '3261', '3262', '3263', '3264', '3265', '3266' }
+  elseif name == 'The Husk' then
+    bossRooms = { '3290', '3291', '3292', '3293', '3294', '3295' }
+  elseif name == 'The Wretched' then
+    bossRooms = { '3360', '3361', '3362', '3363' }
+  elseif name == 'Polycephalus' then
+    bossRooms = { '5100', '5101', '5102', '5103', '5104', '5106' }
+  elseif name == 'Dark One' then
+    bossRooms = { '5080', '5081', '5082', '5083', '5084' }
+  elseif name == 'The Frail' then
+    bossRooms = { '3384', '3385', '3386', '3387', '3388', '3389' }
+  elseif name == 'The Forsaken' then
+    bossRooms = { '1079', '1085', '1086', '1087' }
+  elseif name == 'Great Gideon' then
+    bossRooms = { '5210', '5211', '5212', '5213', '5214' }
+  elseif name == 'Great Gideon' then
+    bossRooms = { '5210', '5211', '5212', '5213', '5214' }
+  elseif name == 'Tuff Twins' then
+    bossRooms = { '5200', '5201', '5202', '5203', '5204', '5205', '5206', '5207' }
+  elseif name == 'Reap Creep' then
+    bossRooms = { '5250', '5251', '5252', '5253', '5254', '5256' }
+  elseif name == 'Hornfel' then
+    bossRooms = { '5220', '5221', '5222', '5224', '5225', '5226', '5228', '5229' }
+  elseif name == 'The Shell' then
+    bossRooms = { '5310', '5311', '5312', '5313' }
+  elseif name == 'The Pile' then
+    bossRooms = { '5240', '5241', '5242', '5244' }
+  elseif name == 'Singe' then
+    bossRooms = { '5260', '5261', '5262', '5263', '5264' }
+  elseif name == 'Clutch' then
+    bossRooms = { '6020', '6021', '6022' }
+  elseif name == 'The Fallen' then
+    bossRooms = { '3500', '3501', '3502' }
+  elseif name == 'Loki' then
+    bossRooms = { '2030', '2031', '2032', '2033' }
+  elseif name == 'War' then
+    bossRooms = { '4030', '4034', '4035' }
+  elseif name == 'Brownie' then
+    bossRooms = { '1097', '1098', '1099', '1105', '1116' }
+  elseif name == 'Sisters Vis' then
+    bossRooms = { '3406', '3407', '3408', '3409' }
+  elseif name == 'Monstro II' then
+    bossRooms = { '1050', '1051', '1052', '1053', '1054', '1067', '1068', '1069', '1076' }
+  elseif name == 'Gish' then
+    bossRooms = { '1110', '1111', '1112', '1113', '1114' }
+  elseif name == 'The Cage' then
+    bossRooms = { '5060', '5061', '5062', '5063', '5064' }
+  elseif name == 'The Gate' then
+    bossRooms = { '5040', '5041', '5042', '5044', '5045' }
+  elseif name == 'The Bloat' then
+    bossRooms = { '3300', '3301', '3302', '3303' }
+  elseif name == 'Mask of Infamy' then
+    bossRooms = { '3350', '3351', '3352', '3353' }
+  elseif name == 'The Adversary' then
+    bossRooms = { '5090', '5091', '5092', '5093', '5094' }
+  elseif name == 'The Siren' then
+    bossRooms = { '5370', '5371', '5372' }
+  elseif name == 'The Heretic' then
+    bossRooms = { '5290', '5291', '5292', '5293' }
+  elseif name == 'The Visage' then
+    bossRooms = { '5300', '5301' }
+  elseif name == 'Horny Boys' then
+    bossRooms = { '6010', '6011', '6012' }
+  elseif name == 'Lokii' then
+    bossRooms = { '3310', '3311', '3312', '3313' }
+  elseif name == 'Death' then
+    bossRooms = { '4040', '4041', '4042' }
+  elseif name == 'Conquest' then
+    bossRooms = { '4031', '4032', '4033' }
+  elseif name == 'Scolex' then
+    bossRooms = { '1070', '1071', '1072', '1073', '1074', '1075' }
+  elseif name == 'Blastocyst' then
+    bossRooms = { '2040', '2041', '2042', '2043' }
+  elseif name == 'Mama Gurdy' then
+    bossRooms = { '5070', '5071', '5072' }
+  elseif name == 'Mr. Fred' then
+    bossRooms = { '5110', '5111', '5113' }
+  elseif name == 'Teratoma' then
+    bossRooms = { '3330', '3331', '3332', '3333' }
+  elseif name == 'Daddy Long Legs' then
+    bossRooms = { '3400', '3401', '3402', '3403' }
+  elseif name == 'Triachnid' then
+    bossRooms = { '3410', '3411', '3412', '3413' }
+  elseif name == 'The Matriarch' then
+    bossRooms = { '5152', '5153', '5154', '5155' }
+  elseif name == 'The Scourge' then
+    bossRooms = { '5360', '5361', '5362' }
+  elseif name == 'Chimera' then
+    bossRooms = { '5350', '5351', '5352' }
+  elseif name == 'Rotgut' then
+    bossRooms = { '5340' }
+  end
+  
+  if stage and bossRooms then
+    local bossRoom = bossRooms[mod.rng:RandomInt(#bossRooms) + 1]
+    
+    mod.forceXL = false
+    game:SetStateFlag(GameStateFlag.STATE_MAUSOLEUM_HEART_KILLED, false)
+    game:SetStateFlag(GameStateFlag.STATE_BACKWARDS_PATH_INIT, false)
+    game:SetStateFlag(GameStateFlag.STATE_BACKWARDS_PATH, false)
+    
+    Isaac.ExecuteCommand('stage ' .. stage)
+    mod:reseed(false)
+    Isaac.ExecuteCommand('goto s.boss.' .. bossRoom)
   end
 end
 
@@ -589,6 +825,12 @@ function mod:giveItem(name)
     Isaac.Spawn(EntityType.ENTITY_PICKUP, PickupVariant.PICKUP_TAROTCARD, Card.CARD_FOOL, Isaac.GetFreeNearPosition(player.Position, 3), Vector(0,0), nil)
   elseif name == 'VIII - Justice' then
     Isaac.Spawn(EntityType.ENTITY_PICKUP, PickupVariant.PICKUP_TAROTCARD, Card.CARD_JUSTICE, Isaac.GetFreeNearPosition(player.Position, 3), Vector(0,0), nil)
+  elseif name == 'V - The Hierophant' then
+    Isaac.Spawn(EntityType.ENTITY_PICKUP, PickupVariant.PICKUP_TAROTCARD, Card.CARD_HIEROPHANT, Isaac.GetFreeNearPosition(player.Position, 3), Vector(0,0), nil)
+  elseif name == 'V - The Hierophant?' then
+    Isaac.Spawn(EntityType.ENTITY_PICKUP, PickupVariant.PICKUP_TAROTCARD, Card.CARD_REVERSE_HIEROPHANT, Isaac.GetFreeNearPosition(player.Position, 3), Vector(0,0), nil)
+  elseif name == 'VI - The Lovers' then
+    Isaac.Spawn(EntityType.ENTITY_PICKUP, PickupVariant.PICKUP_TAROTCARD, Card.CARD_LOVERS, Isaac.GetFreeNearPosition(player.Position, 3), Vector(0,0), nil)
   elseif name == 'Rune of Ansuz' then
     Isaac.Spawn(EntityType.ENTITY_PICKUP, PickupVariant.PICKUP_TAROTCARD, Card.RUNE_ANSUZ, Isaac.GetFreeNearPosition(player.Position, 3), Vector(0,0), nil)
   elseif name == 'Cracked Key' then
@@ -613,6 +855,15 @@ function mod:toggleDebug(name)
     mod.toggleText = Isaac.ExecuteCommand('debug 3')
     mod.toggleTextTime = game:GetFrameCount()
   end
+end
+
+function mod:seedRng()
+  repeat
+    local rand = Random()  -- 0 to 2^32
+    if rand > 0 then       -- if this is 0, it causes a crash later on
+      mod.rng:SetSeed(rand, 1)
+    end
+  until(rand > 0)
 end
 
 function mod:isChallenge()
@@ -824,20 +1075,86 @@ function mod:setupModConfigMenu()
       end,
       OnChange = function(b)
         if mod.restartLevelOptions[mod.restartLevelOption[1]] == 'Reseed' then
-          mod:reseed()
+          mod:reseed(true)
           ModConfigMenu.CloseConfigMenu()
         end
       end,
       Info = { 'Execute your chosen option' }
     }
   )
+  for i, v in ipairs({
+                       { title = 'Basement',         stage = '1',  options = mod.basementBosses,        option = mod.basementBoss },
+                       { title = 'Cellar',           stage = '1a', options = mod.cellarBosses,          option = mod.cellarBoss },
+                       { title = 'Burning Basement', stage = '1b', options = mod.burningBasementBosses, option = mod.burningBasementBoss },
+                       { title = 'Downpour',         stage = '1c', options = mod.downpourBosses,        option = mod.downpourBoss },
+                       { title = 'Dross',            stage = '1d', options = mod.drossBosses,           option = mod.drossBoss },
+                       { title = 'Caves',            stage = '3',  options = mod.cavesBosses,           option = mod.cavesBoss },
+                       { title = 'Catacombs',        stage = '3a', options = mod.catacombsBosses,       option = mod.catacombsBoss },
+                       { title = 'Flooded Caves',    stage = '3b', options = mod.floodedCavesBosses,    option = mod.floodedCavesBoss },
+                       { title = 'Mines',            stage = '3c', options = mod.minesBosses,           option = mod.minesBoss },
+                       { title = 'Ashpit',           stage = '3d', options = mod.ashpitBosses,          option = mod.ashpitBoss },
+                       { title = 'Depths',           stage = '5',  options = mod.depthsBosses,          option = mod.depthsBoss },
+                       { title = 'Necropolis',       stage = '5a', options = mod.necropolisBosses,      option = mod.necropolisBoss },
+                       { title = 'Dank Depths',      stage = '5b', options = mod.dankDepthsBosses,      option = mod.dankDepthsBoss },
+                       { title = 'Mausoleum',        stage = '5c', options = mod.mausoleumBosses,       option = mod.mausoleumBoss },
+                       { title = 'Gehenna',          stage = '5d', options = mod.gehennaBosses,         option = mod.gehennaBoss },
+                       { title = 'Womb',             stage = '7',  options = mod.wombBosses,            option = mod.wombBoss },
+                       { title = 'Utero',            stage = '7a', options = mod.uteroBosses,           option = mod.uteroBoss },
+                       { title = 'Scarred Womb',     stage = '7b', options = mod.scarredWombBosses,     option = mod.scarredWombBoss },
+                       { title = 'Corpse',           stage = '7c', options = mod.corpseBosses,          option = mod.corpseBoss }
+                    })
+  do
+    if i ~= 1 then
+      ModConfigMenu.AddSpace(mod.Name, 'Bosses')
+    end
+    ModConfigMenu.AddTitle(mod.Name, 'Bosses', v.title)
+    ModConfigMenu.AddSetting(
+      mod.Name,
+      'Bosses',
+      {
+        Type = ModConfigMenu.OptionType.NUMBER,
+        CurrentSetting = function()
+          return v.option[1]
+        end,
+        Minimum = 1,
+        Maximum = #v.options,
+        Display = function()
+          return '< ' .. v.options[v.option[1]] .. ' >'
+        end,
+        OnChange = function(n)
+          v.option[1] = n
+        end,
+        Info = { 'Select a boss' }
+      }
+    )
+    ModConfigMenu.AddSetting(
+      mod.Name,
+      'Bosses',
+      {
+        Type = ModConfigMenu.OptionType.BOOLEAN,
+        CurrentSetting = function()
+          return false
+        end,
+        Display = function()
+          return not game:IsGreedMode() and 'Go!' or '(Disabled)'
+        end,
+        OnChange = function(b)
+          if not game:IsGreedMode() then
+            mod:goToBoss(v.options[v.option[1]], v.stage)
+            ModConfigMenu.CloseConfigMenu()
+          end
+        end,
+        Info = { 'Go to selected boss' }
+      }
+    )
+  end
   for _, v in ipairs({
-                       { name = 'Speed', cacheFlag = CacheFlag.CACHE_SPEED, options = mod.speedOptions, option = mod.speedOption },
-                       { name = 'Tears', cacheFlag = CacheFlag.CACHE_FIREDELAY, options = mod.tearsOptions, option = mod.tearsOption },
-                       { name = 'Damage', cacheFlag = CacheFlag.CACHE_DAMAGE, options = mod.damageOptions, option = mod.damageOption },
-                       { name = 'Range', cacheFlag = CacheFlag.CACHE_RANGE, options = mod.rangeOptions, option = mod.rangeOption },
+                       { name = 'Speed',      cacheFlag = CacheFlag.CACHE_SPEED,     options = mod.speedOptions,     option = mod.speedOption },
+                       { name = 'Tears',      cacheFlag = CacheFlag.CACHE_FIREDELAY, options = mod.tearsOptions,     option = mod.tearsOption },
+                       { name = 'Damage',     cacheFlag = CacheFlag.CACHE_DAMAGE,    options = mod.damageOptions,    option = mod.damageOption },
+                       { name = 'Range',      cacheFlag = CacheFlag.CACHE_RANGE,     options = mod.rangeOptions,     option = mod.rangeOption },
                        { name = 'Shot Speed', cacheFlag = CacheFlag.CACHE_SHOTSPEED, options = mod.shotSpeedOptions, option = mod.shotSpeedOption },
-                       { name = 'Luck', cacheFlag = CacheFlag.CACHE_LUCK, options = mod.luckOptions, option = mod.luckOption }
+                       { name = 'Luck',       cacheFlag = CacheFlag.CACHE_LUCK,      options = mod.luckOptions,      option = mod.luckOption }
                     })
   do
     ModConfigMenu.AddSetting(
@@ -953,6 +1270,7 @@ function mod:setupModConfigMenu()
   end)
 end
 
+mod:seedRng()
 mod:AddCallback(ModCallbacks.MC_PRE_GAME_EXIT, mod.onGameExit)
 mod:AddCallback(ModCallbacks.MC_POST_CURSE_EVAL, mod.onCurseEval)
 mod:AddCallback(ModCallbacks.MC_POST_NEW_LEVEL, mod.onNewLevel)
