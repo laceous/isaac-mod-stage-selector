@@ -33,6 +33,25 @@ mod.greedStage6Options = { 'The Shop' }
 mod.greedStage7Options = { 'Ultra Greed' }
 mod.restartGameOptions = { 'Restart', 'Victory Lap' }
 mod.restartLevelOptions = { 'Reseed' }
+mod.basementBossOptions = { 'Baby Plum', 'Dangle', 'Dingle', 'Famine', 'Gemini', 'Gurglings', 'Larry Jr.', 'Little Horn', 'Monstro', 'Steven', 'The Duke of Flies', 'The Headless Horseman', 'Turdlings' }
+mod.cellarBossOptions = { 'Baby Plum', 'Blighted Ovum', 'Famine', 'Little Horn', 'Pin', 'Rag Man', 'The Duke of Flies', 'The Haunt', 'The Headless Horseman', 'Widow' }
+mod.burningBasementBossOptions = { 'Baby Plum', 'Dangle', 'Dingle', 'Famine', 'Gemini', 'Gurglings', 'Larry Jr.', 'Little Horn', 'Monstro', 'Rag Man', 'Steven', 'The Duke of Flies', 'The Headless Horseman', 'Turdlings' }
+mod.downpourBossOptions = { 'Lil Blub', 'Min-Min', 'The Rainmaker', 'Wormwood' }
+mod.drossBossOptions = { 'Clog', 'Colostomia', 'Lil Blub', 'Turdlet', 'Wormwood' }
+mod.cavesBossOptions = { 'Big Horn', 'Bumbino', 'C.H.A.D.', 'Chub', 'Fistula', 'Gurdy', 'Gurdy Jr.', 'Mega Fatty', 'Mega Maw', 'Peep', 'Pestilence', 'Rag Mega', 'The Fallen', 'The Headless Horseman', 'The Stain' }
+mod.catacombsBossOptions = { 'Big Horn', 'Bumbino', 'Carrion Queen', 'Dark One', 'Gurdy Jr.', 'Peep', 'Pestilence', 'Polycephalus', 'Rag Mega', 'The Fallen', 'The Forsaken', 'The Frail', 'The Headless Horseman', 'The Hollow', 'The Husk', 'The Wretched' }
+mod.floodedCavesBossOptions = { 'Big Horn', 'Bumbino', 'C.H.A.D.', 'Chub', 'Fistula', 'Gurdy', 'Gurdy Jr.', 'Mega Fatty', 'Mega Maw', 'Peep', 'Pestilence', 'Rag Mega', 'The Fallen', 'The Forsaken', 'The Frail', 'The Headless Horseman', 'The Stain' }
+mod.minesBossOptions = { 'Great Gideon', 'Hornfel', 'Reap Creep', 'Tuff Twins' }
+mod.ashpitBossOptions = { 'Clutch', 'Great Gideon', 'Singe', 'The Pile', 'The Shell' }
+mod.depthsBossOptions = { 'Brownie', 'Gish', 'Loki', 'Monstro II', 'Reap Creep', 'Sisters Vis', 'The Cage', 'The Fallen', 'The Gate', 'The Headless Horseman', 'War' }
+mod.necropolisBossOptions = { 'Brownie', 'Loki', 'Mask of Infamy', 'Sisters Vis', 'The Adversary', 'The Bloat', 'The Fallen', 'The Headless Horseman', 'The Pile', 'War' }
+mod.dankDepthsBossOptions = { 'Brownie', 'Gish', 'Loki', 'Monstro II', 'Reap Creep', 'Sisters Vis', 'The Cage', 'The Fallen', 'The Gate', 'The Headless Horseman', 'War' }
+mod.mausoleumBossOptions = { 'The Heretic', 'The Siren'  }
+mod.gehennaBossOptions = { 'Horny Boys', 'The Visage' }
+mod.wombBossOptions = { 'Blastocyst', 'Conquest', 'Death', 'Lokii', 'Mama Gurdy', 'Mr. Fred', 'Scolex', 'The Fallen', 'The Headless Horseman', 'The Matriarch' }
+mod.uteroBossOptions = { 'Conquest', 'Daddy Long Legs', 'Death', 'Lokii', 'Teratoma', 'The Bloat', 'The Fallen', 'The Headless Horseman', 'Triachnid' }
+mod.scarredWombBossOptions = { 'Blastocyst', 'Conquest', 'Death', 'Lokii', 'Mama Gurdy', 'Mr. Fred', 'Scolex', 'The Fallen', 'The Headless Horseman', 'The Matriarch', 'Triachnid' }
+mod.corpseBossOptions = { 'Chimera', 'Rotgut', 'The Scourge' }
 mod.speedOptions = { -1.0, -0.9, -0.8, -0.7, -0.6, -0.5, -0.4, -0.3, -0.2, -0.1, 0.0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1.0, 1.1, 1.2, 1.3, 1.4, 1.5, 1.6, 1.7, 1.8, 1.9, 2.0 }
 mod.tearsOptions = { -50.0, -45.0, -40.0, -35.0, -30.0, -25.0, -20.0, -15.0, -10.0, -9.5, -9.0, -8.5, -8.0, -7.5, -7.0, -6.5, -6.0, -5.5, -5.0, -4.5, -4.0, -3.5, -3.0, -2.5, -2.0, -1.5, -1.0, -0.5, 0.0, 0.5, 1.0, 1.5, 2.0, 2.5, 3.0, 3.5, 4.0, 4.5, 5.0, 5.5, 6.0, 6.5, 7.0, 7.5, 8.0, 8.5, 9.0, 9.5, 10.0, 15.0, 20.0, 25.0, 30.0, 35.0, 40.0, 45.0, 50.0, 55.0, 60.0, 65.0, 70.0, 75.0, 80.0, 85.0, 90.0, 95.0, 100.0 }
 mod.damageOptions = { -50.0, -45.0, -40.0, -35.0, -30.0, -25.0, -20.0, -15.0, -10.0, -9.5, -9.0, -8.5, -8.0, -7.5, -7.0, -6.5, -6.0, -5.5, -5.0, -4.5, -4.0, -3.5, -3.0, -2.5, -2.0, -1.5, -1.0, -0.5, 0.0, 0.5, 1.0, 1.5, 2.0, 2.5, 3.0, 3.5, 4.0, 4.5, 5.0, 5.5, 6.0, 6.5, 7.0, 7.5, 8.0, 8.5, 9.0, 9.5, 10.0, 15.0, 20.0, 25.0, 30.0, 35.0, 40.0, 45.0, 50.0, 55.0, 60.0, 65.0, 70.0, 75.0, 80.0, 85.0, 90.0, 95.0, 100.0 }
@@ -41,26 +60,6 @@ mod.shotSpeedOptions = { -1.0, -0.9, -0.8, -0.7, -0.6, -0.5, -0.4, -0.3, -0.2, -
 mod.luckOptions = { -50.0, -45.0, -40.0, -35.0, -30.0, -25.0, -20.0, -15.0, -10.0, -9.5, -9.0, -8.5, -8.0, -7.5, -7.0, -6.5, -6.0, -5.5, -5.0, -4.5, -4.0, -3.5, -3.0, -2.5, -2.0, -1.5, -1.0, -0.5, 0.0, 0.5, 1.0, 1.5, 2.0, 2.5, 3.0, 3.5, 4.0, 4.5, 5.0, 5.5, 6.0, 6.5, 7.0, 7.5, 8.0, 8.5, 9.0, 9.5, 10.0, 15.0, 20.0, 25.0, 30.0, 35.0, 40.0, 45.0, 50.0, 55.0, 60.0, 65.0, 70.0, 75.0, 80.0, 85.0, 90.0, 95.0, 100.0 }
 mod.itemOptions = { 'The Polaroid', 'The Negative', 'Key Piece 1', 'Key Piece 2', 'Knife Piece 1', 'Knife Piece 2', '0 - The Fool', 'V - The Hierophant', 'V - The Hierophant?', 'VI - The Lovers', 'VIII - Justice', 'Rune of Ansuz', 'Cracked Key' }
 mod.debugOptions = { 'Infinite HP' }
-
-mod.basementBosses = { 'Baby Plum', 'Dangle', 'Dingle', 'Famine', 'Gemini', 'Gurglings', 'Larry Jr.', 'Little Horn', 'Monstro', 'Steven', 'The Duke of Flies', 'The Headless Horseman', 'Turdlings' }
-mod.cellarBosses = { 'Baby Plum', 'Blighted Ovum', 'Famine', 'Little Horn', 'Pin', 'Rag Man', 'The Duke of Flies', 'The Haunt', 'The Headless Horseman', 'Widow' }
-mod.burningBasementBosses = { 'Baby Plum', 'Dangle', 'Dingle', 'Famine', 'Gemini', 'Gurglings', 'Larry Jr.', 'Little Horn', 'Monstro', 'Rag Man', 'Steven', 'The Duke of Flies', 'The Headless Horseman', 'Turdlings' }
-mod.downpourBosses = { 'Lil Blub', 'Min-Min', 'The Rainmaker', 'Wormwood' }
-mod.drossBosses = { 'Clog', 'Colostomia', 'Lil Blub', 'Turdlet', 'Wormwood' }
-mod.cavesBosses = { 'Big Horn', 'Bumbino', 'C.H.A.D.', 'Chub', 'Fistula', 'Gurdy', 'Gurdy Jr.', 'Mega Fatty', 'Mega Maw', 'Peep', 'Pestilence', 'Rag Mega', 'The Fallen', 'The Headless Horseman', 'The Stain' }
-mod.catacombsBosses = { 'Big Horn', 'Bumbino', 'Carrion Queen', 'Dark One', 'Gurdy Jr.', 'Peep', 'Pestilence', 'Polycephalus', 'Rag Mega', 'The Fallen', 'The Forsaken', 'The Frail', 'The Headless Horseman', 'The Hollow', 'The Husk', 'The Wretched' }
-mod.floodedCavesBosses = { 'Big Horn', 'Bumbino', 'C.H.A.D.', 'Chub', 'Fistula', 'Gurdy', 'Gurdy Jr.', 'Mega Fatty', 'Mega Maw', 'Peep', 'Pestilence', 'Rag Mega', 'The Fallen', 'The Forsaken', 'The Frail', 'The Headless Horseman', 'The Stain' }
-mod.minesBosses = { 'Great Gideon', 'Hornfel', 'Reap Creep', 'Tuff Twins' }
-mod.ashpitBosses = { 'Clutch', 'Great Gideon', 'Singe', 'The Pile', 'The Shell' }
-mod.depthsBosses = { 'Brownie', 'Gish', 'Loki', 'Monstro II', 'Reap Creep', 'Sisters Vis', 'The Cage', 'The Fallen', 'The Gate', 'The Headless Horseman', 'War' }
-mod.necropolisBosses = { 'Brownie', 'Loki', 'Mask of Infamy', 'Sisters Vis', 'The Adversary', 'The Bloat', 'The Fallen', 'The Headless Horseman', 'The Pile', 'War' }
-mod.dankDepthsBosses = { 'Brownie', 'Gish', 'Loki', 'Monstro II', 'Reap Creep', 'Sisters Vis', 'The Cage', 'The Fallen', 'The Gate', 'The Headless Horseman', 'War' }
-mod.mausoleumBosses = { 'The Heretic', 'The Siren'  }
-mod.gehennaBosses = { 'Horny Boys', 'The Visage' }
-mod.wombBosses = { 'Blastocyst', 'Conquest', 'Death', 'Lokii', 'Mama Gurdy', 'Mr. Fred', 'Scolex', 'The Fallen', 'The Headless Horseman', 'The Matriarch' }
-mod.uteroBosses = { 'Conquest', 'Daddy Long Legs', 'Death', 'Lokii', 'Teratoma', 'The Bloat', 'The Fallen', 'The Headless Horseman', 'Triachnid' }
-mod.scarredWombBosses = { 'Blastocyst', 'Conquest', 'Death', 'Lokii', 'Mama Gurdy', 'Mr. Fred', 'Scolex', 'The Fallen', 'The Headless Horseman', 'The Matriarch', 'Triachnid' }
-mod.corpseBosses = { 'Chimera', 'Rotgut', 'The Scourge' }
 
 mod.stage11Option = {1}
 mod.stage11AltOption = {1}
@@ -92,6 +91,25 @@ mod.greedStage6Option = {1}
 mod.greedStage7Option = {1}
 mod.restartGameOption = {1}
 mod.restartLevelOption = {1}
+mod.basementBossOption = {1}
+mod.cellarBossOption = {1}
+mod.burningBasementBossOption = {1}
+mod.downpourBossOption = {1}
+mod.drossBossOption = {1}
+mod.cavesBossOption = {1}
+mod.catacombsBossOption = {1}
+mod.floodedCavesBossOption = {1}
+mod.minesBossOption = {1}
+mod.ashpitBossOption = {1}
+mod.depthsBossOption = {1}
+mod.necropolisBossOption = {1}
+mod.dankDepthsBossOption = {1}
+mod.mausoleumBossOption = {1}
+mod.gehennaBossOption = {1}
+mod.wombBossOption = {1}
+mod.uteroBossOption = {1}
+mod.scarredWombBossOption = {1}
+mod.corpseBossOption = {1}
 mod.speedOption = {11}
 mod.tearsOption = {29}
 mod.damageOption = {29}
@@ -100,26 +118,6 @@ mod.shotSpeedOption = {11}
 mod.luckOption = {29}
 mod.itemOption = {1}
 mod.debugOption = {1}
-
-mod.basementBoss = {1}
-mod.cellarBoss = {1}
-mod.burningBasementBoss = {1}
-mod.downpourBoss = {1}
-mod.drossBoss = {1}
-mod.cavesBoss = {1}
-mod.catacombsBoss = {1}
-mod.floodedCavesBoss = {1}
-mod.minesBoss = {1}
-mod.ashpitBoss = {1}
-mod.depthsBoss = {1}
-mod.necropolisBoss = {1}
-mod.dankDepthsBoss = {1}
-mod.mausoleumBoss = {1}
-mod.gehennaBoss = {1}
-mod.wombBoss = {1}
-mod.uteroBoss = {1}
-mod.scarredWombBoss = {1}
-mod.corpseBoss = {1}
 
 mod.forceXL = nil -- 3 state: true, false, nil
 mod.showLevelName = false
@@ -1083,25 +1081,25 @@ function mod:setupModConfigMenu()
     }
   )
   for i, v in ipairs({
-                       { title = 'Basement',         stage = '1',  options = mod.basementBosses,        option = mod.basementBoss },
-                       { title = 'Cellar',           stage = '1a', options = mod.cellarBosses,          option = mod.cellarBoss },
-                       { title = 'Burning Basement', stage = '1b', options = mod.burningBasementBosses, option = mod.burningBasementBoss },
-                       { title = 'Downpour',         stage = '1c', options = mod.downpourBosses,        option = mod.downpourBoss },
-                       { title = 'Dross',            stage = '1d', options = mod.drossBosses,           option = mod.drossBoss },
-                       { title = 'Caves',            stage = '3',  options = mod.cavesBosses,           option = mod.cavesBoss },
-                       { title = 'Catacombs',        stage = '3a', options = mod.catacombsBosses,       option = mod.catacombsBoss },
-                       { title = 'Flooded Caves',    stage = '3b', options = mod.floodedCavesBosses,    option = mod.floodedCavesBoss },
-                       { title = 'Mines',            stage = '3c', options = mod.minesBosses,           option = mod.minesBoss },
-                       { title = 'Ashpit',           stage = '3d', options = mod.ashpitBosses,          option = mod.ashpitBoss },
-                       { title = 'Depths',           stage = '5',  options = mod.depthsBosses,          option = mod.depthsBoss },
-                       { title = 'Necropolis',       stage = '5a', options = mod.necropolisBosses,      option = mod.necropolisBoss },
-                       { title = 'Dank Depths',      stage = '5b', options = mod.dankDepthsBosses,      option = mod.dankDepthsBoss },
-                       { title = 'Mausoleum',        stage = '5c', options = mod.mausoleumBosses,       option = mod.mausoleumBoss },
-                       { title = 'Gehenna',          stage = '5d', options = mod.gehennaBosses,         option = mod.gehennaBoss },
-                       { title = 'Womb',             stage = '7',  options = mod.wombBosses,            option = mod.wombBoss },
-                       { title = 'Utero',            stage = '7a', options = mod.uteroBosses,           option = mod.uteroBoss },
-                       { title = 'Scarred Womb',     stage = '7b', options = mod.scarredWombBosses,     option = mod.scarredWombBoss },
-                       { title = 'Corpse',           stage = '7c', options = mod.corpseBosses,          option = mod.corpseBoss }
+                       { title = 'Basement',         stage = '1',  options = mod.basementBossOptions,        option = mod.basementBossOption },
+                       { title = 'Cellar',           stage = '1a', options = mod.cellarBossOptions,          option = mod.cellarBossOption },
+                       { title = 'Burning Basement', stage = '1b', options = mod.burningBasementBossOptions, option = mod.burningBasementBossOption },
+                       { title = 'Downpour',         stage = '1c', options = mod.downpourBossOptions,        option = mod.downpourBossOption },
+                       { title = 'Dross',            stage = '1d', options = mod.drossBossOptions,           option = mod.drossBossOption },
+                       { title = 'Caves',            stage = '3',  options = mod.cavesBossOptions,           option = mod.cavesBossOption },
+                       { title = 'Catacombs',        stage = '3a', options = mod.catacombsBossOptions,       option = mod.catacombsBossOption },
+                       { title = 'Flooded Caves',    stage = '3b', options = mod.floodedCavesBossOptions,    option = mod.floodedCavesBossOption },
+                       { title = 'Mines',            stage = '3c', options = mod.minesBossOptions,           option = mod.minesBossOption },
+                       { title = 'Ashpit',           stage = '3d', options = mod.ashpitBossOptions,          option = mod.ashpitBossOption },
+                       { title = 'Depths',           stage = '5',  options = mod.depthsBossOptions,          option = mod.depthsBossOption },
+                       { title = 'Necropolis',       stage = '5a', options = mod.necropolisBossOptions,      option = mod.necropolisBossOption },
+                       { title = 'Dank Depths',      stage = '5b', options = mod.dankDepthsBossOptions,      option = mod.dankDepthsBossOption },
+                       { title = 'Mausoleum',        stage = '5c', options = mod.mausoleumBossOptions,       option = mod.mausoleumBossOption },
+                       { title = 'Gehenna',          stage = '5d', options = mod.gehennaBossOptions,         option = mod.gehennaBossOption },
+                       { title = 'Womb',             stage = '7',  options = mod.wombBossOptions,            option = mod.wombBossOption },
+                       { title = 'Utero',            stage = '7a', options = mod.uteroBossOptions,           option = mod.uteroBossOption },
+                       { title = 'Scarred Womb',     stage = '7b', options = mod.scarredWombBossOptions,     option = mod.scarredWombBossOption },
+                       { title = 'Corpse',           stage = '7c', options = mod.corpseBossOptions,          option = mod.corpseBossOption }
                     })
   do
     if i ~= 1 then
