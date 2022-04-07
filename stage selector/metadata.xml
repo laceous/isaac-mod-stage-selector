@@ -58,7 +58,7 @@ There's 4 challenges included that you can use as a playground. All of them end 
 This mod is enabled for other challenges too, but can likely break them.
 
 There's an option to practice against individual bosses from each level. This works by moving you to the appropriate stage 1 and using the goto command which takes you to a boss room that's off the map. Story bosses aren't included here since it's easy enough to trigger them by going to the appropriate level. Be aware that the goto command can cause a crash if you try to quit and continue. You can generally work around this by going down to the next level (or reseeding) before quitting your run.</description>
-    <version>1.10</version>
+    <version>1.11</version>
     <visibility>Public</visibility>
     <tag id="Lua"/>
     <tag id="Floors"/>

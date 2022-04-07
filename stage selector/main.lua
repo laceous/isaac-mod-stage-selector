@@ -24,10 +24,14 @@ mod.stage5Options = { 'Sheol', 'Cathedral' }
 mod.stage6Options = { 'Dark Room', 'Chest' }
 mod.stage7Options = { 'The Void' }
 mod.stage8Options = { 'Home', 'Home (Alt)' }
-mod.greedStage1Options = { 'Basement', 'Cellar', 'Burning Basement', 'Downpour', 'Dross' }
-mod.greedStage2Options = { 'Caves', 'Catacombs', 'Flooded Caves', 'Mines', 'Asphit' }
-mod.greedStage3Options = { 'Depths', 'Necropolis', 'Dank Depths', 'Mausoleum', 'Gehenna' }
-mod.greedStage4Options = { 'Womb', 'Utero', 'Scarred Womb', 'Corpse' }
+mod.greedStage1Options = { 'Basement', 'Cellar', 'Burning Basement' }
+mod.greedStage1AltOptions = { 'Downpour', 'Dross' }
+mod.greedStage2Options = { 'Caves', 'Catacombs', 'Flooded Caves' }
+mod.greedStage2AltOptions = { 'Mines', 'Asphit' }
+mod.greedStage3Options = { 'Depths', 'Necropolis', 'Dank Depths' }
+mod.greedStage3AltOptions = { 'Mausoleum', 'Gehenna' }
+mod.greedStage4Options = { 'Womb', 'Utero', 'Scarred Womb' }
+mod.greedStage4AltOptions = { 'Corpse' }
 mod.greedStage5Options = { 'Sheol' }
 mod.greedStage6Options = { 'The Shop' }
 mod.greedStage7Options = { 'Ultra Greed' }
@@ -83,9 +87,13 @@ mod.stage6Option = {1}
 mod.stage7Option = {1}
 mod.stage8Option = {1}
 mod.greedStage1Option = {1}
+mod.greedStage1AltOption = {1}
 mod.greedStage2Option = {1}
+mod.greedStage2AltOption = {1}
 mod.greedStage3Option = {1}
+mod.greedStage3AltOption = {1}
 mod.greedStage4Option = {1}
+mod.greedStage4AltOption = {1}
 mod.greedStage5Option = {1}
 mod.greedStage6Option = {1}
 mod.greedStage7Option = {1}
@@ -597,6 +605,7 @@ function mod:goToGreedStage(name)
   
   if stage then
     Isaac.ExecuteCommand('stage ' .. stage)
+    Isaac.ExecuteCommand('stage ' .. stage) -- better Alt path in Greed Mode support
     mod:reseed(true)
   end
 end
@@ -942,13 +951,17 @@ function mod:setupModConfigMenu()
     )
   end
   for i, v in ipairs({
-                       { title = 'Stage 1', options = mod.greedStage1Options, option = mod.greedStage1Option },
-                       { title = 'Stage 2', options = mod.greedStage2Options, option = mod.greedStage2Option },
-                       { title = 'Stage 3', options = mod.greedStage3Options, option = mod.greedStage3Option },
-                       { title = 'Stage 4', options = mod.greedStage4Options, option = mod.greedStage4Option },
-                       { title = 'Stage 5', options = mod.greedStage5Options, option = mod.greedStage5Option },
-                       { title = 'Stage 6', options = mod.greedStage6Options, option = mod.greedStage6Option },
-                       { title = 'Stage 7', options = mod.greedStage7Options, option = mod.greedStage7Option }
+                       { title = 'Stage 1 (Main)', options = mod.greedStage1Options,    option = mod.greedStage1Option },
+                       { title = 'Stage 1 (Alt)',  options = mod.greedStage1AltOptions, option = mod.greedStage1AltOption },
+                       { title = 'Stage 2 (Main)', options = mod.greedStage2Options,    option = mod.greedStage2Option },
+                       { title = 'Stage 2 (Alt)',  options = mod.greedStage2AltOptions, option = mod.greedStage2AltOption },
+                       { title = 'Stage 3 (Main)', options = mod.greedStage3Options,    option = mod.greedStage3Option },
+                       { title = 'Stage 3 (Alt)',  options = mod.greedStage3AltOptions, option = mod.greedStage3AltOption },
+                       { title = 'Stage 4 (Main)', options = mod.greedStage4Options,    option = mod.greedStage4Option },
+                       { title = 'Stage 4 (Alt)',  options = mod.greedStage4AltOptions, option = mod.greedStage4AltOption },
+                       { title = 'Stage 5',        options = mod.greedStage5Options,    option = mod.greedStage5Option },
+                       { title = 'Stage 6',        options = mod.greedStage6Options,    option = mod.greedStage6Option },
+                       { title = 'Stage 7',        options = mod.greedStage7Options,    option = mod.greedStage7Option }
                     })
   do
     if i ~= 1 then
