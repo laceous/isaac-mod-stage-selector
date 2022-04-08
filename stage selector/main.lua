@@ -653,7 +653,7 @@ function mod:goToBoss(name, stage)
     bossRooms = { '5180', '5181', '5182', '5183', '5184' }
   elseif name == 'Lil Blub' then
     bossRooms = { '5170', '5171', '5172', '5173', '5174', '5175' }
-  elseif name == 'Rainmaker' then
+  elseif name == 'The Rainmaker' then
     bossRooms = { '5230', '5231', '5232' }
   elseif name == 'Min-Min' then
     bossRooms = { '5280', '5281', '5282' }
