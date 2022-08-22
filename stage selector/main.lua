@@ -322,23 +322,23 @@ function mod:goToStage(name)
   elseif name == 'Basement 2 (Ascent)' then
     stage = '2'
     forceXL = nil
-    local backwardsPath = true
+    backwardsPath = true
   elseif name == 'Cellar 2 (Ascent)' then
     stage = '2a'
     forceXL = nil
-    local backwardsPath = true
+    backwardsPath = true
   elseif name == 'Burning Basement 2 (Ascent)' then
     stage = '2b'
     forceXL = nil
-    local backwardsPath = true
+    backwardsPath = true
   elseif name == 'Downpour 2 (Ascent)' then
     stage = '2c'
     forceXL = nil
-    local backwardsPath = true
+    backwardsPath = true
   elseif name == 'Dross 2 (Ascent)' then
     stage = '2d'
     forceXL = nil
-    local backwardsPath = true
+    backwardsPath = true
   elseif name == 'Caves 1' then
     stage = '3'
   elseif name == 'Catacombs 1' then
