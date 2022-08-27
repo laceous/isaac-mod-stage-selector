@@ -1286,7 +1286,7 @@ mod:AddCallback(ModCallbacks.MC_PRE_GAME_EXIT, mod.onGameExit)
 mod:AddCallback(ModCallbacks.MC_POST_CURSE_EVAL, mod.onCurseEval)
 mod:AddCallback(ModCallbacks.MC_POST_NEW_LEVEL, mod.onNewLevel)
 mod:AddCallback(ModCallbacks.MC_POST_NEW_ROOM, mod.onNewRoom)
-mod:AddCallback(ModCallbacks.MC_EVALUATE_CACHE , mod.onCacheEval)
+mod:AddCallback(ModCallbacks.MC_EVALUATE_CACHE, mod.onCacheEval)
 
 if ModConfigMenu then
   mod:setupModConfigMenu()
