@@ -32,7 +32,7 @@ mod.greedStage3Options = { 'Depths', 'Necropolis', 'Dank Depths' }
 mod.greedStage3AltOptions = { 'Mausoleum', 'Gehenna' }
 mod.greedStage4Options = { 'Womb', 'Utero', 'Scarred Womb' }
 mod.greedStage4AltOptions = { 'Corpse' }
-mod.greedStage5Options = { 'Sheol' }
+mod.greedStage5Options = { 'Sheol', 'Cathedral' }
 mod.greedStage6Options = { 'The Shop' }
 mod.greedStage7Options = { 'Ultra Greed' }
 mod.restartGameOptions = { 'Restart', 'Victory Lap' }
@@ -163,12 +163,18 @@ function mod:onNewLevel()
   if mod.showLevelName then
     local hud = game:GetHUD()
     local level = game:GetLevel()
+    local levelName = level:GetName()
     local curseName = level:GetCurseName()
     
+    -- not supported natively by the game
+    if game:IsGreedMode() and level:GetStage() == LevelStage.STAGE5_GREED and level:GetStageType() == StageType.STAGETYPE_WOTL then
+      levelName = 'Cathedral'
+    end
+    
     if curseName ~= '' then
-      hud:ShowItemText(level:GetName(), curseName, true)
+      hud:ShowItemText(levelName, curseName, true)
     else
-      hud:ShowItemText(level:GetName(), nil, false)
+      hud:ShowItemText(levelName, nil, false)
     end
     
     mod.showLevelName = false
@@ -597,6 +603,8 @@ function mod:goToGreedStage(name)
     stage = '4c' -- doesn't show in the debug console, but works
   elseif name == 'Sheol' then
     stage = '5' -- the debug console lists 5a and 5b, but they're also sheol
+  elseif name == 'Cathedral' then
+    stage = '5a' -- requires The Cathedral in Greed Mode, otherwise falls back to Sheol
   elseif name == 'The Shop' then
     stage = '6'
   elseif name == 'Ultra Greed' then
