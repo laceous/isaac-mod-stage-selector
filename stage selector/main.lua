@@ -889,7 +889,11 @@ function mod:isChallenge()
          challenge == Isaac.GetChallengeIdByName('Stage Selector (Greedier)')
 end
 
+-- start ModConfigMenu --
 function mod:setupModConfigMenu()
+  for _, v in ipairs({ 'Stages', 'Greed', 'Restart', 'Bosses', 'Stats', 'Misc' }) do
+    ModConfigMenu.RemoveSubcategory(mod.Name, v)
+  end
   for i, v in ipairs({
                        { title = 'Stage 1-1 (Main)', options = mod.stage11Options,    option = mod.stage11Option },
                        { title = 'Stage 1-1 (Alt)',  options = mod.stage11AltOptions, option = mod.stage11AltOption },
@@ -1288,6 +1292,7 @@ function mod:setupModConfigMenu()
     return mod.toggleText
   end)
 end
+-- end ModConfigMenu --
 
 mod:seedRng()
 mod:AddCallback(ModCallbacks.MC_PRE_GAME_EXIT, mod.onGameExit)
