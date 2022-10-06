@@ -132,6 +132,10 @@ mod.showLevelName = false
 mod.toggleText = ''
 mod.toggleTextTime = 0
 
+function mod:onGameStart()
+  mod:setupModConfigMenu()
+end
+
 function mod:onGameExit()
   mod.speedOption[1] = 11
   mod.tearsOption[1] = 29
@@ -891,33 +895,54 @@ end
 
 -- start ModConfigMenu --
 function mod:setupModConfigMenu()
-  for _, v in ipairs({ 'Stages', 'Greed', 'Restart', 'Bosses', 'Stats', 'Misc' }) do
+  if ModConfigMenu == nil then
+    return
+  end
+  
+  for _, v in ipairs({ 'Stages', 'Restart', 'Bosses', 'Stats', 'Misc' }) do
     ModConfigMenu.RemoveSubcategory(mod.Name, v)
   end
-  for i, v in ipairs({
-                       { title = 'Stage 1-1 (Main)', options = mod.stage11Options,    option = mod.stage11Option },
-                       { title = 'Stage 1-1 (Alt)',  options = mod.stage11AltOptions, option = mod.stage11AltOption },
-                       { title = 'Stage 1-2 (Main)', options = mod.stage12Options,    option = mod.stage12Option },
-                       { title = 'Stage 1-2 (Alt)',  options = mod.stage12AltOptions, option = mod.stage12AltOption },
-                       { title = 'Stage 2-1 (Main)', options = mod.stage21Options,    option = mod.stage21Option },
-                       { title = 'Stage 2-1 (Alt)',  options = mod.stage21AltOptions, option = mod.stage21AltOption },
-                       { title = 'Stage 2-2 (Main)', options = mod.stage22Options,    option = mod.stage22Option },
-                       { title = 'Stage 2-2 (Alt)',  options = mod.stage22AltOptions, option = mod.stage22AltOption },
-                       { title = 'Stage 3-1 (Main)', options = mod.stage31Options,    option = mod.stage31Option },
-                       { title = 'Stage 3-1 (Alt)',  options = mod.stage31AltOptions, option = mod.stage31AltOption },
-                       { title = 'Stage 3-2 (Main)', options = mod.stage32Options,    option = mod.stage32Option },
-                       { title = 'Stage 3-2 (Alt)',  options = mod.stage32AltOptions, option = mod.stage32AltOption },
-                       { title = 'Stage 4-1 (Main)', options = mod.stage41Options,    option = mod.stage41Option },
-                       { title = 'Stage 4-1 (Alt)',  options = mod.stage41AltOptions, option = mod.stage41AltOption },
-                       { title = 'Stage 4-2 (Main)', options = mod.stage42Options,    option = mod.stage42Option },
-                       { title = 'Stage 4-2 (Alt)',  options = mod.stage42AltOptions, option = mod.stage42AltOption },
-                       { title = 'Stage 4-3',        options = mod.stage43Options,    option = mod.stage43Option },
-                       { title = 'Stage 5',          options = mod.stage5Options,     option = mod.stage5Option },
-                       { title = 'Stage 6',          options = mod.stage6Options,     option = mod.stage6Option },
-                       { title = 'Stage 7',          options = mod.stage7Options,     option = mod.stage7Option },
-                       { title = 'Stage 8',          options = mod.stage8Options,     option = mod.stage8Option }
-                    })
-  do
+  local stages
+  if game:IsGreedMode() then
+    stages = {
+               { title = 'Stage 1 (Main)', options = mod.greedStage1Options,    option = mod.greedStage1Option },
+               { title = 'Stage 1 (Alt)',  options = mod.greedStage1AltOptions, option = mod.greedStage1AltOption },
+               { title = 'Stage 2 (Main)', options = mod.greedStage2Options,    option = mod.greedStage2Option },
+               { title = 'Stage 2 (Alt)',  options = mod.greedStage2AltOptions, option = mod.greedStage2AltOption },
+               { title = 'Stage 3 (Main)', options = mod.greedStage3Options,    option = mod.greedStage3Option },
+               { title = 'Stage 3 (Alt)',  options = mod.greedStage3AltOptions, option = mod.greedStage3AltOption },
+               { title = 'Stage 4 (Main)', options = mod.greedStage4Options,    option = mod.greedStage4Option },
+               { title = 'Stage 4 (Alt)',  options = mod.greedStage4AltOptions, option = mod.greedStage4AltOption },
+               { title = 'Stage 5',        options = mod.greedStage5Options,    option = mod.greedStage5Option },
+               { title = 'Stage 6',        options = mod.greedStage6Options,    option = mod.greedStage6Option },
+               { title = 'Stage 7',        options = mod.greedStage7Options,    option = mod.greedStage7Option }
+             }
+  else
+    stages = {
+               { title = 'Stage 1-1 (Main)', options = mod.stage11Options,    option = mod.stage11Option },
+               { title = 'Stage 1-1 (Alt)',  options = mod.stage11AltOptions, option = mod.stage11AltOption },
+               { title = 'Stage 1-2 (Main)', options = mod.stage12Options,    option = mod.stage12Option },
+               { title = 'Stage 1-2 (Alt)',  options = mod.stage12AltOptions, option = mod.stage12AltOption },
+               { title = 'Stage 2-1 (Main)', options = mod.stage21Options,    option = mod.stage21Option },
+               { title = 'Stage 2-1 (Alt)',  options = mod.stage21AltOptions, option = mod.stage21AltOption },
+               { title = 'Stage 2-2 (Main)', options = mod.stage22Options,    option = mod.stage22Option },
+               { title = 'Stage 2-2 (Alt)',  options = mod.stage22AltOptions, option = mod.stage22AltOption },
+               { title = 'Stage 3-1 (Main)', options = mod.stage31Options,    option = mod.stage31Option },
+               { title = 'Stage 3-1 (Alt)',  options = mod.stage31AltOptions, option = mod.stage31AltOption },
+               { title = 'Stage 3-2 (Main)', options = mod.stage32Options,    option = mod.stage32Option },
+               { title = 'Stage 3-2 (Alt)',  options = mod.stage32AltOptions, option = mod.stage32AltOption },
+               { title = 'Stage 4-1 (Main)', options = mod.stage41Options,    option = mod.stage41Option },
+               { title = 'Stage 4-1 (Alt)',  options = mod.stage41AltOptions, option = mod.stage41AltOption },
+               { title = 'Stage 4-2 (Main)', options = mod.stage42Options,    option = mod.stage42Option },
+               { title = 'Stage 4-2 (Alt)',  options = mod.stage42AltOptions, option = mod.stage42AltOption },
+               { title = 'Stage 4-3',        options = mod.stage43Options,    option = mod.stage43Option },
+               { title = 'Stage 5',          options = mod.stage5Options,     option = mod.stage5Option },
+               { title = 'Stage 6',          options = mod.stage6Options,     option = mod.stage6Option },
+               { title = 'Stage 7',          options = mod.stage7Options,     option = mod.stage7Option },
+               { title = 'Stage 8',          options = mod.stage8Options,     option = mod.stage8Option }
+             }
+  end
+  for i, v in ipairs(stages) do
     if i ~= 1 then
       ModConfigMenu.AddSpace(mod.Name, 'Stages')
     end
@@ -950,71 +975,15 @@ function mod:setupModConfigMenu()
           return false
         end,
         Display = function()
-          return game:IsGreedMode() and '(Disabled)' or 'Go!'
-        end,
-        OnChange = function(b)
-          if not game:IsGreedMode() then
-            mod:goToStage(v.options[v.option[1]])
-            ModConfigMenu.CloseConfigMenu()
-          end
-        end,
-        Info = { 'Go to selected stage' }
-      }
-    )
-  end
-  for i, v in ipairs({
-                       { title = 'Stage 1 (Main)', options = mod.greedStage1Options,    option = mod.greedStage1Option },
-                       { title = 'Stage 1 (Alt)',  options = mod.greedStage1AltOptions, option = mod.greedStage1AltOption },
-                       { title = 'Stage 2 (Main)', options = mod.greedStage2Options,    option = mod.greedStage2Option },
-                       { title = 'Stage 2 (Alt)',  options = mod.greedStage2AltOptions, option = mod.greedStage2AltOption },
-                       { title = 'Stage 3 (Main)', options = mod.greedStage3Options,    option = mod.greedStage3Option },
-                       { title = 'Stage 3 (Alt)',  options = mod.greedStage3AltOptions, option = mod.greedStage3AltOption },
-                       { title = 'Stage 4 (Main)', options = mod.greedStage4Options,    option = mod.greedStage4Option },
-                       { title = 'Stage 4 (Alt)',  options = mod.greedStage4AltOptions, option = mod.greedStage4AltOption },
-                       { title = 'Stage 5',        options = mod.greedStage5Options,    option = mod.greedStage5Option },
-                       { title = 'Stage 6',        options = mod.greedStage6Options,    option = mod.greedStage6Option },
-                       { title = 'Stage 7',        options = mod.greedStage7Options,    option = mod.greedStage7Option }
-                    })
-  do
-    if i ~= 1 then
-      ModConfigMenu.AddSpace(mod.Name, 'Greed')
-    end
-    ModConfigMenu.AddTitle(mod.Name, 'Greed', v.title)
-    ModConfigMenu.AddSetting(
-      mod.Name,
-      'Greed',
-      {
-        Type = ModConfigMenu.OptionType.NUMBER,
-        CurrentSetting = function()
-          return v.option[1]
-        end,
-        Minimum = 1,
-        Maximum = #v.options,
-        Display = function()
-          return '< ' .. v.options[v.option[1]] .. ' >'
-        end,
-        OnChange = function(n)
-          v.option[1] = n
-        end,
-        Info = { 'Select a stage' }
-      }
-    )
-    ModConfigMenu.AddSetting(
-      mod.Name,
-      'Greed',
-      {
-        Type = ModConfigMenu.OptionType.BOOLEAN,
-        CurrentSetting = function()
-          return false
-        end,
-        Display = function()
-          return game:IsGreedMode() and 'Go!' or '(Disabled)'
+          return 'Go!'
         end,
         OnChange = function(b)
           if game:IsGreedMode() then
             mod:goToGreedStage(v.options[v.option[1]])
-            ModConfigMenu.CloseConfigMenu()
+          else
+            mod:goToStage(v.options[v.option[1]])
           end
+          ModConfigMenu.CloseConfigMenu()
         end,
         Info = { 'Go to selected stage' }
       }
@@ -1054,6 +1023,7 @@ function mod:setupModConfigMenu()
       OnChange = function(b)
         if mod.restartGameOptions[mod.restartGameOption[1]] == 'Restart' then
           Isaac.ExecuteCommand('restart')
+          ModConfigMenu.CloseConfigMenu()
         elseif mod.restartGameOptions[mod.restartGameOption[1]] == 'Victory Lap' then
           if not game:IsGreedMode() then
             mod:doVictoryLap()
@@ -1105,71 +1075,73 @@ function mod:setupModConfigMenu()
       Info = { 'Execute your chosen option' }
     }
   )
-  for i, v in ipairs({
-                       { title = 'Basement',         stage = '1',  options = mod.basementBossOptions,        option = mod.basementBossOption },
-                       { title = 'Cellar',           stage = '1a', options = mod.cellarBossOptions,          option = mod.cellarBossOption },
-                       { title = 'Burning Basement', stage = '1b', options = mod.burningBasementBossOptions, option = mod.burningBasementBossOption },
-                       { title = 'Downpour',         stage = '1c', options = mod.downpourBossOptions,        option = mod.downpourBossOption },
-                       { title = 'Dross',            stage = '1d', options = mod.drossBossOptions,           option = mod.drossBossOption },
-                       { title = 'Caves',            stage = '3',  options = mod.cavesBossOptions,           option = mod.cavesBossOption },
-                       { title = 'Catacombs',        stage = '3a', options = mod.catacombsBossOptions,       option = mod.catacombsBossOption },
-                       { title = 'Flooded Caves',    stage = '3b', options = mod.floodedCavesBossOptions,    option = mod.floodedCavesBossOption },
-                       { title = 'Mines',            stage = '3c', options = mod.minesBossOptions,           option = mod.minesBossOption },
-                       { title = 'Ashpit',           stage = '3d', options = mod.ashpitBossOptions,          option = mod.ashpitBossOption },
-                       { title = 'Depths',           stage = '5',  options = mod.depthsBossOptions,          option = mod.depthsBossOption },
-                       { title = 'Necropolis',       stage = '5a', options = mod.necropolisBossOptions,      option = mod.necropolisBossOption },
-                       { title = 'Dank Depths',      stage = '5b', options = mod.dankDepthsBossOptions,      option = mod.dankDepthsBossOption },
-                       { title = 'Mausoleum',        stage = '5c', options = mod.mausoleumBossOptions,       option = mod.mausoleumBossOption },
-                       { title = 'Gehenna',          stage = '5d', options = mod.gehennaBossOptions,         option = mod.gehennaBossOption },
-                       { title = 'Womb',             stage = '7',  options = mod.wombBossOptions,            option = mod.wombBossOption },
-                       { title = 'Utero',            stage = '7a', options = mod.uteroBossOptions,           option = mod.uteroBossOption },
-                       { title = 'Scarred Womb',     stage = '7b', options = mod.scarredWombBossOptions,     option = mod.scarredWombBossOption },
-                       { title = 'Corpse',           stage = '7c', options = mod.corpseBossOptions,          option = mod.corpseBossOption }
-                    })
-  do
-    if i ~= 1 then
-      ModConfigMenu.AddSpace(mod.Name, 'Bosses')
-    end
-    ModConfigMenu.AddTitle(mod.Name, 'Bosses', v.title)
-    ModConfigMenu.AddSetting(
-      mod.Name,
-      'Bosses',
-      {
-        Type = ModConfigMenu.OptionType.NUMBER,
-        CurrentSetting = function()
-          return v.option[1]
-        end,
-        Minimum = 1,
-        Maximum = #v.options,
-        Display = function()
-          return '< ' .. v.options[v.option[1]] .. ' >'
-        end,
-        OnChange = function(n)
-          v.option[1] = n
-        end,
-        Info = { 'Select a boss' }
-      }
-    )
-    ModConfigMenu.AddSetting(
-      mod.Name,
-      'Bosses',
-      {
-        Type = ModConfigMenu.OptionType.BOOLEAN,
-        CurrentSetting = function()
-          return false
-        end,
-        Display = function()
-          return not game:IsGreedMode() and 'Go!' or '(Disabled)'
-        end,
-        OnChange = function(b)
-          if not game:IsGreedMode() then
+  if game:IsGreedMode() then
+    ModConfigMenu.AddText(mod.Name, 'Bosses', 'Disabled in greed mode')
+  else
+    for i, v in ipairs({
+                         { title = 'Basement',         stage = '1',  options = mod.basementBossOptions,        option = mod.basementBossOption },
+                         { title = 'Cellar',           stage = '1a', options = mod.cellarBossOptions,          option = mod.cellarBossOption },
+                         { title = 'Burning Basement', stage = '1b', options = mod.burningBasementBossOptions, option = mod.burningBasementBossOption },
+                         { title = 'Downpour',         stage = '1c', options = mod.downpourBossOptions,        option = mod.downpourBossOption },
+                         { title = 'Dross',            stage = '1d', options = mod.drossBossOptions,           option = mod.drossBossOption },
+                         { title = 'Caves',            stage = '3',  options = mod.cavesBossOptions,           option = mod.cavesBossOption },
+                         { title = 'Catacombs',        stage = '3a', options = mod.catacombsBossOptions,       option = mod.catacombsBossOption },
+                         { title = 'Flooded Caves',    stage = '3b', options = mod.floodedCavesBossOptions,    option = mod.floodedCavesBossOption },
+                         { title = 'Mines',            stage = '3c', options = mod.minesBossOptions,           option = mod.minesBossOption },
+                         { title = 'Ashpit',           stage = '3d', options = mod.ashpitBossOptions,          option = mod.ashpitBossOption },
+                         { title = 'Depths',           stage = '5',  options = mod.depthsBossOptions,          option = mod.depthsBossOption },
+                         { title = 'Necropolis',       stage = '5a', options = mod.necropolisBossOptions,      option = mod.necropolisBossOption },
+                         { title = 'Dank Depths',      stage = '5b', options = mod.dankDepthsBossOptions,      option = mod.dankDepthsBossOption },
+                         { title = 'Mausoleum',        stage = '5c', options = mod.mausoleumBossOptions,       option = mod.mausoleumBossOption },
+                         { title = 'Gehenna',          stage = '5d', options = mod.gehennaBossOptions,         option = mod.gehennaBossOption },
+                         { title = 'Womb',             stage = '7',  options = mod.wombBossOptions,            option = mod.wombBossOption },
+                         { title = 'Utero',            stage = '7a', options = mod.uteroBossOptions,           option = mod.uteroBossOption },
+                         { title = 'Scarred Womb',     stage = '7b', options = mod.scarredWombBossOptions,     option = mod.scarredWombBossOption },
+                         { title = 'Corpse',           stage = '7c', options = mod.corpseBossOptions,          option = mod.corpseBossOption }
+                      })
+    do
+      if i ~= 1 then
+        ModConfigMenu.AddSpace(mod.Name, 'Bosses')
+      end
+      ModConfigMenu.AddTitle(mod.Name, 'Bosses', v.title)
+      ModConfigMenu.AddSetting(
+        mod.Name,
+        'Bosses',
+        {
+          Type = ModConfigMenu.OptionType.NUMBER,
+          CurrentSetting = function()
+            return v.option[1]
+          end,
+          Minimum = 1,
+          Maximum = #v.options,
+          Display = function()
+            return '< ' .. v.options[v.option[1]] .. ' >'
+          end,
+          OnChange = function(n)
+            v.option[1] = n
+          end,
+          Info = { 'Select a boss' }
+        }
+      )
+      ModConfigMenu.AddSetting(
+        mod.Name,
+        'Bosses',
+        {
+          Type = ModConfigMenu.OptionType.BOOLEAN,
+          CurrentSetting = function()
+            return false
+          end,
+          Display = function()
+            return 'Go!'
+          end,
+          OnChange = function(b)
             mod:goToBoss(v.options[v.option[1]], v.stage)
             ModConfigMenu.CloseConfigMenu()
-          end
-        end,
-        Info = { 'Go to selected boss' }
-      }
-    )
+          end,
+          Info = { 'Go to selected boss' }
+        }
+      )
+    end
   end
   for _, v in ipairs({
                        { name = 'Speed',      cacheFlag = CacheFlag.CACHE_SPEED,     options = mod.speedOptions,     option = mod.speedOption },
@@ -1295,12 +1267,11 @@ end
 -- end ModConfigMenu --
 
 mod:seedRng()
+mod:AddCallback(ModCallbacks.MC_POST_GAME_STARTED, mod.onGameStart)
 mod:AddCallback(ModCallbacks.MC_PRE_GAME_EXIT, mod.onGameExit)
 mod:AddCallback(ModCallbacks.MC_POST_CURSE_EVAL, mod.onCurseEval)
 mod:AddCallback(ModCallbacks.MC_POST_NEW_LEVEL, mod.onNewLevel)
 mod:AddCallback(ModCallbacks.MC_POST_NEW_ROOM, mod.onNewRoom)
 mod:AddCallback(ModCallbacks.MC_EVALUATE_CACHE, mod.onCacheEval)
 
-if ModConfigMenu then
-  mod:setupModConfigMenu()
-end
+mod:setupModConfigMenu()
