@@ -1259,6 +1259,7 @@ function mod:setupModConfigMenu()
   ModConfigMenu.AddText(mod.Name, 'Misc', function()
     if game:GetFrameCount() >= mod.toggleTextTime + 45 then
       mod.toggleText = ''
+      mod.toggleTextTime = 0
     end
     
     return mod.toggleText
