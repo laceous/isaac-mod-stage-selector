@@ -3,23 +3,23 @@ local game = Game()
 
 mod.rng = RNG()
 
-mod.stage11Options = { 'Basement 1', 'Cellar 1', 'Burning Basement 1', 'Basement XL', 'Cellar XL', 'Burning Basement XL', 'Basement 1 (Ascent)', 'Cellar 1 (Ascent)', 'Burning Basement 1 (Ascent)' }
-mod.stage11AltOptions = { 'Downpour 1', 'Dross 1', 'Downpour XL', 'Dross XL', 'Downpour 1 (Ascent)', 'Dross 1 (Ascent)' }
-mod.stage12Options = { 'Basement 2', 'Cellar 2', 'Burning Basement 2', 'Basement 2 (Ascent)', 'Cellar 2 (Ascent)', 'Burning Basement 2 (Ascent)' }
-mod.stage12AltOptions = { 'Downpour 2', 'Dross 2', 'Downpour 2 (Ascent)', 'Dross 2 (Ascent)' }
-mod.stage21Options = { 'Caves 1', 'Catacombs 1', 'Flooded Caves 1', 'Caves XL', 'Catacombs XL', 'Flooded Caves XL', 'Caves 1 (Ascent)', 'Catacombs 1 (Ascent)', 'Flooded Caves 1 (Ascent)' }
-mod.stage21AltOptions = { 'Mines 1', 'Ashpit 1', 'Mines XL', 'Ashpit XL', 'Mines 1 (Ascent)', 'Ashpit 1 (Ascent)' }
-mod.stage22Options = { 'Caves 2', 'Catacombs 2', 'Flooded Caves 2', 'Caves 2 (Ascent)', 'Catacombs 2 (Ascent)', 'Flooded Caves 2 (Ascent)' }
-mod.stage22AltOptions = { 'Mines 2', 'Ashpit 2', 'Mines 2 (Ascent)', 'Ashpit 2 (Ascent)' }
-mod.stage31Options = { 'Depths 1', 'Necropolis 1', 'Dank Depths 1', 'Depths XL', 'Necropolis XL', 'Dank Depths XL', 'Depths 1 (Ascent)', 'Necropolis 1 (Ascent)', 'Dank Depths 1 (Ascent)' }
-mod.stage31AltOptions = { 'Mausoleum 1', 'Gehenna 1', 'Mausoleum XL', 'Gehenna XL', 'Mausoleum 1 (Ascent)', 'Gehenna 1 (Ascent)' }
-mod.stage32Options = { 'Depths 2', 'Necropolis 2', 'Dank Depths 2', 'Depths 2 (Ascent)', 'Necropolis 2 (Ascent)', 'Dank Depths 2 (Ascent)' }
-mod.stage32AltOptions = { 'Mausoleum 2', 'Gehenna 2', 'Mausoleum 2 (PreAscent)', 'Gehenna 2 (PreAscent)', 'Mausoleum 2 (Ascent)', 'Gehenna 2 (Ascent)' }
-mod.stage41Options = { 'Womb 1', 'Utero 1', 'Scarred Womb 1', 'Womb XL', 'Utero XL', 'Scarred Womb XL' }
-mod.stage41AltOptions = { 'Corpse 1', 'Corpse XL' }
-mod.stage42Options = { 'Womb 2', 'Utero 2', 'Scarred Womb 2' }
-mod.stage42AltOptions = { 'Corpse 2' }
-mod.stage43Options = { 'Blue Womb' }
+mod.stage11Options = { 'Basement I', 'Cellar I', 'Burning Basement I', 'Basement XL', 'Cellar XL', 'Burning Basement XL', 'Basement I (Ascent)', 'Cellar I (Ascent)', 'Burning Basement I (Ascent)' }
+mod.stage11AltOptions = { 'Downpour I', 'Dross I', 'Downpour XL', 'Dross XL', 'Downpour I (Ascent)', 'Dross I (Ascent)' }
+mod.stage12Options = { 'Basement II', 'Cellar II', 'Burning Basement II', 'Basement II (Ascent)', 'Cellar II (Ascent)', 'Burning Basement II (Ascent)' }
+mod.stage12AltOptions = { 'Downpour II', 'Dross II', 'Downpour II (Ascent)', 'Dross II (Ascent)' }
+mod.stage21Options = { 'Caves I', 'Catacombs I', 'Flooded Caves I', 'Caves XL', 'Catacombs XL', 'Flooded Caves XL', 'Caves I (Ascent)', 'Catacombs I (Ascent)', 'Flooded Caves I (Ascent)' }
+mod.stage21AltOptions = { 'Mines I', 'Ashpit I', 'Mines XL', 'Ashpit XL', 'Mines I (Ascent)', 'Ashpit I (Ascent)' }
+mod.stage22Options = { 'Caves II', 'Catacombs II', 'Flooded Caves II', 'Caves II (Ascent)', 'Catacombs II (Ascent)', 'Flooded Caves II (Ascent)' }
+mod.stage22AltOptions = { 'Mines II', 'Ashpit II', 'Mines II (Ascent)', 'Ashpit II (Ascent)' }
+mod.stage31Options = { 'Depths I', 'Necropolis I', 'Dank Depths I', 'Depths XL', 'Necropolis XL', 'Dank Depths XL', 'Depths I (Ascent)', 'Necropolis I (Ascent)', 'Dank Depths I (Ascent)' }
+mod.stage31AltOptions = { 'Mausoleum I', 'Gehenna I', 'Mausoleum XL', 'Gehenna XL', 'Mausoleum I (Ascent)', 'Gehenna I (Ascent)' }
+mod.stage32Options = { 'Depths II', 'Necropolis II', 'Dank Depths II', 'Depths II (Ascent)', 'Necropolis II (Ascent)', 'Dank Depths II (Ascent)' }
+mod.stage32AltOptions = { 'Mausoleum II', 'Gehenna II', 'Mausoleum II (PreAscent)', 'Gehenna II (PreAscent)', 'Mausoleum II (Ascent)', 'Gehenna II (Ascent)' }
+mod.stage41Options = { 'Womb I', 'Utero I', 'Scarred Womb I', 'Womb XL', 'Utero XL', 'Scarred Womb XL' }
+mod.stage41AltOptions = { 'Corpse I', 'Corpse XL' }
+mod.stage42Options = { 'Womb II', 'Utero II', 'Scarred Womb II' }
+mod.stage42AltOptions = { 'Corpse II' }
+mod.stage43Options = { '???' } -- Blue Womb
 mod.stage5Options = { 'Sheol', 'Cathedral' }
 mod.stage6Options = { 'Dark Room', 'Chest' }
 mod.stage7Options = { 'The Void' }
@@ -35,6 +35,8 @@ mod.greedStage4AltOptions = { 'Corpse' }
 mod.greedStage5Options = { 'Sheol', 'Cathedral' }
 mod.greedStage6Options = { 'The Shop' }
 mod.greedStage7Options = { 'Ultra Greed' }
+mod.revelationsCh1Options = { 'Glacier I', 'Glacier II', 'Glacier XL' }
+mod.revelationsCh2Options = { 'Tomb I', 'Tomb II', 'Tomb XL' }
 mod.restartGameOptions = { 'Restart', 'Victory Lap' }
 mod.restartLevelOptions = { 'Reseed' }
 mod.basementBossOptions = { 'Baby Plum', 'Dangle', 'Dingle', 'Famine', 'Gemini', 'Gurglings', 'Larry Jr.', 'Little Horn', 'Monstro', 'Steven', 'The Duke of Flies', 'The Headless Horseman', 'Turdlings' }
@@ -97,6 +99,8 @@ mod.greedStage4AltOption = {1}
 mod.greedStage5Option = {1}
 mod.greedStage6Option = {1}
 mod.greedStage7Option = {1}
+mod.revelationsCh1Option = {1}
+mod.revelationsCh2Option = {1}
 mod.restartGameOption = {1}
 mod.restartLevelOption = {1}
 mod.basementBossOption = {1}
@@ -167,7 +171,7 @@ function mod:onNewLevel()
   if mod.showLevelName then
     local hud = game:GetHUD()
     local level = game:GetLevel()
-    local levelName = level:GetName()
+    local levelName = (StageAPI and StageAPI.Loaded and StageAPI.GetCurrentStageDisplayName()) and StageAPI.GetCurrentStageDisplayName() or level:GetName()
     local curseName = level:GetCurseName()
     
     -- not supported natively by the game
@@ -274,15 +278,15 @@ function mod:goToStage(name)
   local backwardsPathInit = false
   local backwardsPath = false
   
-  if name == 'Basement 1' then
+  if name == 'Basement I' then
     stage = '1'
-  elseif name == 'Cellar 1' then
+  elseif name == 'Cellar I' then
     stage = '1a'
-  elseif name == 'Burning Basement 1' then
+  elseif name == 'Burning Basement I' then
     stage = '1b'
-  elseif name == 'Downpour 1' then
+  elseif name == 'Downpour I' then
     stage = '1c'
-  elseif name == 'Dross 1' then
+  elseif name == 'Dross I' then
     stage = '1d'
   elseif name == 'Basement XL' then
     stage = '1'
@@ -299,65 +303,65 @@ function mod:goToStage(name)
   elseif name == 'Dross XL' then
     stage = '1d'
     forceXL = true
-  elseif name == 'Basement 1 (Ascent)' then
+  elseif name == 'Basement I (Ascent)' then
     stage = '1'
     forceXL = nil
     backwardsPath = true
-  elseif name == 'Cellar 1 (Ascent)' then
+  elseif name == 'Cellar I (Ascent)' then
     stage = '1a'
     forceXL = nil
     backwardsPath = true
-  elseif name == 'Burning Basement 1 (Ascent)' then
+  elseif name == 'Burning Basement I (Ascent)' then
     stage = '1b'
     forceXL = nil
     backwardsPath = true
-  elseif name == 'Downpour 1 (Ascent)' then
+  elseif name == 'Downpour I (Ascent)' then
     stage = '1c'
     forceXL = nil
     backwardsPath = true
-  elseif name == 'Dross 1 (Ascent)'then
+  elseif name == 'Dross I (Ascent)'then
     stage = '1d'
     forceXL = nil
     backwardsPath = true
-  elseif name == 'Basement 2' then
+  elseif name == 'Basement II' then
     stage = '2'
-  elseif name == 'Cellar 2' then
+  elseif name == 'Cellar II' then
     stage = '2a'
-  elseif name == 'Burning Basement 2' then
+  elseif name == 'Burning Basement II' then
     stage = '2b'
-  elseif name == 'Downpour 2' then
+  elseif name == 'Downpour II' then
     stage = '2c'
-  elseif name == 'Dross 2' then
+  elseif name == 'Dross II' then
     stage = '2d'
-  elseif name == 'Basement 2 (Ascent)' then
+  elseif name == 'Basement II (Ascent)' then
     stage = '2'
     forceXL = nil
     backwardsPath = true
-  elseif name == 'Cellar 2 (Ascent)' then
+  elseif name == 'Cellar II (Ascent)' then
     stage = '2a'
     forceXL = nil
     backwardsPath = true
-  elseif name == 'Burning Basement 2 (Ascent)' then
+  elseif name == 'Burning Basement II (Ascent)' then
     stage = '2b'
     forceXL = nil
     backwardsPath = true
-  elseif name == 'Downpour 2 (Ascent)' then
+  elseif name == 'Downpour II (Ascent)' then
     stage = '2c'
     forceXL = nil
     backwardsPath = true
-  elseif name == 'Dross 2 (Ascent)' then
+  elseif name == 'Dross II (Ascent)' then
     stage = '2d'
     forceXL = nil
     backwardsPath = true
-  elseif name == 'Caves 1' then
+  elseif name == 'Caves I' then
     stage = '3'
-  elseif name == 'Catacombs 1' then
+  elseif name == 'Catacombs I' then
     stage = '3a'
-  elseif name == 'Flooded Caves 1' then
+  elseif name == 'Flooded Caves I' then
     stage = '3b'
-  elseif name == 'Mines 1' then
+  elseif name == 'Mines I' then
     stage = '3c'
-  elseif name == 'Ashpit 1' then
+  elseif name == 'Ashpit I' then
     stage = '3d'
   elseif name == 'Caves XL' then
     stage = '3'
@@ -374,65 +378,65 @@ function mod:goToStage(name)
   elseif name == 'Ashpit XL' then
     stage = '3d'
     forceXL = true
-  elseif name == 'Caves 1 (Ascent)' then
+  elseif name == 'Caves I (Ascent)' then
     stage = '3'
     forceXL = nil
     backwardsPath = true
-  elseif name == 'Catacombs 1 (Ascent)' then
+  elseif name == 'Catacombs I (Ascent)' then
     stage = '3a'
     forceXL = nil
     backwardsPath = true
-  elseif name == 'Flooded Caves 1 (Ascent)' then
+  elseif name == 'Flooded Caves I (Ascent)' then
     stage = '3b'
     forceXL = nil
     backwardsPath = true
-  elseif name == 'Mines 1 (Ascent)' then
+  elseif name == 'Mines I (Ascent)' then
     stage = '3c'
     forceXL = nil
     backwardsPath = true
-  elseif name == 'Ashpit 1 (Ascent)' then
+  elseif name == 'Ashpit I (Ascent)' then
     stage = '3d'
     forceXL = nil
     backwardsPath = true
-  elseif name == 'Caves 2' then
+  elseif name == 'Caves II' then
     stage = '4'
-  elseif name == 'Catacombs 2' then
+  elseif name == 'Catacombs II' then
     stage = '4a'
-  elseif name == 'Flooded Caves 2' then
+  elseif name == 'Flooded Caves II' then
     stage = '4b'
-  elseif name == 'Mines 2' then
+  elseif name == 'Mines II' then
     stage = '4c'
-  elseif name == 'Ashpit 2' then
+  elseif name == 'Ashpit II' then
     stage = '4d'
-  elseif name == 'Caves 2 (Ascent)' then
+  elseif name == 'Caves II (Ascent)' then
     stage = '4'
     forceXL = nil
     backwardsPath = true
-  elseif name == 'Catacombs 2 (Ascent)' then
+  elseif name == 'Catacombs II (Ascent)' then
     stage = '4a'
     forceXL = nil
     backwardsPath = true
-  elseif name == 'Flooded Caves 2 (Ascent)' then
+  elseif name == 'Flooded Caves II (Ascent)' then
     stage = '4b'
     forceXL = nil
     backwardsPath = true
-  elseif name == 'Mines 2 (Ascent)' then
+  elseif name == 'Mines II (Ascent)' then
     stage = '4c'
     forceXL = nil
     backwardsPath = true
-  elseif name == 'Ashpit 2 (Ascent)' then
+  elseif name == 'Ashpit II (Ascent)' then
     stage = '4d'
     forceXL = nil
     backwardsPath = true
-  elseif name == 'Depths 1' then
+  elseif name == 'Depths I' then
     stage = '5'
-  elseif name == 'Necropolis 1' then
+  elseif name == 'Necropolis I' then
     stage = '5a'
-  elseif name == 'Dank Depths 1' then
+  elseif name == 'Dank Depths I' then
     stage = '5b'
-  elseif name == 'Mausoleum 1' then
+  elseif name == 'Mausoleum I' then
     stage = '5c'
-  elseif name == 'Gehenna 1' then
+  elseif name == 'Gehenna I' then
     stage = '5d'
   elseif name == 'Depths XL' then
     stage = '5'
@@ -449,69 +453,69 @@ function mod:goToStage(name)
   elseif name == 'Gehenna XL' then
     stage = '5d'
     forceXL = true
-  elseif name == 'Depths 1 (Ascent)' then
+  elseif name == 'Depths I (Ascent)' then
     stage = '5'
     forceXL = nil
     backwardsPath = true
-  elseif name == 'Necropolis 1 (Ascent)' then
+  elseif name == 'Necropolis I (Ascent)' then
     stage = '5a'
     forceXL = nil
     backwardsPath = true
-  elseif name == 'Dank Depths 1 (Ascent)' then
+  elseif name == 'Dank Depths I (Ascent)' then
     stage = '5b'
     forceXL = nil
     backwardsPath = true
-  elseif name == 'Mausoleum 1 (Ascent)' then
+  elseif name == 'Mausoleum I (Ascent)' then
     stage = '5c'
     forceXL = nil
     backwardsPath = true
-  elseif name == 'Gehenna 1 (Ascent)' then
+  elseif name == 'Gehenna I (Ascent)' then
     stage = '5d'
     forceXL = nil
     backwardsPath = true
-  elseif name == 'Depths 2' then
+  elseif name == 'Depths II' then
     stage = '6'
-  elseif name == 'Necropolis 2' then
+  elseif name == 'Necropolis II' then
     stage = '6a'
-  elseif name == 'Dank Depths 2' then
+  elseif name == 'Dank Depths II' then
     stage = '6b'
-  elseif name == 'Mausoleum 2' then
+  elseif name == 'Mausoleum II' then
     stage = '6c'
-  elseif name == 'Gehenna 2' then
+  elseif name == 'Gehenna II' then
     stage = '6d'
-  elseif name == 'Mausoleum 2 (PreAscent)' then
+  elseif name == 'Mausoleum II (PreAscent)' then
     stage = '6c'
     backwardsPathInit = true
-  elseif name == 'Gehenna 2 (PreAscent)' then
+  elseif name == 'Gehenna II (PreAscent)' then
     stage = '6d'
     backwardsPathInit = true
-  elseif name == 'Depths 2 (Ascent)' then
+  elseif name == 'Depths II (Ascent)' then
     stage = '6'
     forceXL = nil
     backwardsPath = true
-  elseif name == 'Necropolis 2 (Ascent)' then
+  elseif name == 'Necropolis II (Ascent)' then
     stage = '6a'
     forceXL = nil
     backwardsPath = true
-  elseif name == 'Dank Depths 2 (Ascent)' then
+  elseif name == 'Dank Depths II (Ascent)' then
     stage = '6b'
     forceXL = nil
     backwardsPath = true
-  elseif name == 'Mausoleum 2 (Ascent)' then
+  elseif name == 'Mausoleum II (Ascent)' then
     stage = '6c'
     forceXL = nil
     backwardsPath = true
-  elseif name == 'Gehenna 2 (Ascent)' then
+  elseif name == 'Gehenna II (Ascent)' then
     stage = '6d'
     forceXL = nil
     backwardsPath = true
-  elseif name == 'Womb 1' then
+  elseif name == 'Womb I' then
     stage = '7'
-  elseif name == 'Utero 1' then
+  elseif name == 'Utero I' then
     stage = '7a'
-  elseif name == 'Scarred Womb 1' then
+  elseif name == 'Scarred Womb I' then
     stage = '7b'
-  elseif name == 'Corpse 1' then
+  elseif name == 'Corpse I' then
     stage = '7c'
   elseif name == 'Womb XL' then
     stage = '7'
@@ -525,15 +529,15 @@ function mod:goToStage(name)
   elseif name == 'Corpse XL' then
     stage = '7c'
     forceXL = true
-  elseif name == 'Womb 2' then
+  elseif name == 'Womb II' then
     stage = '8'
-  elseif name == 'Utero 2' then
+  elseif name == 'Utero II' then
     stage = '8a'
-  elseif name == 'Scarred Womb 2' then
+  elseif name == 'Scarred Womb II' then
     stage = '8b'
-  elseif name == 'Corpse 2' then
+  elseif name == 'Corpse II' then
     stage = '8c'
-  elseif name == 'Blue Womb' then
+  elseif name == '???' then
     stage = '9'
   elseif name == 'Sheol' then
     stage = '10'
@@ -619,6 +623,41 @@ function mod:goToGreedStage(name)
     Isaac.ExecuteCommand('stage ' .. stage)
     Isaac.ExecuteCommand('stage ' .. stage) -- better Alt path in Greed Mode support
     mod:reseed(true)
+  end
+end
+
+function mod:goToModdedStage(name)
+  if not StageAPI or not StageAPI.Loaded or not REVEL then
+    return
+  end
+  
+  local stage
+  local forceXL = false
+  
+  if name == 'Glacier I' then
+    stage = REVEL.STAGE.Glacier
+  elseif name == 'Glacier XL' then
+    stage = REVEL.STAGE.Glacier
+    forceXL = true
+  elseif name == 'Glacier II' then
+    stage = REVEL.STAGE.GlacierTwo
+  elseif name == 'Tomb I' then
+    stage = REVEL.STAGE.Tomb
+  elseif name == 'Tomb XL' then
+    stage = REVEL.STAGE.Tomb
+    forceXL = true
+  elseif name == 'Tomb II' then
+    stage = REVEL.STAGE.TombTwo
+  end
+  
+  if stage then
+    mod.forceXL = forceXL
+    game:SetStateFlag(GameStateFlag.STATE_MAUSOLEUM_HEART_KILLED, false)
+    game:SetStateFlag(GameStateFlag.STATE_BACKWARDS_PATH_INIT, false)
+    game:SetStateFlag(GameStateFlag.STATE_BACKWARDS_PATH, false)
+    
+    mod.showLevelName = true
+    StageAPI.GotoCustomStage(stage, false)
   end
 end
 
@@ -899,7 +938,7 @@ function mod:setupModConfigMenu()
     return
   end
   
-  for _, v in ipairs({ 'Stages', 'Restart', 'Bosses', 'Stats', 'Misc' }) do
+  for _, v in ipairs({ 'Stages', 'Mods', 'Restart', 'Bosses', 'Stats', 'Misc' }) do
     ModConfigMenu.RemoveSubcategory(mod.Name, v)
   end
   local stages
@@ -989,6 +1028,55 @@ function mod:setupModConfigMenu()
       }
     )
   end
+  if not game:IsGreedMode() and StageAPI and StageAPI.Loaded and REVEL then
+    for i, v in ipairs({
+                         { title = 'Revelations Ch.1', options = mod.revelationsCh1Options, option = mod.revelationsCh1Option },
+                         { title = 'Revelations Ch.2', options = mod.revelationsCh2Options, option = mod.revelationsCh2Option }
+                      })
+    do
+      if i ~= 1 then
+        ModConfigMenu.AddSpace(mod.Name, 'Mods')
+      end
+      ModConfigMenu.AddTitle(mod.Name, 'Mods', v.title)
+      ModConfigMenu.AddSetting(
+        mod.Name,
+        'Mods',
+        {
+          Type = ModConfigMenu.OptionType.NUMBER,
+          CurrentSetting = function()
+            return v.option[1]
+          end,
+          Minimum = 1,
+          Maximum = #v.options,
+          Display = function()
+            return '< ' .. v.options[v.option[1]] .. ' >'
+          end,
+          OnChange = function(n)
+            v.option[1] = n
+          end,
+          Info = { 'Select a stage' }
+        }
+      )
+      ModConfigMenu.AddSetting(
+        mod.Name,
+        'Mods',
+        {
+          Type = ModConfigMenu.OptionType.BOOLEAN,
+          CurrentSetting = function()
+            return false
+          end,
+          Display = function()
+            return 'Go!'
+          end,
+          OnChange = function(b)
+            mod:goToModdedStage(v.options[v.option[1]])
+            ModConfigMenu.CloseConfigMenu()
+          end,
+          Info = { 'Go to selected stage' }
+        }
+      )
+    end
+  end
   ModConfigMenu.AddTitle(mod.Name, 'Restart', 'Game')
   ModConfigMenu.AddSetting(
     mod.Name,
@@ -1075,29 +1163,27 @@ function mod:setupModConfigMenu()
       Info = { 'Execute your chosen option' }
     }
   )
-  if game:IsGreedMode() then
-    ModConfigMenu.AddText(mod.Name, 'Bosses', 'Disabled in greed mode')
-  else
+  if not game:IsGreedMode() then
     for i, v in ipairs({
-                         { title = 'Basement',         stage = '1',  options = mod.basementBossOptions,        option = mod.basementBossOption },
-                         { title = 'Cellar',           stage = '1a', options = mod.cellarBossOptions,          option = mod.cellarBossOption },
-                         { title = 'Burning Basement', stage = '1b', options = mod.burningBasementBossOptions, option = mod.burningBasementBossOption },
-                         { title = 'Downpour',         stage = '1c', options = mod.downpourBossOptions,        option = mod.downpourBossOption },
-                         { title = 'Dross',            stage = '1d', options = mod.drossBossOptions,           option = mod.drossBossOption },
-                         { title = 'Caves',            stage = '3',  options = mod.cavesBossOptions,           option = mod.cavesBossOption },
-                         { title = 'Catacombs',        stage = '3a', options = mod.catacombsBossOptions,       option = mod.catacombsBossOption },
-                         { title = 'Flooded Caves',    stage = '3b', options = mod.floodedCavesBossOptions,    option = mod.floodedCavesBossOption },
-                         { title = 'Mines',            stage = '3c', options = mod.minesBossOptions,           option = mod.minesBossOption },
-                         { title = 'Ashpit',           stage = '3d', options = mod.ashpitBossOptions,          option = mod.ashpitBossOption },
-                         { title = 'Depths',           stage = '5',  options = mod.depthsBossOptions,          option = mod.depthsBossOption },
-                         { title = 'Necropolis',       stage = '5a', options = mod.necropolisBossOptions,      option = mod.necropolisBossOption },
-                         { title = 'Dank Depths',      stage = '5b', options = mod.dankDepthsBossOptions,      option = mod.dankDepthsBossOption },
-                         { title = 'Mausoleum',        stage = '5c', options = mod.mausoleumBossOptions,       option = mod.mausoleumBossOption },
-                         { title = 'Gehenna',          stage = '5d', options = mod.gehennaBossOptions,         option = mod.gehennaBossOption },
-                         { title = 'Womb',             stage = '7',  options = mod.wombBossOptions,            option = mod.wombBossOption },
-                         { title = 'Utero',            stage = '7a', options = mod.uteroBossOptions,           option = mod.uteroBossOption },
-                         { title = 'Scarred Womb',     stage = '7b', options = mod.scarredWombBossOptions,     option = mod.scarredWombBossOption },
-                         { title = 'Corpse',           stage = '7c', options = mod.corpseBossOptions,          option = mod.corpseBossOption }
+                         { title = 'Basement I',         stage = '1',  options = mod.basementBossOptions,        option = mod.basementBossOption },
+                         { title = 'Cellar I',           stage = '1a', options = mod.cellarBossOptions,          option = mod.cellarBossOption },
+                         { title = 'Burning Basement I', stage = '1b', options = mod.burningBasementBossOptions, option = mod.burningBasementBossOption },
+                         { title = 'Downpour I',         stage = '1c', options = mod.downpourBossOptions,        option = mod.downpourBossOption },
+                         { title = 'Dross I',            stage = '1d', options = mod.drossBossOptions,           option = mod.drossBossOption },
+                         { title = 'Caves I',            stage = '3',  options = mod.cavesBossOptions,           option = mod.cavesBossOption },
+                         { title = 'Catacombs I',        stage = '3a', options = mod.catacombsBossOptions,       option = mod.catacombsBossOption },
+                         { title = 'Flooded Caves I',    stage = '3b', options = mod.floodedCavesBossOptions,    option = mod.floodedCavesBossOption },
+                         { title = 'Mines I',            stage = '3c', options = mod.minesBossOptions,           option = mod.minesBossOption },
+                         { title = 'Ashpit I',           stage = '3d', options = mod.ashpitBossOptions,          option = mod.ashpitBossOption },
+                         { title = 'Depths I',           stage = '5',  options = mod.depthsBossOptions,          option = mod.depthsBossOption },
+                         { title = 'Necropolis I',       stage = '5a', options = mod.necropolisBossOptions,      option = mod.necropolisBossOption },
+                         { title = 'Dank Depths I',      stage = '5b', options = mod.dankDepthsBossOptions,      option = mod.dankDepthsBossOption },
+                         { title = 'Mausoleum I',        stage = '5c', options = mod.mausoleumBossOptions,       option = mod.mausoleumBossOption },
+                         { title = 'Gehenna I',          stage = '5d', options = mod.gehennaBossOptions,         option = mod.gehennaBossOption },
+                         { title = 'Womb I',             stage = '7',  options = mod.wombBossOptions,            option = mod.wombBossOption },
+                         { title = 'Utero I',            stage = '7a', options = mod.uteroBossOptions,           option = mod.uteroBossOption },
+                         { title = 'Scarred Womb I',     stage = '7b', options = mod.scarredWombBossOptions,     option = mod.scarredWombBossOption },
+                         { title = 'Corpse I',           stage = '7c', options = mod.corpseBossOptions,          option = mod.corpseBossOption }
                       })
     do
       if i ~= 1 then
