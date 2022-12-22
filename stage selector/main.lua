@@ -250,6 +250,53 @@ function mod:onCacheEval(player, cacheFlag)
   end
 end
 
+-- usage: stage-selector basement i
+-- usage: stage-selector-boss monstro
+-- usage: stage-selector-victory-lap
+function mod:onExecuteCmd(cmd, parameters)
+  cmd = string.lower(cmd)
+  
+  if cmd == 'stage-selector' then
+    local changedStage = false
+    
+    if game:IsGreedMode() then
+      changedStage = mod:goToGreedStage(parameters)
+    else
+      changedStage = mod:goToStage(parameters)
+      if not changedStage then
+        changedStage = mod:goToModdedStage(parameters)
+      end
+    end
+    
+    if changedStage then
+      return 'Changed stage.' -- normal "stage" response
+    end
+    
+    return '"' .. parameters .. '" is not a valid stage.'
+  elseif cmd == 'stage-selector-boss' then
+    local changedRoom = false
+    
+    if game:IsGreedMode() then
+      return 'Disabled in greed mode.'
+    else
+      changedRoom = mod:goToBoss(parameters, nil)
+    end
+    
+    if changedRoom then
+      return 'Changed room.' -- normal "goto" response
+    end
+    
+    return '"' .. parameters .. '" is not a valid boss.'
+  elseif cmd == 'stage-selector-victory-lap' then
+    if game:IsGreedMode() then
+      return 'Disabled in greed mode.'
+    else
+      mod:doVictoryLap()
+      return 'Kicked off victory lap #' .. game:GetVictoryLap()
+    end
+  end
+end
+
 function mod:reseed(showLevelName)
   mod.forceXL = mod:isCurseOfTheLabyrinth()
   mod.showLevelName = showLevelName
@@ -278,282 +325,283 @@ function mod:goToStage(name)
   local mausoleumHeartKilled = false
   local backwardsPathInit = false
   local backwardsPath = false
+  name = string.lower(name)
   
-  if name == 'Basement I' then
+  if name == string.lower('Basement I') then
     stage = '1'
-  elseif name == 'Cellar I' then
+  elseif name == string.lower('Cellar I') then
     stage = '1a'
-  elseif name == 'Burning Basement I' then
+  elseif name == string.lower('Burning Basement I') then
     stage = '1b'
-  elseif name == 'Downpour I' then
+  elseif name == string.lower('Downpour I') then
     stage = '1c'
-  elseif name == 'Dross I' then
+  elseif name == string.lower('Dross I') then
     stage = '1d'
-  elseif name == 'Basement XL' then
+  elseif name == string.lower('Basement XL') then
     stage = '1'
     forceXL = true
-  elseif name == 'Cellar XL' then
+  elseif name == string.lower('Cellar XL') then
     stage = '1a'
     forceXL = true
-  elseif name == 'Burning Basement XL' then
+  elseif name == string.lower('Burning Basement XL') then
     stage = '1b'
     forceXL = true
-  elseif name == 'Downpour XL' then
+  elseif name == string.lower('Downpour XL') then
     stage = '1c'
     forceXL = true
-  elseif name == 'Dross XL' then
+  elseif name == string.lower('Dross XL') then
     stage = '1d'
     forceXL = true
-  elseif name == 'Basement I (Ascent)' then
+  elseif name == string.lower('Basement I (Ascent)') then
     stage = '1'
     forceXL = nil
     backwardsPath = true
-  elseif name == 'Cellar I (Ascent)' then
+  elseif name == string.lower('Cellar I (Ascent)') then
     stage = '1a'
     forceXL = nil
     backwardsPath = true
-  elseif name == 'Burning Basement I (Ascent)' then
+  elseif name == string.lower('Burning Basement I (Ascent)') then
     stage = '1b'
     forceXL = nil
     backwardsPath = true
-  elseif name == 'Downpour I (Ascent)' then
+  elseif name == string.lower('Downpour I (Ascent)') then
     stage = '1c'
     forceXL = nil
     backwardsPath = true
-  elseif name == 'Dross I (Ascent)'then
+  elseif name == string.lower('Dross I (Ascent)') then
     stage = '1d'
     forceXL = nil
     backwardsPath = true
-  elseif name == 'Basement II' then
+  elseif name == string.lower('Basement II') then
     stage = '2'
-  elseif name == 'Cellar II' then
+  elseif name == string.lower('Cellar II') then
     stage = '2a'
-  elseif name == 'Burning Basement II' then
+  elseif name == string.lower('Burning Basement II') then
     stage = '2b'
-  elseif name == 'Downpour II' then
+  elseif name == string.lower('Downpour II') then
     stage = '2c'
-  elseif name == 'Dross II' then
+  elseif name == string.lower('Dross II') then
     stage = '2d'
-  elseif name == 'Basement II (Ascent)' then
+  elseif name == string.lower('Basement II (Ascent)') then
     stage = '2'
     forceXL = nil
     backwardsPath = true
-  elseif name == 'Cellar II (Ascent)' then
+  elseif name == string.lower('Cellar II (Ascent)') then
     stage = '2a'
     forceXL = nil
     backwardsPath = true
-  elseif name == 'Burning Basement II (Ascent)' then
+  elseif name == string.lower('Burning Basement II (Ascent)') then
     stage = '2b'
     forceXL = nil
     backwardsPath = true
-  elseif name == 'Downpour II (Ascent)' then
+  elseif name == string.lower('Downpour II (Ascent)') then
     stage = '2c'
     forceXL = nil
     backwardsPath = true
-  elseif name == 'Dross II (Ascent)' then
+  elseif name == string.lower('Dross II (Ascent)') then
     stage = '2d'
     forceXL = nil
     backwardsPath = true
-  elseif name == 'Caves I' then
+  elseif name == string.lower('Caves I') then
     stage = '3'
-  elseif name == 'Catacombs I' then
+  elseif name == string.lower('Catacombs I') then
     stage = '3a'
-  elseif name == 'Flooded Caves I' then
+  elseif name == string.lower('Flooded Caves I') then
     stage = '3b'
-  elseif name == 'Mines I' then
+  elseif name == string.lower('Mines I') then
     stage = '3c'
-  elseif name == 'Ashpit I' then
+  elseif name == string.lower('Ashpit I') then
     stage = '3d'
-  elseif name == 'Caves XL' then
+  elseif name == string.lower('Caves XL') then
     stage = '3'
     forceXL = true
-  elseif name == 'Catacombs XL' then
+  elseif name == string.lower('Catacombs XL') then
     stage = '3a'
     forceXL = true
-  elseif name == 'Flooded Caves XL' then
+  elseif name == string.lower('Flooded Caves XL') then
     stage = '3b'
     forceXL = true
-  elseif name == 'Mines XL' then
+  elseif name == string.lower('Mines XL') then
     stage = '3c'
     forceXL = true
-  elseif name == 'Ashpit XL' then
+  elseif name == string.lower('Ashpit XL') then
     stage = '3d'
     forceXL = true
-  elseif name == 'Caves I (Ascent)' then
+  elseif name == string.lower('Caves I (Ascent)') then
     stage = '3'
     forceXL = nil
     backwardsPath = true
-  elseif name == 'Catacombs I (Ascent)' then
+  elseif name == string.lower('Catacombs I (Ascent)') then
     stage = '3a'
     forceXL = nil
     backwardsPath = true
-  elseif name == 'Flooded Caves I (Ascent)' then
+  elseif name == string.lower('Flooded Caves I (Ascent)') then
     stage = '3b'
     forceXL = nil
     backwardsPath = true
-  elseif name == 'Mines I (Ascent)' then
+  elseif name == string.lower('Mines I (Ascent)') then
     stage = '3c'
     forceXL = nil
     backwardsPath = true
-  elseif name == 'Ashpit I (Ascent)' then
+  elseif name == string.lower('Ashpit I (Ascent)') then
     stage = '3d'
     forceXL = nil
     backwardsPath = true
-  elseif name == 'Caves II' then
+  elseif name == string.lower('Caves II') then
     stage = '4'
-  elseif name == 'Catacombs II' then
+  elseif name == string.lower('Catacombs II') then
     stage = '4a'
-  elseif name == 'Flooded Caves II' then
+  elseif name == string.lower('Flooded Caves II') then
     stage = '4b'
-  elseif name == 'Mines II' then
+  elseif name == string.lower('Mines II') then
     stage = '4c'
-  elseif name == 'Ashpit II' then
+  elseif name == string.lower('Ashpit II') then
     stage = '4d'
-  elseif name == 'Caves II (Ascent)' then
+  elseif name == string.lower('Caves II (Ascent)') then
     stage = '4'
     forceXL = nil
     backwardsPath = true
-  elseif name == 'Catacombs II (Ascent)' then
+  elseif name == string.lower('Catacombs II (Ascent)') then
     stage = '4a'
     forceXL = nil
     backwardsPath = true
-  elseif name == 'Flooded Caves II (Ascent)' then
+  elseif name == string.lower('Flooded Caves II (Ascent)') then
     stage = '4b'
     forceXL = nil
     backwardsPath = true
-  elseif name == 'Mines II (Ascent)' then
+  elseif name == string.lower('Mines II (Ascent)') then
     stage = '4c'
     forceXL = nil
     backwardsPath = true
-  elseif name == 'Ashpit II (Ascent)' then
+  elseif name == string.lower('Ashpit II (Ascent)') then
     stage = '4d'
     forceXL = nil
     backwardsPath = true
-  elseif name == 'Depths I' then
+  elseif name == string.lower('Depths I') then
     stage = '5'
-  elseif name == 'Necropolis I' then
+  elseif name == string.lower('Necropolis I') then
     stage = '5a'
-  elseif name == 'Dank Depths I' then
+  elseif name == string.lower('Dank Depths I') then
     stage = '5b'
-  elseif name == 'Mausoleum I' then
+  elseif name == string.lower('Mausoleum I') then
     stage = '5c'
-  elseif name == 'Gehenna I' then
+  elseif name == string.lower('Gehenna I') then
     stage = '5d'
-  elseif name == 'Depths XL' then
+  elseif name == string.lower('Depths XL') then
     stage = '5'
     forceXL = true
-  elseif name == 'Necropolis XL' then
+  elseif name == string.lower('Necropolis XL') then
     stage = '5a'
     forceXL = true
-  elseif name == 'Dank Depths XL' then
+  elseif name == string.lower('Dank Depths XL') then
     stage = '5b'
     forceXL = true
-  elseif name == 'Mausoleum XL' then
+  elseif name == string.lower('Mausoleum XL') then
     stage = '5c'
     forceXL = true
-  elseif name == 'Gehenna XL' then
+  elseif name == string.lower('Gehenna XL') then
     stage = '5d'
     forceXL = true
-  elseif name == 'Depths I (Ascent)' then
+  elseif name == string.lower('Depths I (Ascent)') then
     stage = '5'
     forceXL = nil
     backwardsPath = true
-  elseif name == 'Necropolis I (Ascent)' then
+  elseif name == string.lower('Necropolis I (Ascent)') then
     stage = '5a'
     forceXL = nil
     backwardsPath = true
-  elseif name == 'Dank Depths I (Ascent)' then
+  elseif name == string.lower('Dank Depths I (Ascent)') then
     stage = '5b'
     forceXL = nil
     backwardsPath = true
-  elseif name == 'Mausoleum I (Ascent)' then
+  elseif name == string.lower('Mausoleum I (Ascent)') then
     stage = '5c'
     forceXL = nil
     backwardsPath = true
-  elseif name == 'Gehenna I (Ascent)' then
+  elseif name == string.lower('Gehenna I (Ascent)') then
     stage = '5d'
     forceXL = nil
     backwardsPath = true
-  elseif name == 'Depths II' then
+  elseif name == string.lower('Depths II') then
     stage = '6'
-  elseif name == 'Necropolis II' then
+  elseif name == string.lower('Necropolis II') then
     stage = '6a'
-  elseif name == 'Dank Depths II' then
+  elseif name == string.lower('Dank Depths II') then
     stage = '6b'
-  elseif name == 'Mausoleum II' then
+  elseif name == string.lower('Mausoleum II') then
     stage = '6c'
-  elseif name == 'Gehenna II' then
+  elseif name == string.lower('Gehenna II') then
     stage = '6d'
-  elseif name == 'Mausoleum II (PreAscent)' then
+  elseif name == string.lower('Mausoleum II (PreAscent)') then
     stage = '6c'
     backwardsPathInit = true
-  elseif name == 'Gehenna II (PreAscent)' then
+  elseif name == string.lower('Gehenna II (PreAscent)') then
     stage = '6d'
     backwardsPathInit = true
-  elseif name == 'Depths II (Ascent)' then
+  elseif name == string.lower('Depths II (Ascent)') then
     stage = '6'
     forceXL = nil
     backwardsPath = true
-  elseif name == 'Necropolis II (Ascent)' then
+  elseif name == string.lower('Necropolis II (Ascent)') then
     stage = '6a'
     forceXL = nil
     backwardsPath = true
-  elseif name == 'Dank Depths II (Ascent)' then
+  elseif name == string.lower('Dank Depths II (Ascent)') then
     stage = '6b'
     forceXL = nil
     backwardsPath = true
-  elseif name == 'Mausoleum II (Ascent)' then
+  elseif name == string.lower('Mausoleum II (Ascent)') then
     stage = '6c'
     forceXL = nil
     backwardsPath = true
-  elseif name == 'Gehenna II (Ascent)' then
+  elseif name == string.lower('Gehenna II (Ascent)') then
     stage = '6d'
     forceXL = nil
     backwardsPath = true
-  elseif name == 'Womb I' then
+  elseif name == string.lower('Womb I') then
     stage = '7'
-  elseif name == 'Utero I' then
+  elseif name == string.lower('Utero I') then
     stage = '7a'
-  elseif name == 'Scarred Womb I' then
+  elseif name == string.lower('Scarred Womb I') then
     stage = '7b'
-  elseif name == 'Corpse I' then
+  elseif name == string.lower('Corpse I') then
     stage = '7c'
-  elseif name == 'Womb XL' then
+  elseif name == string.lower('Womb XL') then
     stage = '7'
     forceXL = true
-  elseif name == 'Utero XL' then
+  elseif name == string.lower('Utero XL') then
     stage = '7a'
     forceXL = true
-  elseif name == 'Scarred Womb XL' then
+  elseif name == string.lower('Scarred Womb XL') then
     stage = '7b'
     forceXL = true
-  elseif name == 'Corpse XL' then
+  elseif name == string.lower('Corpse XL') then
     stage = '7c'
     forceXL = true
-  elseif name == 'Womb II' then
+  elseif name == string.lower('Womb II') then
     stage = '8'
-  elseif name == 'Utero II' then
+  elseif name == string.lower('Utero II') then
     stage = '8a'
-  elseif name == 'Scarred Womb II' then
+  elseif name == string.lower('Scarred Womb II') then
     stage = '8b'
-  elseif name == 'Corpse II' then
+  elseif name == string.lower('Corpse II') then
     stage = '8c'
-  elseif name == '???' then
+  elseif name == string.lower('???') then
     stage = '9'
-  elseif name == 'Sheol' then
+  elseif name == string.lower('Sheol') then
     stage = '10'
-  elseif name == 'Cathedral' then
+  elseif name == string.lower('Cathedral') then
     stage = '10a'
-  elseif name == 'Dark Room' then
+  elseif name == string.lower('Dark Room') then
     stage = '11'
-  elseif name == 'Chest' then
+  elseif name == string.lower('Chest') then
     stage = '11a'
-  elseif name == 'The Void' then
+  elseif name == string.lower('The Void') then
     stage = '12'
-  elseif name == 'Home' then
+  elseif name == string.lower('Home') then
     stage = '13'
     forceXL = nil
-  elseif name == 'Home (Alt)' then
+  elseif name == string.lower('Home (Alt)') then
     stage = '13a'
     forceXL = nil
   end
@@ -566,57 +614,62 @@ function mod:goToStage(name)
     
     Isaac.ExecuteCommand('stage ' .. stage)
     mod:reseed(true)
+    
+    return true
   end
+  
+  return false
 end
 
 function mod:goToGreedStage(name)
   local stage
+  name = string.lower(name)
   
-  if name == 'Basement' then
+  if name == string.lower('Basement') then
     stage = '1'
-  elseif name == 'Cellar' then
+  elseif name == string.lower('Cellar') then
     stage = '1a'
-  elseif name == 'Burning Basement' then
+  elseif name == string.lower('Burning Basement') then
     stage = '1b'
-  elseif name == 'Downpour' then
+  elseif name == string.lower('Downpour') then
     stage = '1c' -- doesn't show in the debug console, but works
-  elseif name == 'Dross' then
+  elseif name == string.lower('Dross') then
     stage = '1d' -- doesn't show in the debug console, but works
-  elseif name == 'Caves' then
+  elseif name == string.lower('Caves') then
     stage = '2'
-  elseif name == 'Catacombs' then
+  elseif name == string.lower('Catacombs') then
     stage = '2a'
-  elseif name == 'Flooded Caves' then
+  elseif name == string.lower('Flooded Caves') then
     stage = '2b'
-  elseif name == 'Mines' then
+  elseif name == string.lower('Mines') then
     stage = '2c' -- doesn't show in the debug console, but works
-  elseif name == 'Asphit' then
+  elseif name == string.lower('Asphit') then
     stage = '2d' -- doesn't show in the debug console, but works
-  elseif name == 'Depths' then
+  elseif name == string.lower('Depths') then
     stage = '3'
-  elseif name == 'Necropolis' then
+  elseif name == string.lower('Necropolis') then
     stage = '3a'
-  elseif name == 'Dank Depths' then
+  elseif name == string.lower('Dank Depths') then
     stage = '3b'
-  elseif name == 'Mausoleum' then
+  elseif name == string.lower('Mausoleum') then
     stage = '3c' -- doesn't show in the debug console, but works
-  elseif name == 'Gehenna' then
+  elseif name == string.lower('Gehenna') then
     stage = '3d' -- doesn't show in the debug console, but works
-  elseif name == 'Womb' then
+  elseif name == string.lower('Womb') then
     stage = '4'
-  elseif name == 'Utero' then
+  elseif name == string.lower('Utero') then
     stage = '4a'
-  elseif name == 'Scarred Womb' then
+  elseif name == string.lower('Scarred Womb') then
     stage = '4b'
-  elseif name == 'Corpse' then
+  elseif name == string.lower('Corpse') then
     stage = '4c' -- doesn't show in the debug console, but works
-  elseif name == 'Sheol' then
+  elseif name == string.lower('Sheol') then
     stage = '5' -- the debug console lists 5a and 5b, but they're also sheol
-  elseif name == 'Cathedral' then
+  elseif name == string.lower('Cathedral') then
     stage = '5a' -- requires The Cathedral in Greed Mode, otherwise falls back to Sheol
-  elseif name == 'The Shop' then
+  elseif name == string.lower('The Shop') then
     stage = '6'
-  elseif name == 'Ultra Greed' then
+  elseif name == string.lower('Ultra Greed') then
     stage = '7'
   end
   
@@ -624,30 +677,35 @@ function mod:goToGreedStage(name)
     Isaac.ExecuteCommand('stage ' .. stage)
     Isaac.ExecuteCommand('stage ' .. stage) -- better Alt path in Greed Mode support
     mod:reseed(true)
+    
+    return true
   end
+  
+  return false
 end
 
 function mod:goToModdedStage(name)
   if not StageAPI or not StageAPI.Loaded or not REVEL then
-    return
+    return false
   end
   
   local stage
   local forceXL = false
+  name = string.lower(name)
   
-  if name == 'Glacier I' then
+  if name == string.lower('Glacier I') then
     stage = REVEL.STAGE.Glacier
-  elseif name == 'Glacier XL' then
+  elseif name == string.lower('Glacier XL') then
     stage = REVEL.STAGE.Glacier
     forceXL = true
-  elseif name == 'Glacier II' then
+  elseif name == string.lower('Glacier II') then
     stage = REVEL.STAGE.GlacierTwo
-  elseif name == 'Tomb I' then
+  elseif name == string.lower('Tomb I') then
     stage = REVEL.STAGE.Tomb
-  elseif name == 'Tomb XL' then
+  elseif name == string.lower('Tomb XL') then
     stage = REVEL.STAGE.Tomb
     forceXL = true
-  elseif name == 'Tomb II' then
+  elseif name == string.lower('Tomb II') then
     stage = REVEL.STAGE.TombTwo
   end
   
@@ -659,198 +717,209 @@ function mod:goToModdedStage(name)
     
     mod.showLevelName = true
     StageAPI.GotoCustomStage(stage, false)
+    
+    return true
   end
+  
+  return false
 end
 
 function mod:goToBoss(name, stage)
   local bossRooms
+  name = string.lower(name)
   
-  if name == 'The Duke of Flies' then
+  if name == string.lower('The Duke of Flies') then
     bossRooms = { '2010', '2011', '2012', '2013', '2014', '2015', '2016', '2017', '2018' }
-  elseif name == 'Famine' then
+  elseif name == string.lower('Famine') then
     bossRooms = { '4010', '4012', '4013', '4014' }
-  elseif name == 'Little Horn' then
+  elseif name == string.lower('Little Horn') then
     bossRooms = { '1088', '1089', '1095', '1096' }
-  elseif name == 'Baby Plum' then
+  elseif name == string.lower('Baby Plum') then
     bossRooms = { '5160', '5161', '5162', '5163', '5164', '5165', }
-  elseif name == 'Monstro' then
+  elseif name == string.lower('Monstro') then
     bossRooms = { '1010', '1011', '1012', '1013', '1014', '1015', '1016', '1017', '1018', '1037', '1038', '1039', '1045', '1123' }
-  elseif name == 'Gemini' then
+  elseif name == string.lower('Gemini') then
     bossRooms = { '2050', '2051', '2052', '2053' }
-  elseif name == 'Steven' then
+  elseif name == string.lower('Steven') then
     bossRooms = { '2070', '2071', '2072', '2073' }
-  elseif name == 'Larry Jr.' then
+  elseif name == string.lower('Larry Jr.') then
     bossRooms = { '1020', '1021', '1022', '1023', '1024', '1025', '1026', '1027', '1028', '1046', '1047', '1048', '1049', '1124', '1125' }
-  elseif name == 'Dingle' then
+  elseif name == string.lower('Dingle') then
     bossRooms = { '5020', '5021', '5022', '5023', '5024', '5025' }
-  elseif name == 'Dangle' then
+  elseif name == string.lower('Dangle') then
     bossRooms = { '1117', '1118', '1119', '1120', '1121' }
-  elseif name == 'Gurglings' then
+  elseif name == string.lower('Gurglings') then
     bossRooms = { '5140', '5141', '5142', '5143', '5144' }
-  elseif name == 'Turdlings' then
+  elseif name == string.lower('Turdlings') then
     bossRooms = { '5146', '5147', '5148', '5149', '5150', '5151' }
-  elseif name == 'The Headless Horseman' then
+  elseif name == string.lower('The Headless Horseman') then
     bossRooms = { '4050', '4051', '4052' }
-  elseif name == 'Blighted Ovum' then
+  elseif name == string.lower('Blighted Ovum') then
     bossRooms = { '3320', '3321', '3322', '3323' }
-  elseif name == 'Widow' then
+  elseif name == string.lower('Widow') then
     bossRooms = { '3340', '3341', '3342', '3343', '3344', '3345' }
-  elseif name == 'Pin' then
+  elseif name == string.lower('Pin') then
     bossRooms = { '3370', '3371', '3372', '3373', '3374', '3375', '3376', '3377', '3378' }
-  elseif name == 'The Haunt' then
+  elseif name == string.lower('The Haunt') then
     bossRooms = { '5010', '5011', '5012', '5013', '5014' }
-  elseif name == 'Rag Man' then
+  elseif name == string.lower('Rag Man') then
     bossRooms = { '1019', '1029', '1035', '1036', '1128', '1129' }
-  elseif name == 'Wormwood' then
+  elseif name == string.lower('Wormwood') then
     bossRooms = { '5180', '5181', '5182', '5183', '5184' }
-  elseif name == 'Lil Blub' then
+  elseif name == string.lower('Lil Blub') then
     bossRooms = { '5170', '5171', '5172', '5173', '5174', '5175' }
-  elseif name == 'The Rainmaker' then
+  elseif name == string.lower('The Rainmaker') then
     bossRooms = { '5230', '5231', '5232' }
-  elseif name == 'Min-Min' then
+  elseif name == string.lower('Min-Min') then
     bossRooms = { '5280', '5281', '5282' }
-  elseif name == 'Clog' then
+  elseif name == string.lower('Clog)') then
     bossRooms = { '5190', '5191', '5192', '5193', '5194' }
-  elseif name == 'Colostomia' then
+  elseif name == string.lower('Colostomia') then
     bossRooms = { '5330' }
-  elseif name == 'Turdlet' then
+  elseif name == string.lower('Turdlet') then
     bossRooms = { '5320', '5321', '5322' }
-  elseif name == 'Peep' then
+  elseif name == string.lower('Peep') then
     bossRooms = { '2020', '2021', '2022', '2023', '2024', '2025' }
-  elseif name == 'Gurdy Jr.' then
+  elseif name == string.lower('Gurdy Jr.') then
     bossRooms = { '3280', '3281', '3282', '3283' }
-  elseif name == 'Pestilence' then
+  elseif name == string.lower('Pestilence') then
     bossRooms = { '4020', '4021', '4022' }
-  elseif name == 'Rag Mega' then
+  elseif name == string.lower('Rag Mega') then
     bossRooms = { '3398', '3399', '3404', '3405' }
-  elseif name == 'Big Horn' then
+  elseif name == string.lower('Big Horn') then
     bossRooms = { '3394', '3395', '3396', '3397' }
-  elseif name == 'Bumbino' then
+  elseif name == string.lower('Bumbino') then
     bossRooms = { '5270', '5271', '5272', '5273', '5274' }
-  elseif name == 'Bumbino' then
+  elseif name == string.lower('Bumbino') then
     bossRooms = { '5270', '5271', '5272', '5273', '5274' }
-  elseif name == 'Chub' then
+  elseif name == string.lower('Chub') then
     bossRooms = { '1030', '1031', '1032', '1033', '1034', '1055', '1056', '1057', '1126', '1127' }
-  elseif name == 'C.H.A.D.' then
+  elseif name == string.lower('C.H.A.D.') then
     bossRooms = { '1100', '1101', '1102', '1103', '1104' }
-  elseif name == 'Gurdy' then
+  elseif name == string.lower('Gurdy') then
     bossRooms = { '1040', '1041', '1042', '1043', '1044', '1058', '1059', '1065', '1066', '1130', '1131' }
-  elseif name == 'Fistula' then
+  elseif name == string.lower('Fistula') then
     bossRooms = { '2060', '2061', '2062', '2063', '2064' }
-  elseif name == 'Mega Maw' then
+  elseif name == string.lower('Mega Maw') then
     bossRooms = { '5030', '5031', '5032', '5033', '5034' }
-  elseif name == 'Mega Fatty' then
+  elseif name == string.lower('Mega Fatty') then
     bossRooms = { '5050', '5051', '5052', '5054' }
-  elseif name == 'The Stain' then
+  elseif name == string.lower('The Stain') then
     bossRooms = { '1106', '1107', '1108', '1109', '1115' }
-  elseif name == 'Carrion Queen' then
+  elseif name == string.lower('Carrion Queen') then
     bossRooms = { '3270', '3271', '3272', '3273' }
-  elseif name == 'The Hollow' then
+  elseif name == string.lower('The Hollow') then
     bossRooms = { '3260', '3261', '3262', '3263', '3264', '3265', '3266' }
-  elseif name == 'The Husk' then
+  elseif name == string.lower('The Husk') then
     bossRooms = { '3290', '3291', '3292', '3293', '3294', '3295' }
-  elseif name == 'The Wretched' then
+  elseif name == string.lower('The Wretched') then
     bossRooms = { '3360', '3361', '3362', '3363' }
-  elseif name == 'Polycephalus' then
+  elseif name == string.lower('Polycephalus') then
     bossRooms = { '5100', '5101', '5102', '5103', '5104', '5106' }
-  elseif name == 'Dark One' then
+  elseif name == string.lower('Dark One') then
     bossRooms = { '5080', '5081', '5082', '5083', '5084' }
-  elseif name == 'The Frail' then
+  elseif name == string.lower('The Frail') then
     bossRooms = { '3384', '3385', '3386', '3387', '3388', '3389' }
-  elseif name == 'The Forsaken' then
+  elseif name == string.lower('The Forsaken') then
     bossRooms = { '1079', '1085', '1086', '1087' }
-  elseif name == 'Great Gideon' then
+  elseif name == string.lower('Great Gideon') then
     bossRooms = { '5210', '5211', '5212', '5213', '5214' }
-  elseif name == 'Great Gideon' then
+  elseif name == string.lower('Great Gideon') then
     bossRooms = { '5210', '5211', '5212', '5213', '5214' }
-  elseif name == 'Tuff Twins' then
+  elseif name == string.lower('Tuff Twins') then
     bossRooms = { '5200', '5201', '5202', '5203', '5204', '5205', '5206', '5207' }
-  elseif name == 'Reap Creep' then
+  elseif name == string.lower('Reap Creep') then
     bossRooms = { '5250', '5251', '5252', '5253', '5254', '5256' }
-  elseif name == 'Hornfel' then
+  elseif name == string.lower('Hornfel') then
     bossRooms = { '5220', '5221', '5222', '5224', '5225', '5226', '5228', '5229' }
-  elseif name == 'The Shell' then
+  elseif name == string.lower('The Shell') then
     bossRooms = { '5310', '5311', '5312', '5313' }
-  elseif name == 'The Pile' then
+  elseif name == string.lower('The Pile') then
     bossRooms = { '5240', '5241', '5242', '5244' }
-  elseif name == 'Singe' then
+  elseif name == string.lower('Singe') then
     bossRooms = { '5260', '5261', '5262', '5263', '5264' }
-  elseif name == 'Clutch' then
+  elseif name == string.lower('Clutch') then
     bossRooms = { '6020', '6021', '6022' }
-  elseif name == 'The Fallen' then
+  elseif name == string.lower('The Fallen') then
     bossRooms = { '3500', '3501', '3502' }
-  elseif name == 'Loki' then
+  elseif name == string.lower('Loki') then
     bossRooms = { '2030', '2031', '2032', '2033' }
-  elseif name == 'War' then
+  elseif name == string.lower('War') then
     bossRooms = { '4030', '4034', '4035' }
-  elseif name == 'Brownie' then
+  elseif name == string.lower('Brownie') then
     bossRooms = { '1097', '1098', '1099', '1105', '1116' }
-  elseif name == 'Sisters Vis' then
+  elseif name == string.lower('Sisters Vis') then
     bossRooms = { '3406', '3407', '3408', '3409' }
-  elseif name == 'Monstro II' then
+  elseif name == string.lower('Monstro II') then
     bossRooms = { '1050', '1051', '1052', '1053', '1054', '1067', '1068', '1069', '1076' }
-  elseif name == 'Gish' then
+  elseif name == string.lower('Gish') then
     bossRooms = { '1110', '1111', '1112', '1113', '1114' }
-  elseif name == 'The Cage' then
+  elseif name == string.lower('The Cage') then
     bossRooms = { '5060', '5061', '5062', '5063', '5064' }
-  elseif name == 'The Gate' then
+  elseif name == string.lower('The Gate') then
     bossRooms = { '5040', '5041', '5042', '5044', '5045' }
-  elseif name == 'The Bloat' then
+  elseif name == string.lower('The Bloat') then
     bossRooms = { '3300', '3301', '3302', '3303' }
-  elseif name == 'Mask of Infamy' then
+  elseif name == string.lower('Mask of Infamy') then
     bossRooms = { '3350', '3351', '3352', '3353' }
-  elseif name == 'The Adversary' then
+  elseif name == string.lower('The Adversary') then
     bossRooms = { '5090', '5091', '5092', '5093', '5094' }
-  elseif name == 'The Siren' then
+  elseif name == string.lower('The Siren') then
     bossRooms = { '5370', '5371', '5372' }
-  elseif name == 'The Heretic' then
+  elseif name == string.lower('The Heretic') then
     bossRooms = { '5290', '5291', '5292', '5293' }
-  elseif name == 'The Visage' then
+  elseif name == string.lower('The Visage') then
     bossRooms = { '5300', '5301' }
-  elseif name == 'Horny Boys' then
+  elseif name == string.lower('Horny Boys') then
     bossRooms = { '6010', '6011', '6012' }
-  elseif name == 'Lokii' then
+  elseif name == string.lower('Lokii') then
     bossRooms = { '3310', '3311', '3312', '3313' }
-  elseif name == 'Death' then
+  elseif name == string.lower('Death') then
     bossRooms = { '4040', '4041', '4042' }
-  elseif name == 'Conquest' then
+  elseif name == string.lower('Conquest') then
     bossRooms = { '4031', '4032', '4033' }
-  elseif name == 'Scolex' then
+  elseif name == string.lower('Scolex') then
     bossRooms = { '1070', '1071', '1072', '1073', '1074', '1075' }
-  elseif name == 'Blastocyst' then
+  elseif name == string.lower('Blastocyst') then
     bossRooms = { '2040', '2041', '2042', '2043' }
-  elseif name == 'Mama Gurdy' then
+  elseif name == string.lower('Mama Gurdy') then
     bossRooms = { '5070', '5071', '5072' }
-  elseif name == 'Mr. Fred' then
+  elseif name == string.lower('Mr. Fred') then
     bossRooms = { '5110', '5111', '5113' }
-  elseif name == 'Teratoma' then
+  elseif name == string.lower('Teratoma') then
     bossRooms = { '3330', '3331', '3332', '3333' }
-  elseif name == 'Daddy Long Legs' then
+  elseif name == string.lower('Daddy Long Legs') then
     bossRooms = { '3400', '3401', '3402', '3403' }
-  elseif name == 'Triachnid' then
+  elseif name == string.lower('Triachnid') then
     bossRooms = { '3410', '3411', '3412', '3413' }
-  elseif name == 'The Matriarch' then
+  elseif name == string.lower('The Matriarch') then
     bossRooms = { '5152', '5153', '5154', '5155' }
-  elseif name == 'The Scourge' then
+  elseif name == string.lower('The Scourge') then
     bossRooms = { '5360', '5361', '5362' }
-  elseif name == 'Chimera' then
+  elseif name == string.lower('Chimera') then
     bossRooms = { '5350', '5351', '5352' }
-  elseif name == 'Rotgut' then
+  elseif name == string.lower('Rotgut') then
     bossRooms = { '5340' }
   end
   
-  if stage and bossRooms then
+  if bossRooms then
+    if stage then
+      mod.forceXL = false
+      game:SetStateFlag(GameStateFlag.STATE_MAUSOLEUM_HEART_KILLED, false)
+      game:SetStateFlag(GameStateFlag.STATE_BACKWARDS_PATH_INIT, false)
+      game:SetStateFlag(GameStateFlag.STATE_BACKWARDS_PATH, false)
+      
+      Isaac.ExecuteCommand('stage ' .. stage)
+      mod:reseed(false)
+    end
+    
     local bossRoom = bossRooms[mod.rng:RandomInt(#bossRooms) + 1]
-    
-    mod.forceXL = false
-    game:SetStateFlag(GameStateFlag.STATE_MAUSOLEUM_HEART_KILLED, false)
-    game:SetStateFlag(GameStateFlag.STATE_BACKWARDS_PATH_INIT, false)
-    game:SetStateFlag(GameStateFlag.STATE_BACKWARDS_PATH, false)
-    
-    Isaac.ExecuteCommand('stage ' .. stage)
-    mod:reseed(false)
     Isaac.ExecuteCommand('goto s.boss.' .. bossRoom)
+    
+    return true
   end
+  
+  return false
 end
 
 function mod:giveItem(name)
@@ -1361,5 +1430,6 @@ mod:AddCallback(ModCallbacks.MC_POST_CURSE_EVAL, mod.onCurseEval)
 mod:AddCallback(ModCallbacks.MC_POST_NEW_LEVEL, mod.onNewLevel)
 mod:AddCallback(ModCallbacks.MC_POST_NEW_ROOM, mod.onNewRoom)
 mod:AddCallback(ModCallbacks.MC_EVALUATE_CACHE, mod.onCacheEval)
+mod:AddCallback(ModCallbacks.MC_EXECUTE_CMD, mod.onExecuteCmd)
 
 mod:setupModConfigMenu()
