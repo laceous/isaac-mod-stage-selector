@@ -57,7 +57,7 @@ There's 4 challenges included that you can use as a playground. All of them end 
 
 This mod is enabled for other challenges too, but can likely break them.
 
-There's an option to practice against individual bosses from each level. This works by moving you to the appropriate X-1 stage and using the goto command which takes you to a boss room that's off the map. Story bosses aren't included here since it's easy enough to trigger them by going to the appropriate level. Be aware that the goto command can cause a crash if you try to quit and continue. You can generally work around this by going down to the next level (or reseeding) before quitting your run.
+There's an option to practice against individual bosses from each level. This works by moving you to the appropriate X-1 stage and using the goto command which takes you to a boss room that's off the map. Story bosses aren't included here since it's easy enough to trigger them by going to the appropriate level.
 
 Debug console:
 [list]
@@ -114,7 +114,7 @@ lua Game():SetStateFlag(GameStateFlag.STATE_MAUSOLEUM_HEART_KILLED, false)
 lua Game():NextVictoryLap()
 [/code]
 
-Most other things this mod does are already exposed in the debug console (restart, reseed, giveitem, debug, etc). To change your stats, check out the [url=https://steamcommunity.com/sharedfiles/filedetails/?id=1889162991]Stat Change Commands[/url] mod or [url=https://steamcommunity.com/sharedfiles/filedetails/?id=2666310447]Utility Commands[/url] mod.
+Most other things this mod does are already exposed in the debug console (restart, reseed, giveitem, spawn, debug, etc). To change your stats, check out the [url=https://steamcommunity.com/sharedfiles/filedetails/?id=1889162991]Stat Change Commands[/url] mod or [url=https://steamcommunity.com/sharedfiles/filedetails/?id=2666310447]Utility Commands[/url] mod.
 
 Mod support:
 [list]
@@ -123,7 +123,7 @@ Mod support:
     [*][url=https://steamcommunity.com/sharedfiles/filedetails/?id=2813909722]The Cathedral in Greed Mode[/url]: Required if you want to visit the Cathedral in Greed mode (otherwise you'll fall back to Sheol).
     [*][url=https://steamcommunity.com/sharedfiles/filedetails/?id=2880387531]Revelations Ch. 2[/url]: Includes the Glacier and Tomb stages.
 [/list]</description>
-    <version>1.19</version>
+    <version>1.20</version>
     <visibility>Public</visibility>
     <tag id="Lua"/>
     <tag id="Floors"/>
