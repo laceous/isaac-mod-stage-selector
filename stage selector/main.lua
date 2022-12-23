@@ -252,6 +252,7 @@ end
 
 -- usage: stage-selector basement i
 -- usage: stage-selector-boss monstro
+-- usage: stage-selector-reseed
 -- usage: stage-selector-victory-lap
 function mod:onExecuteCmd(cmd, parameters)
   cmd = string.lower(cmd)
@@ -287,6 +288,9 @@ function mod:onExecuteCmd(cmd, parameters)
     end
     
     return '"' .. parameters .. '" is not a valid boss.'
+  elseif cmd == 'stage-selector-reseed' then
+    mod:reseed(true)
+    return 'Changed stage.' -- normal "reseed" response
   elseif cmd == 'stage-selector-victory-lap' then
     if game:IsGreedMode() then
       return 'Disabled in greed mode.'

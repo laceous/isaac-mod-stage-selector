@@ -61,7 +61,7 @@ There's an option to practice against individual bosses from each level. This wo
 
 Debug console:
 [list]
-    [*]This mod adds 3 new console commands.
+    [*]This mod adds 4 new console commands.
     [*]stage-selector
     [list]
         [*]Usage: stage-selector stage-name-as-seen-in-mcm
@@ -72,6 +72,12 @@ Debug console:
         [*]Usage: stage-selector-boss boss-name-as-seen-in-mcm
         [*]This can be used as an alternative to the built-in goto command.
         [*]This doesn't work in greed mode.
+    [/list]
+    [*]stage-selector-reseed
+    [list]
+        [*]Usage: stage-selector-reseed
+        [*]This can be used as an extension to the built-in reseed command.
+        [*]It does a few extra things like keeping XL state and resetting certain game state.
     [/list]
     [*]stage-selector-victory-lap
     [list]
@@ -90,6 +96,7 @@ or
 lua Game():SetStateFlag(GameStateFlag.STATE_BACKWARDS_PATH, true)
 stage 2
 reseed
+lua Game():GetHUD():ShowItemText(Game():GetLevel():GetName(), nil, false)
 [/code]
 
 [code]
@@ -98,10 +105,23 @@ stage-selector-boss mega fatty
 [/code]
 or
 [code]
+lua Game():SetStateFlag(GameStateFlag.STATE_BACKWARDS_PATH, false)
 stage 3
 reseed
 goto s.boss.5050
 [/code]
+(Also, force XL off via callback because it's Caves I and not Caves XL. You can't disable curses set by the game with the built-in curse command.)
+
+[code]
+stage-selector-reseed
+[/code]
+or
+[code]
+lua Game():SetStateFlag(GameStateFlag.STATE_MAUSOLEUM_HEART_KILLED, false)
+reseed
+lua Game():GetHUD():ShowItemText(Game():GetLevel():GetName(), nil, false)
+[/code]
+(Also, force XL on or off via callback which you can kind of mimic with the curse command, but it's not ideal for Curse of the Labyrinth.)
 
 [code]
 stage-selector-victory-lap
@@ -114,7 +134,7 @@ lua Game():SetStateFlag(GameStateFlag.STATE_MAUSOLEUM_HEART_KILLED, false)
 lua Game():NextVictoryLap()
 [/code]
 
-Most other things this mod does are already exposed in the debug console (restart, reseed, giveitem, spawn, debug, etc). To change your stats, check out the [url=https://steamcommunity.com/sharedfiles/filedetails/?id=1889162991]Stat Change Commands[/url] mod or [url=https://steamcommunity.com/sharedfiles/filedetails/?id=2666310447]Utility Commands[/url] mod.
+Most other things this mod does are already exposed in the debug console (restart, giveitem, spawn, debug, etc). To change your stats, check out the [url=https://steamcommunity.com/sharedfiles/filedetails/?id=1889162991]Stat Change Commands[/url] mod or [url=https://steamcommunity.com/sharedfiles/filedetails/?id=2666310447]Utility Commands[/url] mod.
 
 Mod support:
 [list]
@@ -123,7 +143,7 @@ Mod support:
     [*][url=https://steamcommunity.com/sharedfiles/filedetails/?id=2813909722]The Cathedral in Greed Mode[/url]: Required if you want to visit the Cathedral in Greed mode (otherwise you'll fall back to Sheol).
     [*][url=https://steamcommunity.com/sharedfiles/filedetails/?id=2880387531]Revelations Ch. 2[/url]: Includes the Glacier and Tomb stages.
 [/list]</description>
-    <version>1.20</version>
+    <version>1.21</version>
     <visibility>Public</visibility>
     <tag id="Lua"/>
     <tag id="Floors"/>
