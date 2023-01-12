@@ -9,9 +9,9 @@ You can choose between normal first floors and XL floors. There's no way to forc
 
 There's options to:
 [list]
-    [*]Restart the game
+    [*]Restart the game (with or without a specific seed)
     [*]Kick off a victory lap
-    [*]Reseed the current stage
+    [*]Reseed the current stage (manually or automatically)
 [/list]
 
 You can use this mod to test or practice certain parts of the game.
@@ -61,7 +61,7 @@ There's an option to practice against individual bosses from each level. This wo
 
 Debug console:
 [list]
-    [*]This mod adds 4 new console commands.
+    [*]This mod adds 5 new console commands.
     [*]stage-selector
     [list]
         [*]Usage: stage-selector stage-name-as-seen-in-mcm
@@ -72,6 +72,12 @@ Debug console:
         [*]Usage: stage-selector-boss boss-name-as-seen-in-mcm
         [*]This can be used as an alternative to the built-in goto command.
         [*]This doesn't work in greed mode.
+    [/list]
+    [*]stage-selector-seed
+    [list]
+        [*]Usage: stage-selector-seed seed
+        [*]This can be used as an extension to the built-in seed command.
+        [*]It supports more permissive seed formatting.
     [/list]
     [*]stage-selector-reseed
     [list]
@@ -87,51 +93,25 @@ Debug console:
     [/list]
 [/list]
 
-Mostly equivalent examples:
+Examples:
 [code]
 stage-selector basement ii (ascent)
 [/code]
-or
+
 [code]
-lua Game():SetStateFlag(GameStateFlag.STATE_BACKWARDS_PATH, true)
-stage 2
-reseed
-lua Game():GetHUD():ShowItemText(Game():GetLevel():GetName(), nil, false)
+stage-selector-boss mega fatty
 [/code]
 
 [code]
-stage-selector caves i
-stage-selector-boss mega fatty
+stage-selector-seed dhgr j6pc
 [/code]
-or
-[code]
-lua Game():SetStateFlag(GameStateFlag.STATE_BACKWARDS_PATH, false)
-stage 3
-reseed
-goto s.boss.5050
-[/code]
-(Also, force XL off via callback because it's Caves I and not Caves XL. You can't disable curses set by the game with the built-in curse command.)
 
 [code]
 stage-selector-reseed
 [/code]
-or
-[code]
-lua Game():SetStateFlag(GameStateFlag.STATE_MAUSOLEUM_HEART_KILLED, false)
-reseed
-lua Game():GetHUD():ShowItemText(Game():GetLevel():GetName(), nil, false)
-[/code]
-(Also, force XL on or off via callback which you can kind of mimic with the curse command, but it's not ideal for Curse of the Labyrinth.)
 
 [code]
 stage-selector-victory-lap
-[/code]
-or
-[code]
-lua Game():SetStateFlag(GameStateFlag.STATE_BACKWARDS_PATH_INIT, false)
-lua Game():SetStateFlag(GameStateFlag.STATE_BACKWARDS_PATH, false)
-lua Game():SetStateFlag(GameStateFlag.STATE_MAUSOLEUM_HEART_KILLED, false)
-lua Game():NextVictoryLap()
 [/code]
 
 Most other things this mod does are already exposed in the debug console (restart, giveitem, spawn, debug, etc). To change your stats, check out the [url=https://steamcommunity.com/sharedfiles/filedetails/?id=1889162991]Stat Change Commands[/url] mod or [url=https://steamcommunity.com/sharedfiles/filedetails/?id=2666310447]Utility Commands[/url] mod.
@@ -143,7 +123,7 @@ Mod support:
     [*][url=https://steamcommunity.com/sharedfiles/filedetails/?id=2813909722]The Cathedral in Greed Mode[/url]: Required if you want to visit the Cathedral in Greed mode (otherwise you'll fall back to Sheol).
     [*][url=https://steamcommunity.com/sharedfiles/filedetails/?id=2880387531]Revelations Ch. 2[/url]: Includes the Glacier and Tomb stages.
 [/list]</description>
-    <version>1.21</version>
+    <version>1.22</version>
     <visibility>Public</visibility>
     <tag id="Lua"/>
     <tag id="Floors"/>

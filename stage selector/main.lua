@@ -1,4 +1,5 @@
 local mod = RegisterMod('Stage Selector', 1)
+local json = require('json')
 local game = Game()
 
 mod.rng = RNG()
@@ -40,6 +41,7 @@ mod.revelationsCh1Options = { 'Glacier I', 'Glacier II', 'Glacier XL' }
 mod.revelationsCh2Options = { 'Tomb I', 'Tomb II', 'Tomb XL' }
 mod.restartGameOptions = { 'Restart', 'Victory Lap' }
 mod.restartLevelOptions = { 'Reseed' }
+mod.seedCharOptions = { '0', '1', '2', '3', '4', '6', '7', '8', '9', 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'J', 'K', 'L', 'M', 'N', 'P', 'Q', 'R', 'S', 'T', 'V', 'W', 'X', 'Y', 'Z' } -- no 5, I, O, U
 mod.basementBossOptions = { 'Baby Plum', 'Dangle', 'Dingle', 'Famine', 'Gemini', 'Gurglings', 'Larry Jr.', 'Little Horn', 'Monstro', 'Steven', 'The Duke of Flies', 'The Headless Horseman', 'Turdlings' }
 mod.cellarBossOptions = { 'Baby Plum', 'Blighted Ovum', 'Famine', 'Little Horn', 'Pin', 'Rag Man', 'The Duke of Flies', 'The Haunt', 'The Headless Horseman', 'Widow' }
 mod.burningBasementBossOptions = { 'Baby Plum', 'Dangle', 'Dingle', 'Famine', 'Gemini', 'Gurglings', 'Larry Jr.', 'Little Horn', 'Monstro', 'Rag Man', 'Steven', 'The Duke of Flies', 'The Headless Horseman', 'Turdlings' }
@@ -104,6 +106,7 @@ mod.revelationsCh1Option = {1}
 mod.revelationsCh2Option = {1}
 mod.restartGameOption = {1}
 mod.restartLevelOption = {1}
+mod.seedCharOption = { 1, 1, 1, 1, 1, 1, 1, 1 }
 mod.basementBossOption = {1}
 mod.cellarBossOption = {1}
 mod.burningBasementBossOption = {1}
@@ -137,8 +140,25 @@ mod.showLevelName = false
 mod.toggleText = ''
 mod.toggleTextTime = 0
 
+mod.state = {}
+mod.state.autoReseed = true
+
 function mod:onGameStart()
   mod:setupModConfigMenu()
+  
+  if mod:HasData() then
+    local _, state = pcall(json.decode, mod:LoadData())
+    
+    if type(state) == 'table' then
+      if type(state.autoReseed) == 'boolean' then
+        mod.state.autoReseed = state.autoReseed
+      end
+    end
+  end
+  
+  local seeds = game:GetSeeds()
+  local seed = seeds:GetStartSeedString()
+  mod:setSeed(seed)
 end
 
 function mod:onGameExit()
@@ -155,6 +175,11 @@ function mod:onGameExit()
   mod.toggleTextTime = 0
   
   mod:seedRng()
+  mod:save()
+end
+
+function mod:save()
+  mod:SaveData(json.encode(mod.state))
 end
 
 function mod:onCurseEval(curses)
@@ -252,6 +277,7 @@ end
 
 -- usage: stage-selector basement i
 -- usage: stage-selector-boss monstro
+-- usage: stage-selector-seed DHGR J6PC
 -- usage: stage-selector-reseed
 -- usage: stage-selector-victory-lap
 function mod:onExecuteCmd(cmd, parameters)
@@ -288,6 +314,32 @@ function mod:onExecuteCmd(cmd, parameters)
     end
     
     return '"' .. parameters .. '" is not a valid boss.'
+  elseif cmd == 'stage-selector-seed' then
+    local seed = string.upper(parameters)
+    if string.len(seed) == 8 then
+      seed = string.sub(seed, 1, 4) .. ' ' .. string.sub(seed, 5, 8) -- insert space
+    end
+    
+    if string.len(seed) == 9 then
+      local map = { ['I'] = '1', ['O'] = '0', ['U'] = 'V' }
+      local temp = ''
+      for i = 1, 9 do
+        local c = string.sub(seed, i, i)
+        local c2 = map[c]
+        if c2 then
+          c = c2
+        end
+        temp = temp .. c
+      end
+      seed = temp
+      
+      if Seeds.IsStringValidSeed(seed) then
+        Isaac.ExecuteCommand('seed ' .. seed)
+        return 'Restarted with seed: ' .. seed
+      end
+    end
+    
+    return '"' .. parameters .. '" is not a valid seed.' -- normal "seed" response is "Invalid seed."
   elseif cmd == 'stage-selector-reseed' then
     mod:reseed(true)
     return 'Changed stage.' -- normal "reseed" response
@@ -299,6 +351,44 @@ function mod:onExecuteCmd(cmd, parameters)
       return 'Kicked off victory lap #' .. game:GetVictoryLap()
     end
   end
+end
+
+function mod:getSeedCharIndex(c)
+  for i, v in ipairs(mod.seedCharOptions) do
+    if c == v then
+      return i
+    end
+  end
+  
+  return 0
+end
+
+function mod:constructSeed()
+  local seed = ''
+  for i = 1, 8 do
+    seed = seed .. mod.seedCharOptions[mod.seedCharOption[i]]
+    if i == 4 then
+      seed = seed .. ' '
+    end
+  end
+  
+  return seed
+end
+
+function mod:setSeed(seed)
+  if string.len(seed) == 9 and Seeds.IsStringValidSeed(seed) then
+    for i = 1, 9 do
+      if i ~= 5 then -- space
+        local c = string.sub(seed, i, i)
+        mod.seedCharOption[i <= 4 and i or i - 1] = mod:getSeedCharIndex(c)
+      end
+    end
+  end
+end
+
+function mod:stage(stage, showLevelName)
+  mod.showLevelName = showLevelName
+  Isaac.ExecuteCommand('stage ' .. stage)
 end
 
 function mod:reseed(showLevelName)
@@ -616,8 +706,10 @@ function mod:goToStage(name)
     game:SetStateFlag(GameStateFlag.STATE_BACKWARDS_PATH_INIT, backwardsPathInit)
     game:SetStateFlag(GameStateFlag.STATE_BACKWARDS_PATH, backwardsPath)
     
-    Isaac.ExecuteCommand('stage ' .. stage)
-    mod:reseed(true)
+    mod:stage(stage, not mod.state.autoReseed)
+    if mod.state.autoReseed then
+      mod:reseed(true)
+    end
     
     return true
   end
@@ -678,9 +770,11 @@ function mod:goToGreedStage(name)
   end
   
   if stage then
-    Isaac.ExecuteCommand('stage ' .. stage)
-    Isaac.ExecuteCommand('stage ' .. stage) -- better Alt path in Greed Mode support
-    mod:reseed(true)
+    mod:stage(stage, false)
+    mod:stage(stage, not mod.state.autoReseed) -- better Alt path in Greed Mode support
+    if mod.state.autoReseed then
+      mod:reseed(true)
+    end
     
     return true
   end
@@ -913,8 +1007,10 @@ function mod:goToBoss(name, stage)
       game:SetStateFlag(GameStateFlag.STATE_BACKWARDS_PATH_INIT, false)
       game:SetStateFlag(GameStateFlag.STATE_BACKWARDS_PATH, false)
       
-      Isaac.ExecuteCommand('stage ' .. stage)
-      mod:reseed(false)
+      mod:stage(stage, not mod.state.autoReseed)
+      if mod.state.autoReseed then
+        mod:reseed(false)
+      end
     end
     
     local bossRoom = bossRooms[mod.rng:RandomInt(#bossRooms) + 1]
@@ -1012,7 +1108,7 @@ function mod:setupModConfigMenu()
     return
   end
   
-  for _, v in ipairs({ 'Stages', 'Mods', 'Restart', 'Bosses', 'Stats', 'Misc' }) do
+  for _, v in ipairs({ 'Stages', 'Mods', 'Restart', 'Seed', 'Bosses', 'Stats', 'Misc', 'Settings' }) do
     ModConfigMenu.RemoveSubcategory(mod.Name, v)
   end
   local stages
@@ -1237,6 +1333,53 @@ function mod:setupModConfigMenu()
       Info = { 'Execute your chosen option' }
     }
   )
+  ModConfigMenu.AddSetting(
+    mod.Name,
+    'Seed',
+    {
+      Type = ModConfigMenu.OptionType.BOOLEAN,
+      CurrentSetting = function()
+        return false
+      end,
+      Display = function()
+        local seed = mod:constructSeed()
+        return 'Restart with: ' .. seed
+      end,
+      OnChange = function(b)
+        local seed = mod:constructSeed()
+        if Seeds.IsStringValidSeed(seed) then
+          Isaac.ExecuteCommand('seed ' .. seed)
+          ModConfigMenu.CloseConfigMenu()
+        end
+      end,
+      Info = { 'Restart with the specified seed', '(must be valid)' }
+    }
+  )
+  ModConfigMenu.AddText(mod.Name, 'Seed', function()
+    local seed = mod:constructSeed()
+    return (Seeds.IsStringValidSeed(seed) and 'Valid' or 'Invalid') .. ' seed'
+  end)
+  for i = 1, 8 do
+    ModConfigMenu.AddSetting(
+      mod.Name,
+      'Seed',
+      {
+        Type = ModConfigMenu.OptionType.NUMBER,
+        CurrentSetting = function()
+          return mod.seedCharOption[i]
+        end,
+        Minimum = 1,
+        Maximum = #mod.seedCharOptions,
+        Display = function()
+          return '< ' .. mod.seedCharOptions[mod.seedCharOption[i]] .. ' >'
+        end,
+        OnChange = function(n)
+          mod.seedCharOption[i] = n
+        end,
+        Info = { 'Enter a start seed' }
+      }
+    )
+  end
   if not game:IsGreedMode() then
     for i, v in ipairs({
                          { title = 'Basement I',         stage = '1',  options = mod.basementBossOptions,        option = mod.basementBossOption },
@@ -1424,6 +1567,24 @@ function mod:setupModConfigMenu()
     
     return mod.toggleText
   end)
+  ModConfigMenu.AddSetting(
+    mod.Name,
+    'Settings',
+    {
+      Type = ModConfigMenu.OptionType.BOOLEAN,
+      CurrentSetting = function()
+        return mod.state.autoReseed
+      end,
+      Display = function()
+        return (mod.state.autoReseed and 'Automatically' or 'Do not automatically') .. ' reseed'
+      end,
+      OnChange = function(b)
+        mod.state.autoReseed = b
+        mod:save()
+      end,
+      Info = { 'Automatically reseed when switching stages?', 'Reseeding allows equivalent floors', 'to have different layouts' }
+    }
+  )
 end
 -- end ModConfigMenu --
 
