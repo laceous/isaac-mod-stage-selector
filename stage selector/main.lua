@@ -184,13 +184,14 @@ end
 
 function mod:onCurseEval(curses)
   if mod.forceXL == true then
-    curses = curses | LevelCurse.CURSE_OF_LABYRINTH
+    mod.forceXL = nil
+    return curses | LevelCurse.CURSE_OF_LABYRINTH
   elseif mod.forceXL == false then
-    curses = curses & ~LevelCurse.CURSE_OF_LABYRINTH
+    mod.forceXL = nil
+    return curses & ~LevelCurse.CURSE_OF_LABYRINTH
   end
   
-  mod.forceXL = nil
-  return curses
+  return nil -- return nil if no changes are required
 end
 
 function mod:onNewLevel()
