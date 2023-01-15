@@ -61,7 +61,7 @@ There's an option to practice against individual bosses from each level. This wo
 
 Debug console:
 [list]
-    [*]This mod adds 5 new console commands.
+    [*]This mod adds 6 new console commands.
     [*]stage-selector
     [list]
         [*]Usage: stage-selector stage-name-as-seen-in-mcm
@@ -72,6 +72,12 @@ Debug console:
         [*]Usage: stage-selector-boss boss-name-as-seen-in-mcm
         [*]This can be used as an alternative to the built-in goto command.
         [*]This doesn't work in greed mode.
+    [/list]
+    [*]stage-selector-restart
+    [list]
+        [*]Usage: stage-selector-restart
+        [*]This can be used as an extension to the built-in restart command.
+        [*]It makes sure you always restart with a random seed rather than being locked into a seeded run.
     [/list]
     [*]stage-selector-seed
     [list]
@@ -97,24 +103,23 @@ Examples:
 [code]
 stage-selector basement ii (ascent)
 [/code]
-
 [code]
 stage-selector-boss mega fatty
 [/code]
-
+[code]
+stage-selector-restart
+[/code]
 [code]
 stage-selector-seed dhgr j6pc
 [/code]
-
 [code]
 stage-selector-reseed
 [/code]
-
 [code]
 stage-selector-victory-lap
 [/code]
 
-Most other things this mod does are already exposed in the debug console (restart, giveitem, spawn, debug, etc). To change your stats, check out the [url=https://steamcommunity.com/sharedfiles/filedetails/?id=1889162991]Stat Change Commands[/url] mod or [url=https://steamcommunity.com/sharedfiles/filedetails/?id=2666310447]Utility Commands[/url] mod.
+Most other things this mod does are already exposed in the debug console (giveitem, spawn, debug, etc). To change your stats, check out the [url=https://steamcommunity.com/sharedfiles/filedetails/?id=1889162991]Stat Change Commands[/url] mod or [url=https://steamcommunity.com/sharedfiles/filedetails/?id=2666310447]Utility Commands[/url] mod.
 
 Mod support:
 [list]
@@ -123,7 +128,7 @@ Mod support:
     [*][url=https://steamcommunity.com/sharedfiles/filedetails/?id=2813909722]The Cathedral in Greed Mode[/url]: Required if you want to visit the Cathedral in Greed mode (otherwise you'll fall back to Sheol).
     [*][url=https://steamcommunity.com/sharedfiles/filedetails/?id=2880387531]Revelations Ch. 2[/url]: Includes the Glacier and Tomb stages.
 [/list]</description>
-    <version>1.23</version>
+    <version>1.24</version>
     <visibility>Public</visibility>
     <tag id="Lua"/>
     <tag id="Floors"/>

@@ -278,7 +278,8 @@ end
 
 -- usage: stage-selector basement i
 -- usage: stage-selector-boss monstro
--- usage: stage-selector-seed DHGR J6PC
+-- usage: stage-selector-restart
+-- usage: stage-selector-seed dhgr j6pc
 -- usage: stage-selector-reseed
 -- usage: stage-selector-victory-lap
 function mod:onExecuteCmd(cmd, parameters)
@@ -315,6 +316,9 @@ function mod:onExecuteCmd(cmd, parameters)
     end
     
     return '"' .. parameters .. '" is not a valid boss.'
+  elseif cmd == 'stage-selector-restart' then
+    mod:restart()
+    return 'Restarted with random seed.'
   elseif cmd == 'stage-selector-seed' then
     local seed = string.upper(parameters)
     if string.len(seed) == 8 then
@@ -335,7 +339,7 @@ function mod:onExecuteCmd(cmd, parameters)
       seed = temp
       
       if Seeds.IsStringValidSeed(seed) then
-        Isaac.ExecuteCommand('seed ' .. seed)
+        mod:seed(seed)
         return 'Restarted with seed: ' .. seed
       end
     end
@@ -399,12 +403,14 @@ function mod:reseed(showLevelName)
   Isaac.ExecuteCommand('reseed')
 end
 
-function mod:isCurseOfTheLabyrinth()
-  local level = game:GetLevel()
-  local curses = level:GetCurses()
-  local curse = LevelCurse.CURSE_OF_LABYRINTH
-  
-  return curses & curse == curse
+function mod:restart()
+  local seeds = game:GetSeeds()
+  seeds:ClearStartSeed()
+  Isaac.ExecuteCommand('restart')
+end
+
+function mod:seed(seed)
+  Isaac.ExecuteCommand('seed ' .. seed)
 end
 
 function mod:doVictoryLap()
@@ -412,6 +418,14 @@ function mod:doVictoryLap()
   game:SetStateFlag(GameStateFlag.STATE_BACKWARDS_PATH, false)
   game:SetStateFlag(GameStateFlag.STATE_MAUSOLEUM_HEART_KILLED, false)
   game:NextVictoryLap()
+end
+
+function mod:isCurseOfTheLabyrinth()
+  local level = game:GetLevel()
+  local curses = level:GetCurses()
+  local curse = LevelCurse.CURSE_OF_LABYRINTH
+  
+  return curses & curse == curse
 end
 
 function mod:goToStage(name)
@@ -1265,7 +1279,7 @@ function mod:setupModConfigMenu()
       OnChange = function(n)
         mod.restartGameOption[1] = n
       end,
-      Info = { 'Restart: start a new run', 'Victory Lap: start a new victory lap (disabled', 'in greed mode)' }
+      Info = { 'Restart: start a new run with a random seed', 'Victory Lap: start a new victory lap (disabled', 'in greed mode)' }
     }
   )
   ModConfigMenu.AddSetting(
@@ -1281,7 +1295,7 @@ function mod:setupModConfigMenu()
       end,
       OnChange = function(b)
         if mod.restartGameOptions[mod.restartGameOption[1]] == 'Restart' then
-          Isaac.ExecuteCommand('restart')
+          mod:restart()
           ModConfigMenu.CloseConfigMenu()
         elseif mod.restartGameOptions[mod.restartGameOption[1]] == 'Victory Lap' then
           if not game:IsGreedMode() then
@@ -1349,7 +1363,7 @@ function mod:setupModConfigMenu()
       OnChange = function(b)
         local seed = mod:constructSeed()
         if Seeds.IsStringValidSeed(seed) then
-          Isaac.ExecuteCommand('seed ' .. seed)
+          mod:seed(seed)
           ModConfigMenu.CloseConfigMenu()
         end
       end,
