@@ -298,27 +298,30 @@ function mod:onExecuteCmd(cmd, parameters)
     end
     
     if changedStage then
-      return 'Changed stage.' -- normal "stage" response
+      print('Changed stage.') -- normal "stage" response
+      return
     end
     
-    return '"' .. parameters .. '" is not a valid stage.'
+    print('"' .. parameters .. '" is not a valid stage.')
   elseif cmd == 'stage-selector-boss' then
     local changedRoom = false
     
     if game:IsGreedMode() then
-      return 'Disabled in greed mode.'
+      print('Disabled in greed mode.')
+      return
     else
       changedRoom = mod:goToBoss(parameters, nil)
     end
     
     if changedRoom then
-      return 'Changed room.' -- normal "goto" response
+      print('Changed room.') -- normal "goto" response
+      return
     end
     
-    return '"' .. parameters .. '" is not a valid boss.'
+    print('"' .. parameters .. '" is not a valid boss.')
   elseif cmd == 'stage-selector-restart' then
     mod:restart()
-    return 'Restarted with random seed.'
+    print('Restarted with random seed.')
   elseif cmd == 'stage-selector-seed' then
     local seed = string.upper(parameters)
     if string.len(seed) == 8 then
@@ -340,20 +343,21 @@ function mod:onExecuteCmd(cmd, parameters)
       
       if Seeds.IsStringValidSeed(seed) then
         mod:seed(seed)
-        return 'Restarted with seed: ' .. seed
+        print('Restarted with seed: ' .. seed)
+        return
       end
     end
     
-    return '"' .. parameters .. '" is not a valid seed.' -- normal "seed" response is "Invalid seed."
+    print('"' .. parameters .. '" is not a valid seed.') -- normal "seed" response is "Invalid seed."
   elseif cmd == 'stage-selector-reseed' then
     mod:reseed(true)
-    return 'Changed stage.' -- normal "reseed" response
+    print('Changed stage.') -- normal "reseed" response
   elseif cmd == 'stage-selector-victory-lap' then
     if game:IsGreedMode() then
-      return 'Disabled in greed mode.'
+      print('Disabled in greed mode.')
     else
       mod:doVictoryLap()
-      return 'Kicked off victory lap #' .. game:GetVictoryLap()
+      print('Kicked off victory lap #' .. game:GetVictoryLap())
     end
   end
 end
