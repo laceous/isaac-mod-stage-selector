@@ -1026,7 +1026,7 @@ function mod:goToBoss(name, stage)
       game:SetStateFlag(GameStateFlag.STATE_BACKWARDS_PATH_INIT, false)
       game:SetStateFlag(GameStateFlag.STATE_BACKWARDS_PATH, false)
       
-      mod:stage(stage, not mod.state.autoReseed)
+      mod:stage(stage, false)
       if mod.state.autoReseed then
         mod:reseed(false)
       end
