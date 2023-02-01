@@ -70,70 +70,70 @@ mod.luckOptions = { -50.0, -45.0, -40.0, -35.0, -30.0, -25.0, -20.0, -15.0, -10.
 mod.itemOptions = { 'The Polaroid', 'The Negative', 'Key Piece 1', 'Key Piece 2', 'Knife Piece 1', 'Knife Piece 2', '0 - The Fool', 'V - The Hierophant', 'V - The Hierophant?', 'VI - The Lovers', 'VIII - Justice', 'Rune of Ansuz', 'Cracked Key' }
 mod.debugOptions = { 'Infinite HP' }
 
-mod.stage11Option = {1}
-mod.stage11AltOption = {1}
-mod.stage12Option = {1}
-mod.stage12AltOption = {1}
-mod.stage21Option = {1}
-mod.stage21AltOption = {1}
-mod.stage22Option = {1}
-mod.stage22AltOption = {1}
-mod.stage31Option = {1}
-mod.stage31AltOption = {1}
-mod.stage32Option = {1}
-mod.stage32AltOption = {1}
-mod.stage41Option = {1}
-mod.stage41AltOption = {1}
-mod.stage42Option = {1}
-mod.stage42AltOption = {1}
-mod.stage43Option = {1}
-mod.stage5Option = {1}
-mod.stage6Option = {1}
-mod.stage7Option = {1}
-mod.stage8Option = {1}
-mod.greedStage1Option = {1}
-mod.greedStage1AltOption = {1}
-mod.greedStage2Option = {1}
-mod.greedStage2AltOption = {1}
-mod.greedStage3Option = {1}
-mod.greedStage3AltOption = {1}
-mod.greedStage4Option = {1}
-mod.greedStage4AltOption = {1}
-mod.greedStage5Option = {1}
-mod.greedStage6Option = {1}
-mod.greedStage7Option = {1}
-mod.revelationsCh1Option = {1}
-mod.revelationsCh2Option = {1}
-mod.restartGameOption = {1}
-mod.restartLevelOption = {1}
+mod.stage11Option = 1
+mod.stage11AltOption = 1
+mod.stage12Option = 1
+mod.stage12AltOption = 1
+mod.stage21Option = 1
+mod.stage21AltOption = 1
+mod.stage22Option = 1
+mod.stage22AltOption = 1
+mod.stage31Option = 1
+mod.stage31AltOption = 1
+mod.stage32Option = 1
+mod.stage32AltOption = 1
+mod.stage41Option = 1
+mod.stage41AltOption = 1
+mod.stage42Option = 1
+mod.stage42AltOption = 1
+mod.stage43Option = 1
+mod.stage5Option = 1
+mod.stage6Option = 1
+mod.stage7Option = 1
+mod.stage8Option = 1
+mod.greedStage1Option = 1
+mod.greedStage1AltOption = 1
+mod.greedStage2Option = 1
+mod.greedStage2AltOption = 1
+mod.greedStage3Option = 1
+mod.greedStage3AltOption = 1
+mod.greedStage4Option = 1
+mod.greedStage4AltOption = 1
+mod.greedStage5Option = 1
+mod.greedStage6Option = 1
+mod.greedStage7Option = 1
+mod.revelationsCh1Option = 1
+mod.revelationsCh2Option = 1
+mod.restartGameOption = 1
+mod.restartLevelOption = 1
 mod.seedCharOption = { 1, 1, 1, 1, 1, 1, 1, 1 }
-mod.basementBossOption = {1}
-mod.cellarBossOption = {1}
-mod.burningBasementBossOption = {1}
-mod.downpourBossOption = {1}
-mod.drossBossOption = {1}
-mod.cavesBossOption = {1}
-mod.catacombsBossOption = {1}
-mod.floodedCavesBossOption = {1}
-mod.minesBossOption = {1}
-mod.ashpitBossOption = {1}
-mod.depthsBossOption = {1}
-mod.necropolisBossOption = {1}
-mod.dankDepthsBossOption = {1}
-mod.mausoleumBossOption = {1}
-mod.gehennaBossOption = {1}
-mod.wombBossOption = {1}
-mod.uteroBossOption = {1}
-mod.scarredWombBossOption = {1}
-mod.corpseBossOption = {1}
-mod.speedOption = {11}
-mod.tearsOption = {29}
-mod.damageOption = {29}
-mod.rangeOption = {11}
-mod.shotSpeedOption = {11}
-mod.luckOption = {29}
-mod.itemOption = {1}
-mod.debugOption = {1}
+mod.basementBossOption = 1
+mod.cellarBossOption = 1
+mod.burningBasementBossOption = 1
+mod.downpourBossOption = 1
+mod.drossBossOption = 1
+mod.cavesBossOption = 1
+mod.catacombsBossOption = 1
+mod.floodedCavesBossOption = 1
+mod.minesBossOption = 1
+mod.ashpitBossOption = 1
+mod.depthsBossOption = 1
+mod.necropolisBossOption = 1
+mod.dankDepthsBossOption = 1
+mod.mausoleumBossOption = 1
+mod.gehennaBossOption = 1
+mod.wombBossOption = 1
+mod.uteroBossOption = 1
+mod.scarredWombBossOption = 1
+mod.corpseBossOption = 1
+mod.speedOption = 11
+mod.tearsOption = 29
+mod.damageOption = 29
+mod.rangeOption = 11
+mod.shotSpeedOption = 11
+mod.luckOption = 29
+mod.itemOption = 1
+mod.debugOption = 1
 
 mod.forceXL = nil -- 3 state: true, false, nil
 mod.showLevelName = false
@@ -162,12 +162,12 @@ function mod:onGameStart()
 end
 
 function mod:onGameExit()
-  mod.speedOption[1] = 11
-  mod.tearsOption[1] = 29
-  mod.damageOption[1] = 29
-  mod.rangeOption[1] = 11
-  mod.shotSpeedOption[1] = 11
-  mod.luckOption[1] = 29
+  mod.speedOption = 11
+  mod.tearsOption = 29
+  mod.damageOption = 29
+  mod.rangeOption = 11
+  mod.shotSpeedOption = 11
+  mod.luckOption = 29
   
   mod.forceXL = nil
   mod.showLevelName = false
@@ -228,7 +228,7 @@ end
 -- thanks to the Stat Change Commands mod for help figuring some of this out
 function mod:onCacheEval(player, cacheFlag)
   if cacheFlag & CacheFlag.CACHE_SPEED == CacheFlag.CACHE_SPEED then
-    local speed = player.MoveSpeed + mod.speedOptions[mod.speedOption[1]]
+    local speed = player.MoveSpeed + mod.speedOptions[mod.speedOption]
     if speed > 2.0 then
       speed = 2.0
     elseif speed < 0.1 then
@@ -238,7 +238,7 @@ function mod:onCacheEval(player, cacheFlag)
   end
   
   if cacheFlag & CacheFlag.CACHE_FIREDELAY == CacheFlag.CACHE_FIREDELAY then
-    local tears = (30 / (player.MaxFireDelay + 1)) + mod.tearsOptions[mod.tearsOption[1]]
+    local tears = (30 / (player.MaxFireDelay + 1)) + mod.tearsOptions[mod.tearsOption]
     if tears > 120.0 then
       tears = 120.0
     elseif tears < 1.0 then -- not a hard limit, but keep this above zero
@@ -248,7 +248,7 @@ function mod:onCacheEval(player, cacheFlag)
   end
   
   if cacheFlag & CacheFlag.CACHE_DAMAGE == CacheFlag.CACHE_DAMAGE then
-    local damage = player.Damage + mod.damageOptions[mod.damageOption[1]]
+    local damage = player.Damage + mod.damageOptions[mod.damageOption]
     if damage < 0.5 then
       damage = 0.5
     end
@@ -256,7 +256,7 @@ function mod:onCacheEval(player, cacheFlag)
   end
   
   if cacheFlag & CacheFlag.CACHE_RANGE == CacheFlag.CACHE_RANGE then
-    local range = (player.TearRange / 40) + mod.rangeOptions[mod.rangeOption[1]]
+    local range = (player.TearRange / 40) + mod.rangeOptions[mod.rangeOption]
     if range < 1.0 then
       range = 1.0
     end
@@ -264,7 +264,7 @@ function mod:onCacheEval(player, cacheFlag)
   end
   
   if cacheFlag & CacheFlag.CACHE_SHOTSPEED == CacheFlag.CACHE_SHOTSPEED then
-    local shotSpeed = player.ShotSpeed + mod.shotSpeedOptions[mod.shotSpeedOption[1]]
+    local shotSpeed = player.ShotSpeed + mod.shotSpeedOptions[mod.shotSpeedOption]
     if shotSpeed < 0.6 then
       shotSpeed = 0.6
     end
@@ -272,7 +272,7 @@ function mod:onCacheEval(player, cacheFlag)
   end
   
   if cacheFlag & CacheFlag.CACHE_LUCK == CacheFlag.CACHE_LUCK then
-    player.Luck = player.Luck + mod.luckOptions[mod.luckOption[1]]
+    player.Luck = player.Luck + mod.luckOptions[mod.luckOption]
   end
 end
 
@@ -1133,41 +1133,41 @@ function mod:setupModConfigMenu()
   local stages
   if game:IsGreedMode() then
     stages = {
-               { title = 'Stage 1 (Main)', options = mod.greedStage1Options,    option = mod.greedStage1Option },
-               { title = 'Stage 1 (Alt)',  options = mod.greedStage1AltOptions, option = mod.greedStage1AltOption },
-               { title = 'Stage 2 (Main)', options = mod.greedStage2Options,    option = mod.greedStage2Option },
-               { title = 'Stage 2 (Alt)',  options = mod.greedStage2AltOptions, option = mod.greedStage2AltOption },
-               { title = 'Stage 3 (Main)', options = mod.greedStage3Options,    option = mod.greedStage3Option },
-               { title = 'Stage 3 (Alt)',  options = mod.greedStage3AltOptions, option = mod.greedStage3AltOption },
-               { title = 'Stage 4 (Main)', options = mod.greedStage4Options,    option = mod.greedStage4Option },
-               { title = 'Stage 4 (Alt)',  options = mod.greedStage4AltOptions, option = mod.greedStage4AltOption },
-               { title = 'Stage 5',        options = mod.greedStage5Options,    option = mod.greedStage5Option },
-               { title = 'Stage 6',        options = mod.greedStage6Options,    option = mod.greedStage6Option },
-               { title = 'Stage 7',        options = mod.greedStage7Options,    option = mod.greedStage7Option }
+               { title = 'Stage 1 (Main)', options = 'greedStage1Options',    option = 'greedStage1Option' },
+               { title = 'Stage 1 (Alt)',  options = 'greedStage1AltOptions', option = 'greedStage1AltOption' },
+               { title = 'Stage 2 (Main)', options = 'greedStage2Options',    option = 'greedStage2Option' },
+               { title = 'Stage 2 (Alt)',  options = 'greedStage2AltOptions', option = 'greedStage2AltOption' },
+               { title = 'Stage 3 (Main)', options = 'greedStage3Options',    option = 'greedStage3Option' },
+               { title = 'Stage 3 (Alt)',  options = 'greedStage3AltOptions', option = 'greedStage3AltOption' },
+               { title = 'Stage 4 (Main)', options = 'greedStage4Options',    option = 'greedStage4Option' },
+               { title = 'Stage 4 (Alt)',  options = 'greedStage4AltOptions', option = 'greedStage4AltOption' },
+               { title = 'Stage 5',        options = 'greedStage5Options',    option = 'greedStage5Option' },
+               { title = 'Stage 6',        options = 'greedStage6Options',    option = 'greedStage6Option' },
+               { title = 'Stage 7',        options = 'greedStage7Options',    option = 'greedStage7Option' }
              }
   else
     stages = {
-               { title = 'Stage 1-1 (Main)', options = mod.stage11Options,    option = mod.stage11Option },
-               { title = 'Stage 1-1 (Alt)',  options = mod.stage11AltOptions, option = mod.stage11AltOption },
-               { title = 'Stage 1-2 (Main)', options = mod.stage12Options,    option = mod.stage12Option },
-               { title = 'Stage 1-2 (Alt)',  options = mod.stage12AltOptions, option = mod.stage12AltOption },
-               { title = 'Stage 2-1 (Main)', options = mod.stage21Options,    option = mod.stage21Option },
-               { title = 'Stage 2-1 (Alt)',  options = mod.stage21AltOptions, option = mod.stage21AltOption },
-               { title = 'Stage 2-2 (Main)', options = mod.stage22Options,    option = mod.stage22Option },
-               { title = 'Stage 2-2 (Alt)',  options = mod.stage22AltOptions, option = mod.stage22AltOption },
-               { title = 'Stage 3-1 (Main)', options = mod.stage31Options,    option = mod.stage31Option },
-               { title = 'Stage 3-1 (Alt)',  options = mod.stage31AltOptions, option = mod.stage31AltOption },
-               { title = 'Stage 3-2 (Main)', options = mod.stage32Options,    option = mod.stage32Option },
-               { title = 'Stage 3-2 (Alt)',  options = mod.stage32AltOptions, option = mod.stage32AltOption },
-               { title = 'Stage 4-1 (Main)', options = mod.stage41Options,    option = mod.stage41Option },
-               { title = 'Stage 4-1 (Alt)',  options = mod.stage41AltOptions, option = mod.stage41AltOption },
-               { title = 'Stage 4-2 (Main)', options = mod.stage42Options,    option = mod.stage42Option },
-               { title = 'Stage 4-2 (Alt)',  options = mod.stage42AltOptions, option = mod.stage42AltOption },
-               { title = 'Stage 4-3',        options = mod.stage43Options,    option = mod.stage43Option },
-               { title = 'Stage 5',          options = mod.stage5Options,     option = mod.stage5Option },
-               { title = 'Stage 6',          options = mod.stage6Options,     option = mod.stage6Option },
-               { title = 'Stage 7',          options = mod.stage7Options,     option = mod.stage7Option },
-               { title = 'Stage 8',          options = mod.stage8Options,     option = mod.stage8Option }
+               { title = 'Stage 1-1 (Main)', options = 'stage11Options',    option = 'stage11Option' },
+               { title = 'Stage 1-1 (Alt)',  options = 'stage11AltOptions', option = 'stage11AltOption' },
+               { title = 'Stage 1-2 (Main)', options = 'stage12Options',    option = 'stage12Option' },
+               { title = 'Stage 1-2 (Alt)',  options = 'stage12AltOptions', option = 'stage12AltOption' },
+               { title = 'Stage 2-1 (Main)', options = 'stage21Options',    option = 'stage21Option' },
+               { title = 'Stage 2-1 (Alt)',  options = 'stage21AltOptions', option = 'stage21AltOption' },
+               { title = 'Stage 2-2 (Main)', options = 'stage22Options',    option = 'stage22Option' },
+               { title = 'Stage 2-2 (Alt)',  options = 'stage22AltOptions', option = 'stage22AltOption' },
+               { title = 'Stage 3-1 (Main)', options = 'stage31Options',    option = 'stage31Option' },
+               { title = 'Stage 3-1 (Alt)',  options = 'stage31AltOptions', option = 'stage31AltOption' },
+               { title = 'Stage 3-2 (Main)', options = 'stage32Options',    option = 'stage32Option' },
+               { title = 'Stage 3-2 (Alt)',  options = 'stage32AltOptions', option = 'stage32AltOption' },
+               { title = 'Stage 4-1 (Main)', options = 'stage41Options',    option = 'stage41Option' },
+               { title = 'Stage 4-1 (Alt)',  options = 'stage41AltOptions', option = 'stage41AltOption' },
+               { title = 'Stage 4-2 (Main)', options = 'stage42Options',    option = 'stage42Option' },
+               { title = 'Stage 4-2 (Alt)',  options = 'stage42AltOptions', option = 'stage42AltOption' },
+               { title = 'Stage 4-3',        options = 'stage43Options',    option = 'stage43Option' },
+               { title = 'Stage 5',          options = 'stage5Options',     option = 'stage5Option' },
+               { title = 'Stage 6',          options = 'stage6Options',     option = 'stage6Option' },
+               { title = 'Stage 7',          options = 'stage7Options',     option = 'stage7Option' },
+               { title = 'Stage 8',          options = 'stage8Options',     option = 'stage8Option' }
              }
   end
   for i, v in ipairs(stages) do
@@ -1181,15 +1181,15 @@ function mod:setupModConfigMenu()
       {
         Type = ModConfigMenu.OptionType.NUMBER,
         CurrentSetting = function()
-          return v.option[1]
+          return mod[v.option]
         end,
         Minimum = 1,
-        Maximum = #v.options,
+        Maximum = #mod[v.options],
         Display = function()
-          return '< ' .. v.options[v.option[1]] .. ' >'
+          return '< ' .. mod[v.options][mod[v.option]] .. ' >'
         end,
         OnChange = function(n)
-          v.option[1] = n
+          mod[v.option] = n
         end,
         Info = { 'Select a stage' }
       }
@@ -1207,9 +1207,9 @@ function mod:setupModConfigMenu()
         end,
         OnChange = function(b)
           if game:IsGreedMode() then
-            mod:goToGreedStage(v.options[v.option[1]])
+            mod:goToGreedStage(mod[v.options][mod[v.option]])
           else
-            mod:goToStage(v.options[v.option[1]])
+            mod:goToStage(mod[v.options][mod[v.option]])
           end
           ModConfigMenu.CloseConfigMenu()
         end,
@@ -1219,8 +1219,8 @@ function mod:setupModConfigMenu()
   end
   if not game:IsGreedMode() and StageAPI and StageAPI.Loaded and REVEL then
     for i, v in ipairs({
-                         { title = 'Revelations Ch.1', options = mod.revelationsCh1Options, option = mod.revelationsCh1Option },
-                         { title = 'Revelations Ch.2', options = mod.revelationsCh2Options, option = mod.revelationsCh2Option }
+                         { title = 'Revelations Ch.1', options = 'revelationsCh1Options', option = 'revelationsCh1Option' },
+                         { title = 'Revelations Ch.2', options = 'revelationsCh2Options', option = 'revelationsCh2Option' }
                       })
     do
       if i ~= 1 then
@@ -1233,15 +1233,15 @@ function mod:setupModConfigMenu()
         {
           Type = ModConfigMenu.OptionType.NUMBER,
           CurrentSetting = function()
-            return v.option[1]
+            return mod[v.option]
           end,
           Minimum = 1,
-          Maximum = #v.options,
+          Maximum = #mod[v.options],
           Display = function()
-            return '< ' .. v.options[v.option[1]] .. ' >'
+            return '< ' .. mod[v.options][mod[v.option]] .. ' >'
           end,
           OnChange = function(n)
-            v.option[1] = n
+            mod[v.option] = n
           end,
           Info = { 'Select a stage' }
         }
@@ -1258,7 +1258,7 @@ function mod:setupModConfigMenu()
             return 'Go!'
           end,
           OnChange = function(b)
-            mod:goToModdedStage(v.options[v.option[1]])
+            mod:goToModdedStage(mod[v.options][mod[v.option]])
             ModConfigMenu.CloseConfigMenu()
           end,
           Info = { 'Go to selected stage' }
@@ -1273,15 +1273,15 @@ function mod:setupModConfigMenu()
     {
       Type = ModConfigMenu.OptionType.NUMBER,
       CurrentSetting = function()
-        return mod.restartGameOption[1]
+        return mod.restartGameOption
       end,
       Minimum = 1,
       Maximum = #mod.restartGameOptions,
       Display = function()
-        return '< ' .. mod.restartGameOptions[mod.restartGameOption[1]] .. ' >'
+        return '< ' .. mod.restartGameOptions[mod.restartGameOption] .. ' >'
       end,
       OnChange = function(n)
-        mod.restartGameOption[1] = n
+        mod.restartGameOption = n
       end,
       Info = { 'Restart: start a new run with a random seed', 'Victory Lap: start a new victory lap (disabled', 'in greed mode)' }
     }
@@ -1298,10 +1298,10 @@ function mod:setupModConfigMenu()
         return 'Go!'
       end,
       OnChange = function(b)
-        if mod.restartGameOptions[mod.restartGameOption[1]] == 'Restart' then
+        if mod.restartGameOptions[mod.restartGameOption] == 'Restart' then
           mod:restart()
           ModConfigMenu.CloseConfigMenu()
-        elseif mod.restartGameOptions[mod.restartGameOption[1]] == 'Victory Lap' then
+        elseif mod.restartGameOptions[mod.restartGameOption] == 'Victory Lap' then
           if not game:IsGreedMode() then
             mod:doVictoryLap()
             ModConfigMenu.CloseConfigMenu()
@@ -1319,15 +1319,15 @@ function mod:setupModConfigMenu()
     {
       Type = ModConfigMenu.OptionType.NUMBER,
       CurrentSetting = function()
-        return mod.restartLevelOption[1]
+        return mod.restartLevelOption
       end,
       Minimum = 1,
       Maximum = #mod.restartLevelOptions,
       Display = function()
-        return '< ' .. mod.restartLevelOptions[mod.restartLevelOption[1]] .. ' >'
+        return '< ' .. mod.restartLevelOptions[mod.restartLevelOption] .. ' >'
       end,
       OnChange = function(n)
-        mod.restartLevelOption[1] = n
+        mod.restartLevelOption = n
       end,
       Info = { 'Reseed: restart the stage with a new seed' }
     }
@@ -1344,7 +1344,7 @@ function mod:setupModConfigMenu()
         return 'Go!'
       end,
       OnChange = function(b)
-        if mod.restartLevelOptions[mod.restartLevelOption[1]] == 'Reseed' then
+        if mod.restartLevelOptions[mod.restartLevelOption] == 'Reseed' then
           mod:reseed(true)
           ModConfigMenu.CloseConfigMenu()
         end
@@ -1401,25 +1401,25 @@ function mod:setupModConfigMenu()
   end
   if not game:IsGreedMode() then
     for i, v in ipairs({
-                         { title = 'Basement I',         stage = '1',  options = mod.basementBossOptions,        option = mod.basementBossOption },
-                         { title = 'Cellar I',           stage = '1a', options = mod.cellarBossOptions,          option = mod.cellarBossOption },
-                         { title = 'Burning Basement I', stage = '1b', options = mod.burningBasementBossOptions, option = mod.burningBasementBossOption },
-                         { title = 'Downpour I',         stage = '1c', options = mod.downpourBossOptions,        option = mod.downpourBossOption },
-                         { title = 'Dross I',            stage = '1d', options = mod.drossBossOptions,           option = mod.drossBossOption },
-                         { title = 'Caves I',            stage = '3',  options = mod.cavesBossOptions,           option = mod.cavesBossOption },
-                         { title = 'Catacombs I',        stage = '3a', options = mod.catacombsBossOptions,       option = mod.catacombsBossOption },
-                         { title = 'Flooded Caves I',    stage = '3b', options = mod.floodedCavesBossOptions,    option = mod.floodedCavesBossOption },
-                         { title = 'Mines I',            stage = '3c', options = mod.minesBossOptions,           option = mod.minesBossOption },
-                         { title = 'Ashpit I',           stage = '3d', options = mod.ashpitBossOptions,          option = mod.ashpitBossOption },
-                         { title = 'Depths I',           stage = '5',  options = mod.depthsBossOptions,          option = mod.depthsBossOption },
-                         { title = 'Necropolis I',       stage = '5a', options = mod.necropolisBossOptions,      option = mod.necropolisBossOption },
-                         { title = 'Dank Depths I',      stage = '5b', options = mod.dankDepthsBossOptions,      option = mod.dankDepthsBossOption },
-                         { title = 'Mausoleum I',        stage = '5c', options = mod.mausoleumBossOptions,       option = mod.mausoleumBossOption },
-                         { title = 'Gehenna I',          stage = '5d', options = mod.gehennaBossOptions,         option = mod.gehennaBossOption },
-                         { title = 'Womb I',             stage = '7',  options = mod.wombBossOptions,            option = mod.wombBossOption },
-                         { title = 'Utero I',            stage = '7a', options = mod.uteroBossOptions,           option = mod.uteroBossOption },
-                         { title = 'Scarred Womb I',     stage = '7b', options = mod.scarredWombBossOptions,     option = mod.scarredWombBossOption },
-                         { title = 'Corpse I',           stage = '7c', options = mod.corpseBossOptions,          option = mod.corpseBossOption }
+                         { title = 'Basement I',         stage = '1',  options = 'basementBossOptions',        option = 'basementBossOption' },
+                         { title = 'Cellar I',           stage = '1a', options = 'cellarBossOptions',          option = 'cellarBossOption' },
+                         { title = 'Burning Basement I', stage = '1b', options = 'burningBasementBossOptions', option = 'burningBasementBossOption' },
+                         { title = 'Downpour I',         stage = '1c', options = 'downpourBossOptions',        option = 'downpourBossOption' },
+                         { title = 'Dross I',            stage = '1d', options = 'drossBossOptions',           option = 'drossBossOption' },
+                         { title = 'Caves I',            stage = '3',  options = 'cavesBossOptions',           option = 'cavesBossOption' },
+                         { title = 'Catacombs I',        stage = '3a', options = 'catacombsBossOptions',       option = 'catacombsBossOption' },
+                         { title = 'Flooded Caves I',    stage = '3b', options = 'floodedCavesBossOptions',    option = 'floodedCavesBossOption' },
+                         { title = 'Mines I',            stage = '3c', options = 'minesBossOptions',           option = 'minesBossOption' },
+                         { title = 'Ashpit I',           stage = '3d', options = 'ashpitBossOptions',          option = 'ashpitBossOption' },
+                         { title = 'Depths I',           stage = '5',  options = 'depthsBossOptions',          option = 'depthsBossOption' },
+                         { title = 'Necropolis I',       stage = '5a', options = 'necropolisBossOptions',      option = 'necropolisBossOption' },
+                         { title = 'Dank Depths I',      stage = '5b', options = 'dankDepthsBossOptions',      option = 'dankDepthsBossOption' },
+                         { title = 'Mausoleum I',        stage = '5c', options = 'mausoleumBossOptions',       option = 'mausoleumBossOption' },
+                         { title = 'Gehenna I',          stage = '5d', options = 'gehennaBossOptions',         option = 'gehennaBossOption' },
+                         { title = 'Womb I',             stage = '7',  options = 'wombBossOptions',            option = 'wombBossOption' },
+                         { title = 'Utero I',            stage = '7a', options = 'uteroBossOptions',           option = 'uteroBossOption' },
+                         { title = 'Scarred Womb I',     stage = '7b', options = 'scarredWombBossOptions',     option = 'scarredWombBossOption' },
+                         { title = 'Corpse I',           stage = '7c', options = 'corpseBossOptions',          option = 'corpseBossOption' }
                       })
     do
       if i ~= 1 then
@@ -1432,15 +1432,15 @@ function mod:setupModConfigMenu()
         {
           Type = ModConfigMenu.OptionType.NUMBER,
           CurrentSetting = function()
-            return v.option[1]
+            return mod[v.option]
           end,
           Minimum = 1,
-          Maximum = #v.options,
+          Maximum = #mod[v.options],
           Display = function()
-            return '< ' .. v.options[v.option[1]] .. ' >'
+            return '< ' .. mod[v.options][mod[v.option]] .. ' >'
           end,
           OnChange = function(n)
-            v.option[1] = n
+            mod[v.option] = n
           end,
           Info = { 'Select a boss' }
         }
@@ -1457,7 +1457,7 @@ function mod:setupModConfigMenu()
             return 'Go!'
           end,
           OnChange = function(b)
-            mod:goToBoss(v.options[v.option[1]], v.stage)
+            mod:goToBoss(mod[v.options][mod[v.option]], v.stage)
             ModConfigMenu.CloseConfigMenu()
           end,
           Info = { 'Go to selected boss' }
@@ -1466,12 +1466,12 @@ function mod:setupModConfigMenu()
     end
   end
   for _, v in ipairs({
-                       { name = 'Speed',      cacheFlag = CacheFlag.CACHE_SPEED,     options = mod.speedOptions,     option = mod.speedOption },
-                       { name = 'Tears',      cacheFlag = CacheFlag.CACHE_FIREDELAY, options = mod.tearsOptions,     option = mod.tearsOption },
-                       { name = 'Damage',     cacheFlag = CacheFlag.CACHE_DAMAGE,    options = mod.damageOptions,    option = mod.damageOption },
-                       { name = 'Range',      cacheFlag = CacheFlag.CACHE_RANGE,     options = mod.rangeOptions,     option = mod.rangeOption },
-                       { name = 'Shot Speed', cacheFlag = CacheFlag.CACHE_SHOTSPEED, options = mod.shotSpeedOptions, option = mod.shotSpeedOption },
-                       { name = 'Luck',       cacheFlag = CacheFlag.CACHE_LUCK,      options = mod.luckOptions,      option = mod.luckOption }
+                       { name = 'Speed',      cacheFlag = CacheFlag.CACHE_SPEED,     options = 'speedOptions',     option = 'speedOption' },
+                       { name = 'Tears',      cacheFlag = CacheFlag.CACHE_FIREDELAY, options = 'tearsOptions',     option = 'tearsOption' },
+                       { name = 'Damage',     cacheFlag = CacheFlag.CACHE_DAMAGE,    options = 'damageOptions',    option = 'damageOption' },
+                       { name = 'Range',      cacheFlag = CacheFlag.CACHE_RANGE,     options = 'rangeOptions',     option = 'rangeOption' },
+                       { name = 'Shot Speed', cacheFlag = CacheFlag.CACHE_SHOTSPEED, options = 'shotSpeedOptions', option = 'shotSpeedOption' },
+                       { name = 'Luck',       cacheFlag = CacheFlag.CACHE_LUCK,      options = 'luckOptions',      option = 'luckOption' }
                     })
   do
     ModConfigMenu.AddSetting(
@@ -1480,17 +1480,17 @@ function mod:setupModConfigMenu()
       {
         Type = ModConfigMenu.OptionType.NUMBER,
         CurrentSetting = function()
-          return v.option[1]
+          return mod[v.option]
         end,
         Minimum = 1,
-        Maximum = #v.options,
+        Maximum = #mod[v.options],
         Display = function()
-          local val = v.options[v.option[1]]
+          local val = mod[v.options][mod[v.option]]
           local sign = val < 0.0 and '' or '+'
           return v.name .. ': ' .. sign .. string.format('%.2f', val)
         end,
         OnChange = function(n)
-          v.option[1] = n
+          mod[v.option] = n
           
           for i = 0, game:GetNumPlayers() - 1 do
             local player = game:GetPlayer(i)
@@ -1510,15 +1510,15 @@ function mod:setupModConfigMenu()
     {
       Type = ModConfigMenu.OptionType.NUMBER,
       CurrentSetting = function()
-        return mod.itemOption[1]
+        return mod.itemOption
       end,
       Minimum = 1,
       Maximum = #mod.itemOptions,
       Display = function()
-        return '< ' .. mod.itemOptions[mod.itemOption[1]] .. ' >'
+        return '< ' .. mod.itemOptions[mod.itemOption] .. ' >'
       end,
       OnChange = function(n)
-        mod.itemOption[1] = n
+        mod.itemOption = n
       end,
       Info = { 'Select an item' }
     }
@@ -1535,7 +1535,7 @@ function mod:setupModConfigMenu()
         return 'Give!'
       end,
       OnChange = function(b)
-        mod:giveItem(mod.itemOptions[mod.itemOption[1]])
+        mod:giveItem(mod.itemOptions[mod.itemOption])
       end,
       Info = { 'Give the selected item' }
     }
@@ -1548,15 +1548,15 @@ function mod:setupModConfigMenu()
     {
       Type = ModConfigMenu.OptionType.NUMBER,
       CurrentSetting = function()
-        return mod.debugOption[1]
+        return mod.debugOption
       end,
       Minimum = 1,
       Maximum = #mod.debugOptions,
       Display = function()
-        return '< ' .. mod.debugOptions[mod.debugOption[1]] .. ' >'
+        return '< ' .. mod.debugOptions[mod.debugOption] .. ' >'
       end,
       OnChange = function(n)
-        mod.debugOption[1] = n
+        mod.debugOption = n
       end,
       Info = { 'Select a debug option' }
     }
@@ -1573,7 +1573,7 @@ function mod:setupModConfigMenu()
         return 'Toggle!'
       end,
       OnChange = function(b)
-        mod:toggleDebug(mod.debugOptions[mod.debugOption[1]])
+        mod:toggleDebug(mod.debugOptions[mod.debugOption])
       end,
       Info = { 'Toggle the debug option' }
     }
