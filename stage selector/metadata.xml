@@ -125,10 +125,11 @@ Mod support:
 [list]
     [*][url=https://steamcommunity.com/sharedfiles/filedetails/?id=2717876263]Alt path in Greed Mode[/url]: By default, the Repentance stages can be pretty sparse in Greed mode. This mod fills out these stages much better.
     [*][url=https://steamcommunity.com/sharedfiles/filedetails/?id=2835490368]Greed Alt Floors[/url]: An alternative to the mod listed above.
+    [*][url=https://steamcommunity.com/sharedfiles/filedetails/?id=2925565414]Alt Path + Mother in Greed Mode![/url]: Another alternative to the mod listed above.
     [*][url=https://steamcommunity.com/sharedfiles/filedetails/?id=2813909722]The Cathedral in Greed Mode[/url]: Required if you want to visit the Cathedral in Greed mode (otherwise you'll fall back to Sheol).
     [*][url=https://steamcommunity.com/sharedfiles/filedetails/?id=2880387531]Revelations Ch. 2[/url]: Includes the Glacier and Tomb stages.
 [/list]</description>
-    <version>1.27</version>
+    <version>1.28</version>
     <visibility>Public</visibility>
     <tag id="Lua"/>
     <tag id="Floors"/>
