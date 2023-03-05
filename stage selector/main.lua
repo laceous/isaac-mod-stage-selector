@@ -220,7 +220,7 @@ function mod:onNewRoom()
   local level = game:GetLevel()
   local room = level:GetCurrentRoom()
   
-  if mod:isChallenge() and not game:IsGreedMode() and level:GetStage() == LevelStage.STAGE6 and level:GetCurrentRoomIndex() == level:GetStartingRoomIndex() then
+  if mod:isChallenge() and not game:IsGreedMode() and level:GetStage() == LevelStage.STAGE6 and level:GetCurrentRoomIndex() == level:GetStartingRoomIndex() and mod:getCurrentDimension() == 0 then
     room:TrySpawnMegaSatanRoomDoor(true)
   end
 end
@@ -1104,6 +1104,27 @@ function mod:toggleDebug(name)
     mod.toggleText = Isaac.ExecuteCommand('debug 3')
     mod.toggleTextTime = game:GetFrameCount()
   end
+end
+
+function mod:getCurrentDimension()
+  local level = game:GetLevel()
+  return mod:getDimension(level:GetCurrentRoomDesc())
+end
+
+function mod:getDimension(roomDesc)
+  local level = game:GetLevel()
+  local ptrHash = GetPtrHash(roomDesc)
+  
+  -- 0: main dimension
+  -- 1: secondary dimension, used by downpour mirror dimension and mines escape sequence
+  -- 2: death certificate dimension
+  for i = 0, 2 do
+    if ptrHash == GetPtrHash(level:GetRoomByIdx(roomDesc.SafeGridIndex, i)) then
+      return i
+    end
+  end
+  
+  return -1
 end
 
 function mod:seedRng()
