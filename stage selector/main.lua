@@ -228,51 +228,69 @@ end
 -- thanks to the Stat Change Commands mod for help figuring some of this out
 function mod:onCacheEval(player, cacheFlag)
   if cacheFlag & CacheFlag.CACHE_SPEED == CacheFlag.CACHE_SPEED then
-    local speed = player.MoveSpeed + mod.speedOptions[mod.speedOption]
-    if speed > 2.0 then
-      speed = 2.0
-    elseif speed < 0.1 then
-      speed = 0.1
+    local speedAddition = mod.speedOptions[mod.speedOption]
+    if speedAddition ~= 0.0 then
+      local speed = player.MoveSpeed + speedAddition
+      if speed > 2.0 then
+        speed = 2.0
+      elseif speed < 0.1 then
+        speed = 0.1
+      end
+      player.MoveSpeed = speed
     end
-    player.MoveSpeed = speed
   end
   
   if cacheFlag & CacheFlag.CACHE_FIREDELAY == CacheFlag.CACHE_FIREDELAY then
-    local tears = (30 / (player.MaxFireDelay + 1)) + mod.tearsOptions[mod.tearsOption]
-    if tears > 120.0 then
-      tears = 120.0
-    elseif tears < 1.0 then -- not a hard limit, but keep this above zero
-      tears = 1.0
+    local tearsAddition = mod.tearsOptions[mod.tearsOption]
+    if tearsAddition ~= 0.0 then
+      local tears = (30 / (player.MaxFireDelay + 1)) + tearsAddition
+      if tears > 120.0 then
+        tears = 120.0
+      elseif tears < 1.0 then -- not a hard limit, but keep this above zero
+        tears = 1.0
+      end
+      player.MaxFireDelay = (30 / tears) - 1
     end
-    player.MaxFireDelay = (30 / tears) - 1
   end
   
   if cacheFlag & CacheFlag.CACHE_DAMAGE == CacheFlag.CACHE_DAMAGE then
-    local damage = player.Damage + mod.damageOptions[mod.damageOption]
-    if damage < 0.5 then
-      damage = 0.5
+    local damageAddition = mod.damageOptions[mod.damageOption]
+    if damageAddition ~= 0.0 then
+      local damage = player.Damage + damageAddition
+      if damage < 0.5 then
+        damage = 0.5
+      end
+      player.Damage = damage
     end
-    player.Damage = damage
   end
   
   if cacheFlag & CacheFlag.CACHE_RANGE == CacheFlag.CACHE_RANGE then
-    local range = (player.TearRange / 40) + mod.rangeOptions[mod.rangeOption]
-    if range < 1.0 then
-      range = 1.0
+    local rangeAddition = mod.rangeOptions[mod.rangeOption]
+    if rangeAddition ~= 0.0 then
+      local range = (player.TearRange / 40) + rangeAddition
+      if range < 1.0 then
+        range = 1.0
+      end
+      player.TearRange = range * 40
     end
-    player.TearRange = range * 40
   end
   
   if cacheFlag & CacheFlag.CACHE_SHOTSPEED == CacheFlag.CACHE_SHOTSPEED then
-    local shotSpeed = player.ShotSpeed + mod.shotSpeedOptions[mod.shotSpeedOption]
-    if shotSpeed < 0.6 then
-      shotSpeed = 0.6
+    local shotSpeedAddition = mod.shotSpeedOptions[mod.shotSpeedOption]
+    if shotSpeedAddition ~= 0.0 then
+      local shotSpeed = player.ShotSpeed + shotSpeedAddition
+      if shotSpeed < 0.6 then
+        shotSpeed = 0.6
+      end
+      player.ShotSpeed = shotSpeed
     end
-    player.ShotSpeed = shotSpeed
   end
   
   if cacheFlag & CacheFlag.CACHE_LUCK == CacheFlag.CACHE_LUCK then
-    player.Luck = player.Luck + mod.luckOptions[mod.luckOption]
+    local luckAddition = mod.luckOptions[mod.luckOption]
+    if luckAddition ~= 0.0 then
+      player.Luck = player.Luck + luckAddition
+    end
   end
 end
 
