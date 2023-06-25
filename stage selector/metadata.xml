@@ -129,8 +129,9 @@ Mod support:
     [*][url=https://steamcommunity.com/sharedfiles/filedetails/?id=2925565414]Alt Path + Mother in Greed Mode![/url]: Another alternative to the mod listed above.
     [*][url=https://steamcommunity.com/sharedfiles/filedetails/?id=2813909722]The Cathedral in Greed Mode[/url]: Required if you want to visit the Cathedral in Greed mode (otherwise you'll fall back to Sheol).
     [*][url=https://steamcommunity.com/sharedfiles/filedetails/?id=2880387531]Revelations Ch. 2[/url]: Includes the Glacier and Tomb stages.
+    [*][url=https://steamcommunity.com/sharedfiles/filedetails/?id=2993558907]THE FUTURE[/url]: Includes The Future stage.
 [/list]</description>
-    <version>1.31</version>
+    <version>1.32</version>
     <visibility>Public</visibility>
     <tag id="Lua"/>
     <tag id="Floors"/>

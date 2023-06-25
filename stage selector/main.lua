@@ -39,6 +39,7 @@ mod.greedStage6Options = { 'The Shop' }
 mod.greedStage7Options = { 'Ultra Greed' }
 mod.revelationsCh1Options = { 'Glacier I', 'Glacier II', 'Glacier XL' }
 mod.revelationsCh2Options = { 'Tomb I', 'Tomb II', 'Tomb XL' }
+mod.theFutureOptions = { 'The Future' }
 mod.restartGameOptions = { 'Restart', 'Victory Lap' }
 mod.restartLevelOptions = { 'Reseed' }
 mod.seedCharOptions = { '0', '1', '2', '3', '4', '6', '7', '8', '9', 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'J', 'K', 'L', 'M', 'N', 'P', 'Q', 'R', 'S', 'T', 'V', 'W', 'X', 'Y', 'Z' } -- no 5, I, O, U
@@ -104,6 +105,7 @@ mod.greedStage6Option = 1
 mod.greedStage7Option = 1
 mod.revelationsCh1Option = 1
 mod.revelationsCh2Option = 1
+mod.theFutureOption = 1
 mod.restartGameOption = 1
 mod.restartLevelOption = 1
 mod.seedCharOption = { 1, 1, 1, 1, 1, 1, 1, 1 }
@@ -820,7 +822,7 @@ function mod:goToGreedStage(name)
 end
 
 function mod:goToModdedStage(name)
-  if not StageAPI or not StageAPI.Loaded or not REVEL then
+  if not StageAPI or not StageAPI.Loaded then
     return false
   end
   
@@ -829,19 +831,21 @@ function mod:goToModdedStage(name)
   name = string.lower(name)
   
   if name == string.lower('Glacier I') then
-    stage = REVEL.STAGE.Glacier
+    stage = REVEL and REVEL.STAGE.Glacier
   elseif name == string.lower('Glacier XL') then
-    stage = REVEL.STAGE.Glacier
+    stage = REVEL and REVEL.STAGE.Glacier
     forceXL = true
   elseif name == string.lower('Glacier II') then
-    stage = REVEL.STAGE.GlacierTwo
+    stage = REVEL and REVEL.STAGE.GlacierTwo
   elseif name == string.lower('Tomb I') then
-    stage = REVEL.STAGE.Tomb
+    stage = REVEL and REVEL.STAGE.Tomb
   elseif name == string.lower('Tomb XL') then
-    stage = REVEL.STAGE.Tomb
+    stage = REVEL and REVEL.STAGE.Tomb
     forceXL = true
   elseif name == string.lower('Tomb II') then
-    stage = REVEL.STAGE.TombTwo
+    stage = REVEL and REVEL.STAGE.TombTwo
+  elseif name == string.lower('The Future') then
+    stage = TheFuture and TheFuture.Stage
   end
   
   if stage then
@@ -1258,12 +1262,16 @@ function mod:setupModConfigMenu()
       }
     )
   end
-  if not game:IsGreedMode() and StageAPI and StageAPI.Loaded and REVEL then
-    for i, v in ipairs({
-                         { title = 'Revelations Ch.1', options = 'revelationsCh1Options', option = 'revelationsCh1Option' },
-                         { title = 'Revelations Ch.2', options = 'revelationsCh2Options', option = 'revelationsCh2Option' }
-                      })
-    do
+  if not game:IsGreedMode() and StageAPI and StageAPI.Loaded then
+    local mods = {}
+    if REVEL then
+      table.insert(mods, { title = 'Revelations Ch.1', options = 'revelationsCh1Options', option = 'revelationsCh1Option' })
+      table.insert(mods, { title = 'Revelations Ch.2', options = 'revelationsCh2Options', option = 'revelationsCh2Option' })
+    end
+    if TheFuture then
+      table.insert(mods, { title = 'The Future', options = 'theFutureOptions', option = 'theFutureOption' })
+    end
+    for i, v in ipairs(mods) do
       if i ~= 1 then
         ModConfigMenu.AddSpace(mod.Name, 'Mods')
       end
