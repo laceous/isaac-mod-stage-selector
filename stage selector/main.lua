@@ -39,6 +39,7 @@ mod.greedStage6Options = { 'The Shop' }
 mod.greedStage7Options = { 'Ultra Greed' }
 mod.revelationsCh1Options = { 'Glacier I', 'Glacier II', 'Glacier XL' }
 mod.revelationsCh2Options = { 'Tomb I', 'Tomb II', 'Tomb XL' }
+mod.fallFromGraceOptions = { 'Boiler I', 'Boiler II', 'Boiler XL' }
 mod.theFutureOptions = { 'The Future' }
 mod.restartGameOptions = { 'Restart', 'Victory Lap' }
 mod.restartLevelOptions = { 'Reseed' }
@@ -105,6 +106,7 @@ mod.greedStage6Option = 1
 mod.greedStage7Option = 1
 mod.revelationsCh1Option = 1
 mod.revelationsCh2Option = 1
+mod.fallFromGraceOption = 1
 mod.theFutureOption = 1
 mod.restartGameOption = 1
 mod.restartLevelOption = 1
@@ -844,6 +846,13 @@ function mod:goToModdedStage(name)
     forceXL = true
   elseif name == string.lower('Tomb II') then
     stage = REVEL and REVEL.STAGE.TombTwo
+  elseif name == string.lower('Boiler I') then
+    stage = FFGRACE and FFGRACE.STAGE.Boiler
+  elseif name == string.lower('Boiler XL') then
+    stage = FFGRACE and FFGRACE.STAGE.Boiler
+    forceXL = true
+  elseif name == string.lower('Boiler II') then
+    stage = FFGRACE and FFGRACE.STAGE.BoilerTwo
   elseif name == string.lower('The Future') then
     stage = TheFuture and TheFuture.Stage
   end
@@ -1267,6 +1276,9 @@ function mod:setupModConfigMenu()
     if REVEL then
       table.insert(mods, { title = 'Revelations Ch.1', options = 'revelationsCh1Options', option = 'revelationsCh1Option' })
       table.insert(mods, { title = 'Revelations Ch.2', options = 'revelationsCh2Options', option = 'revelationsCh2Option' })
+    end
+    if FFGRACE then
+      table.insert(mods, { title = 'Fall From Grace', options = 'fallFromGraceOptions', option = 'fallFromGraceOption' })
     end
     if TheFuture then
       table.insert(mods, { title = 'The Future', options = 'theFutureOptions', option = 'theFutureOption' })
