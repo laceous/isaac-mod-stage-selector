@@ -44,6 +44,9 @@ mod.theFutureOptions = { 'The Future' }
 mod.restartGameOptions = { 'Restart', 'Victory Lap' }
 mod.restartLevelOptions = { 'Reseed' }
 mod.seedCharOptions = { '0', '1', '2', '3', '4', '6', '7', '8', '9', 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'J', 'K', 'L', 'M', 'N', 'P', 'Q', 'R', 'S', 'T', 'V', 'W', 'X', 'Y', 'Z' } -- no 5, I, O, U
+mod.mainDimensionOptions = { 'Starting Room', 'Mirror' }
+mod.mirrorDimensionOptions = { 'Starting Room', 'Mirror' }
+mod.deathCertDimensionOptions = { 'Starting Room' }
 mod.basementBossOptions = { 'Baby Plum', 'Dangle', 'Dingle', 'Famine', 'Gemini', 'Gurglings', 'Larry Jr.', 'Little Horn', 'Monstro', 'Steven', 'The Duke of Flies', 'The Headless Horseman', 'Turdlings' }
 mod.cellarBossOptions = { 'Baby Plum', 'Blighted Ovum', 'Famine', 'Little Horn', 'Pin', 'Rag Man', 'The Duke of Flies', 'The Haunt', 'The Headless Horseman', 'Widow' }
 mod.burningBasementBossOptions = { 'Baby Plum', 'Dangle', 'Dingle', 'Famine', 'Gemini', 'Gurglings', 'Larry Jr.', 'Little Horn', 'Monstro', 'Rag Man', 'Steven', 'The Duke of Flies', 'The Headless Horseman', 'Turdlings' }
@@ -111,6 +114,9 @@ mod.theFutureOption = 1
 mod.restartGameOption = 1
 mod.restartLevelOption = 1
 mod.seedCharOption = { 1, 1, 1, 1, 1, 1, 1, 1 }
+mod.mainDimensionOption = 1
+mod.mirrorDimensionOption = 1
+mod.deathCertDimensionOption = 1
 mod.basementBossOption = 1
 mod.cellarBossOption = 1
 mod.burningBasementBossOption = 1
@@ -304,6 +310,7 @@ end
 -- usage: stage-selector-seed dhgr j6pc
 -- usage: stage-selector-reseed
 -- usage: stage-selector-victory-lap
+-- usage: stage-selector-dimension 0
 function mod:onExecuteCmd(cmd, parameters)
   cmd = string.lower(cmd)
   
@@ -381,6 +388,34 @@ function mod:onExecuteCmd(cmd, parameters)
       mod:doVictoryLap()
       print('Kicked off victory lap #' .. game:GetVictoryLap())
     end
+  elseif cmd == 'stage-selector-dimension' then
+    local dimension = tonumber(parameters)
+    local mirror = false
+    
+    if math.type(dimension) ~= 'integer' then
+      local level = game:GetLevel()
+      local stage = level:GetStage()
+      local stageType = level:GetStageType()
+      dimension = nil
+      
+      if string.lower(parameters) == 'mirror' and level:GetCurrentRoomIndex() >= 0 and
+         (stage == LevelStage.STAGE1_2 or (mod:isCurseOfTheLabyrinth() and stage == LevelStage.STAGE1_1)) and (stageType == StageType.STAGETYPE_REPENTANCE or stageType == StageType.STAGETYPE_REPENTANCE_B)
+      then
+        local temp = mod:getCurrentDimension()
+        if temp == 0 then
+          dimension = 1
+        elseif temp == 1 then
+          dimension = 0
+        end
+        mirror = true
+      end
+    end
+    
+    if mod:goToDimension(dimension, mirror) then
+      print('Changed dimension.')
+    else
+      print('"' .. parameters .. '" is not valid in the current context.')
+    end
   end
 end
 
@@ -426,7 +461,12 @@ function mod:reseed(showLevelName)
   mod.forceXL = mod:isCurseOfTheLabyrinth()
   mod.showLevelName = showLevelName
   game:SetStateFlag(GameStateFlag.STATE_MAUSOLEUM_HEART_KILLED, false)
-  Isaac.ExecuteCommand('reseed')
+  
+  if StageAPI and StageAPI.Loaded and StageAPI.CurrentStage then
+    Isaac.ExecuteCommand('creseed')
+  else
+    Isaac.ExecuteCommand('reseed')
+  end
 end
 
 function mod:restart()
@@ -742,6 +782,12 @@ function mod:goToStage(name)
   end
   
   if stage then
+    if backwardsPath then
+      -- try and force treasure rooms to show up, you'll still need to have visited the level first
+      game:SetStateFlag(GameStateFlag.STATE_BACKWARDS_PATH, false)
+      mod:stage('7', false) -- womb
+    end
+    
     mod.forceXL = forceXL
     game:SetStateFlag(GameStateFlag.STATE_MAUSOLEUM_HEART_KILLED, mausoleumHeartKilled)
     game:SetStateFlag(GameStateFlag.STATE_BACKWARDS_PATH_INIT, backwardsPathInit)
@@ -867,6 +913,61 @@ function mod:goToModdedStage(name)
     StageAPI.GotoCustomStage(stage, false)
     
     return true
+  end
+  
+  return false
+end
+
+function mod:goToDimension(dimension, mirror)
+  local level = game:GetLevel()
+  local stage = level:GetStage()
+  local stageType = level:GetStageType()
+  local isCurse = mod:isCurseOfTheLabyrinth()
+  
+  -- use StartRoomTransition rather than ChangeRoom so we can see the boss intro animation
+  if dimension == 0 then
+    if mirror then
+      if not game:IsGreedMode() and level:GetCurrentRoomIndex() >= 0 and
+         (stage == LevelStage.STAGE1_2 or (isCurse and stage == LevelStage.STAGE1_1)) and (stageType == StageType.STAGETYPE_REPENTANCE or stageType == StageType.STAGETYPE_REPENTANCE_B)
+      then
+        game:StartRoomTransition(level:GetCurrentRoomIndex(), Direction.NO_DIRECTION, RoomTransitionAnim.FADE, nil, dimension)
+        return true
+      end
+    else
+      game:StartRoomTransition(level:GetStartingRoomIndex(), Direction.NO_DIRECTION, RoomTransitionAnim.FADE, nil, dimension)
+      return true
+    end
+  elseif dimension == 1 then
+    if not game:IsGreedMode() then
+      if (stage == LevelStage.STAGE1_2 or (isCurse and stage == LevelStage.STAGE1_1)) and (stageType == StageType.STAGETYPE_REPENTANCE or stageType == StageType.STAGETYPE_REPENTANCE_B) then
+        if mirror then
+          if level:GetCurrentRoomIndex() >= 0 then
+            game:StartRoomTransition(level:GetCurrentRoomIndex(), Direction.NO_DIRECTION, RoomTransitionAnim.FADE, nil, dimension)
+            return true
+          end
+        else
+          game:StartRoomTransition(level:GetStartingRoomIndex(), Direction.NO_DIRECTION, RoomTransitionAnim.FADE, nil, dimension)
+          return true
+        end
+      elseif (stage == LevelStage.STAGE2_2 or (isCurse and stage == LevelStage.STAGE2_1)) and (stageType == StageType.STAGETYPE_REPENTANCE or stageType == StageType.STAGETYPE_REPENTANCE_B) then
+        if not mirror then
+          -- you can still access the mines escape sequence even if the entrance hasn't spawned
+          -- however, if you try to leave the escape sequence via the door, the game will crash
+          game:StartRoomTransition(162, Direction.NO_DIRECTION, RoomTransitionAnim.FADE, nil, dimension)
+          return true
+        end
+      end
+    end
+  elseif dimension == 2 then
+    if not mirror then
+      if mod:getCurrentDimension() == dimension then
+        game:StartRoomTransition(80, Direction.NO_DIRECTION, RoomTransitionAnim.DEATH_CERTIFICATE, nil, dimension)
+      else
+        local player = game:GetPlayer(0)
+        player:UseActiveItem(CollectibleType.COLLECTIBLE_DEATH_CERTIFICATE, false, false, true, false, -1, 0)
+      end
+      return true
+    end
   end
   
   return false
@@ -1181,7 +1282,7 @@ function mod:setupModConfigMenu()
     return
   end
   
-  for _, v in ipairs({ 'Stages', 'Mods', 'Restart', 'Seed', 'Bosses', 'Stats', 'Misc', 'Settings' }) do
+  for _, v in ipairs({ 'Stages', 'Mods', 'Restart', 'Seed', 'Dimensions', 'Bosses', 'Stats', 'Misc', 'Settings' }) do
     ModConfigMenu.RemoveSubcategory(mod.Name, v)
   end
   local stages
@@ -1272,6 +1373,8 @@ function mod:setupModConfigMenu()
     )
   end
   if not game:IsGreedMode() and StageAPI and StageAPI.Loaded then
+    -- it's possible to loop over StageAPI.CustomStages to get a dynamic list, but we'd lose the ability to group by mod
+    -- something to reconsider if this list starts to get too long
     local mods = {}
     if REVEL then
       table.insert(mods, { title = 'Revelations Ch.1', options = 'revelationsCh1Options', option = 'revelationsCh1Option' })
@@ -1457,6 +1560,55 @@ function mod:setupModConfigMenu()
           mod.seedCharOption[i] = n
         end,
         Info = { 'Enter a start seed' }
+      }
+    )
+  end
+  for i, v in ipairs({
+                       { title = 'Main Dimension',                dimension = 0, options = 'mainDimensionOptions',      option = 'mainDimensionOption' },
+                       { title = 'Mirror/Mines Escape Dimension', dimension = 1, options = 'mirrorDimensionOptions',    option = 'mirrorDimensionOption' },
+                       { title = 'Death Certificate Dimension',   dimension = 2, options = 'deathCertDimensionOptions', option = 'deathCertDimensionOption' }
+                    })
+  do
+    if i ~= 1 then
+      ModConfigMenu.AddSpace(mod.Name, 'Dimensions')
+    end
+    ModConfigMenu.AddTitle(mod.Name, 'Dimensions', v.title)
+    ModConfigMenu.AddSetting(
+      mod.Name,
+      'Dimensions',
+      {
+        Type = ModConfigMenu.OptionType.NUMBER,
+        CurrentSetting = function()
+          return mod[v.option]
+        end,
+        Minimum = 1,
+        Maximum = #mod[v.options],
+        Display = function()
+          return '< ' .. mod[v.options][mod[v.option]] .. ' >'
+        end,
+        OnChange = function(n)
+          mod[v.option] = n
+        end,
+        Info = { 'Mirror: only available in Downpour/Dross II', 'Mines escape: only available in Mines/Ashpit II' }
+      }
+    )
+    ModConfigMenu.AddSetting(
+      mod.Name,
+      'Dimensions',
+      {
+        Type = ModConfigMenu.OptionType.BOOLEAN,
+        CurrentSetting = function()
+          return false
+        end,
+        Display = function()
+          return 'Go!'
+        end,
+        OnChange = function(b)
+          if mod:goToDimension(v.dimension, mod[v.options][mod[v.option]] == 'Mirror') then
+            ModConfigMenu.CloseConfigMenu()
+          end
+        end,
+        Info = { 'Go to dimension ' .. v.dimension }
       }
     )
   end

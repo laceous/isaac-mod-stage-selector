@@ -12,6 +12,7 @@ There's options to:
     [*]Restart the game (with or without a specific seed)
     [*]Kick off a victory lap
     [*]Reseed the current stage (manually or automatically)
+    [*]Switch dimensions
 [/list]
 
 You can use this mod to test or practice certain parts of the game.
@@ -62,7 +63,7 @@ There's an option to practice against individual bosses from each level. This wo
 
 Debug console:
 [list]
-    [*]This mod adds 6 new console commands.
+    [*]This mod adds 7 new console commands.
     [*]stage-selector
     [list]
         [*]Usage: stage-selector stage-name-as-seen-in-mcm
@@ -98,6 +99,16 @@ Debug console:
         [*]Performs a victory lap.
         [*]Disabled in greed mode because it moves you out of greed mode.
     [/list]
+    [*]stage-selector-dimension
+    [list]
+        [*]Usage: stage-selector-dimension dimension
+        [*]Valid dimensions: 0, 1, 2, mirror
+        [*]0: Main dimension
+        [*]1: Downpour mirror/mines escape dimension
+        [*]2: Death certificate dimension
+        [*]Some of these are disabled in certain cases.
+        [*]Note: You can go to the mines escape sequence without spawning it on the map, but if you leave via the door then the game will crash.
+    [/list]
 [/list]
 
 Examples:
@@ -119,6 +130,10 @@ stage-selector-reseed
 [code]
 stage-selector-victory-lap
 [/code]
+[code]
+stage-selector-dimension 0
+stage-selector-dimension mirror
+[code]
 
 Most other things this mod does are already exposed in the debug console (giveitem, spawn, debug, etc). To change your stats, check out the [url=https://steamcommunity.com/sharedfiles/filedetails/?id=1889162991]Stat Change Commands[/url] mod or [url=https://steamcommunity.com/sharedfiles/filedetails/?id=2666310447]Utility Commands[/url] mod.
 
@@ -132,7 +147,7 @@ Mod support:
     [*][url=https://steamcommunity.com/sharedfiles/filedetails/?id=2974704582]Fall from Grace (Boiler)[/url]: Includes the Boiler stages.
     [*][url=https://steamcommunity.com/sharedfiles/filedetails/?id=2993558907]THE FUTURE[/url]: Includes The Future stage.
 [/list]</description>
-    <version>1.33</version>
+    <version>1.34</version>
     <visibility>Public</visibility>
     <tag id="Lua"/>
     <tag id="Floors"/>
