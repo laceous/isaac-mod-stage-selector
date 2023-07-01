@@ -927,7 +927,7 @@ function mod:goToDimension(dimension, mirror)
   -- use StartRoomTransition rather than ChangeRoom so we can see the boss intro animation
   if dimension == 0 then
     if mirror then
-      if not game:IsGreedMode() and level:GetCurrentRoomIndex() >= 0 and
+      if not game:IsGreedMode() and not game:GetStateFlag(GameStateFlag.STATE_BACKWARDS_PATH) and level:GetCurrentRoomIndex() >= 0 and
          (stage == LevelStage.STAGE1_2 or (isCurse and stage == LevelStage.STAGE1_1)) and (stageType == StageType.STAGETYPE_REPENTANCE or stageType == StageType.STAGETYPE_REPENTANCE_B)
       then
         game:StartRoomTransition(level:GetCurrentRoomIndex(), Direction.NO_DIRECTION, RoomTransitionAnim.FADE, nil, dimension)
@@ -938,7 +938,7 @@ function mod:goToDimension(dimension, mirror)
       return true
     end
   elseif dimension == 1 then
-    if not game:IsGreedMode() then
+    if not game:IsGreedMode() and not game:GetStateFlag(GameStateFlag.STATE_BACKWARDS_PATH) then
       if (stage == LevelStage.STAGE1_2 or (isCurse and stage == LevelStage.STAGE1_1)) and (stageType == StageType.STAGETYPE_REPENTANCE or stageType == StageType.STAGETYPE_REPENTANCE_B) then
         if mirror then
           if level:GetCurrentRoomIndex() >= 0 then
