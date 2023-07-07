@@ -37,10 +37,6 @@ mod.greedStage4AltOptions = { 'Corpse' }
 mod.greedStage5Options = { 'Sheol', 'Cathedral' }
 mod.greedStage6Options = { 'The Shop' }
 mod.greedStage7Options = { 'Ultra Greed' }
-mod.revelationsCh1Options = { 'Glacier I', 'Glacier II', 'Glacier XL' }
-mod.revelationsCh2Options = { 'Tomb I', 'Tomb II', 'Tomb XL' }
-mod.fallFromGraceOptions = { 'Boiler I', 'Boiler II', 'Boiler XL' }
-mod.theFutureOptions = { 'The Future' }
 mod.restartGameOptions = { 'Restart', 'Victory Lap' }
 mod.restartLevelOptions = { 'Reseed' }
 mod.seedCharOptions = { '0', '1', '2', '3', '4', '6', '7', '8', '9', 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'J', 'K', 'L', 'M', 'N', 'P', 'Q', 'R', 'S', 'T', 'V', 'W', 'X', 'Y', 'Z' } -- no 5, I, O, U
@@ -107,10 +103,6 @@ mod.greedStage4AltOption = 1
 mod.greedStage5Option = 1
 mod.greedStage6Option = 1
 mod.greedStage7Option = 1
-mod.revelationsCh1Option = 1
-mod.revelationsCh2Option = 1
-mod.fallFromGraceOption = 1
-mod.theFutureOption = 1
 mod.restartGameOption = 1
 mod.restartLevelOption = 1
 mod.seedCharOption = { 1, 1, 1, 1, 1, 1, 1, 1 }
@@ -145,6 +137,8 @@ mod.luckOption = 29
 mod.itemOption = 1
 mod.debugOption = 1
 
+mod.customStages = {}
+
 mod.forceXL = nil -- 3 state: true, false, nil
 mod.showLevelName = false
 mod.toggleText = ''
@@ -154,6 +148,7 @@ mod.state = {}
 mod.state.autoReseed = true
 
 function mod:onGameStart()
+  mod:setupCustomStages()
   mod:setupModConfigMenu()
   
   if mod:HasData() then
@@ -319,10 +314,13 @@ function mod:onExecuteCmd(cmd, parameters)
     
     if game:IsGreedMode() then
       changedStage = mod:goToGreedStage(parameters)
+      if not changedStage then
+        changedStage = mod:goToModdedStage(parameters, true)
+      end
     else
       changedStage = mod:goToStage(parameters)
       if not changedStage then
-        changedStage = mod:goToModdedStage(parameters)
+        changedStage = mod:goToModdedStage(parameters, true)
       end
     end
     
@@ -339,7 +337,7 @@ function mod:onExecuteCmd(cmd, parameters)
       print('Disabled in greed mode.')
       return
     else
-      changedRoom = mod:goToBoss(parameters, nil)
+      changedRoom = mod:goToBoss(parameters, nil, nil)
     end
     
     if changedRoom then
@@ -398,6 +396,11 @@ function mod:onExecuteCmd(cmd, parameters)
       local stageType = level:GetStageType()
       dimension = nil
       
+      if StageAPI and StageAPI.CurrentStage and not StageAPI.CurrentStage.NormalStage and StageAPI.CurrentStage.LevelgenStage and not StageAPI.InTestMode then
+        stage = StageAPI.CurrentStage.LevelgenStage.Stage
+        stageType = StageAPI.CurrentStage.LevelgenStage.StageType
+      end
+      
       if string.lower(parameters) == 'mirror' and level:GetCurrentRoomIndex() >= 0 and
          (stage == LevelStage.STAGE1_2 or (mod:isCurseOfTheLabyrinth() and stage == LevelStage.STAGE1_1)) and (stageType == StageType.STAGETYPE_REPENTANCE or stageType == StageType.STAGETYPE_REPENTANCE_B)
       then
@@ -452,9 +455,29 @@ function mod:setSeed(seed)
   end
 end
 
-function mod:stage(stage, showLevelName)
+function mod:stage(stage, stageType, showLevelName, noAutoReseed)
+  if not noAutoReseed and mod.state.autoReseed then
+    local seeds = game:GetSeeds()
+    if stageType == StageType.STAGETYPE_REPENTANCE or stageType == StageType.STAGETYPE_REPENTANCE_B then
+      seeds:ForgetStageSeed(stage + 1)
+    else
+      seeds:ForgetStageSeed(stage)
+    end
+  end
+  
+  local letter = '' -- STAGETYPE_ORIGINAL
+  if stageType == StageType.STAGETYPE_WOTL then
+    letter = 'a'
+  elseif stageType == StageType.STAGETYPE_AFTERBIRTH then
+    letter = 'b'
+  elseif stageType == StageType.STAGETYPE_REPENTANCE then
+    letter = 'c'
+  elseif stageType == StageType.STAGETYPE_REPENTANCE_B then
+    letter = 'd'
+  end
+  
   mod.showLevelName = showLevelName
-  Isaac.ExecuteCommand('stage ' .. stage)
+  Isaac.ExecuteCommand('stage ' .. stage .. letter)
 end
 
 function mod:reseed(showLevelName)
@@ -495,7 +518,7 @@ function mod:isCurseOfTheLabyrinth()
 end
 
 function mod:goToStage(name)
-  local stage
+  local stage, stageType
   local forceXL = false
   local mausoleumHeartKilled = false
   local backwardsPathInit = false
@@ -503,289 +526,386 @@ function mod:goToStage(name)
   name = string.lower(name)
   
   if name == string.lower('Basement I') then
-    stage = '1'
+    stage = LevelStage.STAGE1_1
+    stageType = StageType.STAGETYPE_ORIGINAL
   elseif name == string.lower('Cellar I') then
-    stage = '1a'
+    stage = LevelStage.STAGE1_1
+    stageType = StageType.STAGETYPE_WOTL
   elseif name == string.lower('Burning Basement I') then
-    stage = '1b'
+    stage = LevelStage.STAGE1_1
+    stageType = StageType.STAGETYPE_AFTERBIRTH
   elseif name == string.lower('Downpour I') then
-    stage = '1c'
+    stage = LevelStage.STAGE1_1
+    stageType = StageType.STAGETYPE_REPENTANCE
   elseif name == string.lower('Dross I') then
-    stage = '1d'
+    stage = LevelStage.STAGE1_1
+    stageType = StageType.STAGETYPE_REPENTANCE_B
   elseif name == string.lower('Basement XL') then
-    stage = '1'
+    stage = LevelStage.STAGE1_1
+    stageType = StageType.STAGETYPE_ORIGINAL
     forceXL = true
   elseif name == string.lower('Cellar XL') then
-    stage = '1a'
+    stage = LevelStage.STAGE1_1
+    stageType = StageType.STAGETYPE_WOTL
     forceXL = true
   elseif name == string.lower('Burning Basement XL') then
-    stage = '1b'
+    stage = LevelStage.STAGE1_1
+    stageType = StageType.STAGETYPE_AFTERBIRTH
     forceXL = true
   elseif name == string.lower('Downpour XL') then
-    stage = '1c'
+    stage = LevelStage.STAGE1_1
+    stageType = StageType.STAGETYPE_REPENTANCE
     forceXL = true
   elseif name == string.lower('Dross XL') then
-    stage = '1d'
+    stage = LevelStage.STAGE1_1
+    stageType = StageType.STAGETYPE_REPENTANCE_B
     forceXL = true
   elseif name == string.lower('Basement I (Ascent)') then
-    stage = '1'
+    stage = LevelStage.STAGE1_1
+    stageType = StageType.STAGETYPE_ORIGINAL
     forceXL = nil
     backwardsPath = true
   elseif name == string.lower('Cellar I (Ascent)') then
-    stage = '1a'
+    stage = LevelStage.STAGE1_1
+    stageType = StageType.STAGETYPE_WOTL
     forceXL = nil
     backwardsPath = true
   elseif name == string.lower('Burning Basement I (Ascent)') then
-    stage = '1b'
+    stage = LevelStage.STAGE1_1
+    stageType = StageType.STAGETYPE_AFTERBIRTH
     forceXL = nil
     backwardsPath = true
   elseif name == string.lower('Downpour I (Ascent)') then
-    stage = '1c'
+    stage = LevelStage.STAGE1_1
+    stageType = StageType.STAGETYPE_REPENTANCE
     forceXL = nil
     backwardsPath = true
   elseif name == string.lower('Dross I (Ascent)') then
-    stage = '1d'
+    stage = LevelStage.STAGE1_1
+    stageType = StageType.STAGETYPE_REPENTANCE_B
     forceXL = nil
     backwardsPath = true
   elseif name == string.lower('Basement II') then
-    stage = '2'
+    stage = LevelStage.STAGE1_2
+    stageType = StageType.STAGETYPE_ORIGINAL
   elseif name == string.lower('Cellar II') then
-    stage = '2a'
+    stage = LevelStage.STAGE1_2
+    stageType = StageType.STAGETYPE_WOTL
   elseif name == string.lower('Burning Basement II') then
-    stage = '2b'
+    stage = LevelStage.STAGE1_2
+    stageType = StageType.STAGETYPE_AFTERBIRTH
   elseif name == string.lower('Downpour II') then
-    stage = '2c'
+    stage = LevelStage.STAGE1_2
+    stageType = StageType.STAGETYPE_REPENTANCE
   elseif name == string.lower('Dross II') then
-    stage = '2d'
+    stage = LevelStage.STAGE1_2
+    stageType = StageType.STAGETYPE_REPENTANCE_B
   elseif name == string.lower('Basement II (Ascent)') then
-    stage = '2'
+    stage = LevelStage.STAGE1_2
+    stageType = StageType.STAGETYPE_ORIGINAL
     forceXL = nil
     backwardsPath = true
   elseif name == string.lower('Cellar II (Ascent)') then
-    stage = '2a'
+    stage = LevelStage.STAGE1_2
+    stageType = StageType.STAGETYPE_WOTL
     forceXL = nil
     backwardsPath = true
   elseif name == string.lower('Burning Basement II (Ascent)') then
-    stage = '2b'
+    stage = LevelStage.STAGE1_2
+    stageType = StageType.STAGETYPE_AFTERBIRTH
     forceXL = nil
     backwardsPath = true
   elseif name == string.lower('Downpour II (Ascent)') then
-    stage = '2c'
+    stage = LevelStage.STAGE1_2
+    stageType = StageType.STAGETYPE_REPENTANCE
     forceXL = nil
     backwardsPath = true
   elseif name == string.lower('Dross II (Ascent)') then
-    stage = '2d'
+    stage = LevelStage.STAGE1_2
+    stageType = StageType.STAGETYPE_REPENTANCE_B
     forceXL = nil
     backwardsPath = true
   elseif name == string.lower('Caves I') then
-    stage = '3'
+    stage = LevelStage.STAGE2_1
+    stageType = StageType.STAGETYPE_ORIGINAL
   elseif name == string.lower('Catacombs I') then
-    stage = '3a'
+    stage = LevelStage.STAGE2_1
+    stageType = StageType.STAGETYPE_WOTL
   elseif name == string.lower('Flooded Caves I') then
-    stage = '3b'
+    stage = LevelStage.STAGE2_1
+    stageType = StageType.STAGETYPE_AFTERBIRTH
   elseif name == string.lower('Mines I') then
-    stage = '3c'
+    stage = LevelStage.STAGE2_1
+    stageType = StageType.STAGETYPE_REPENTANCE
   elseif name == string.lower('Ashpit I') then
-    stage = '3d'
+    stage = LevelStage.STAGE2_1
+    stageType = StageType.STAGETYPE_REPENTANCE_B
   elseif name == string.lower('Caves XL') then
-    stage = '3'
+    stage = LevelStage.STAGE2_1
+    stageType = StageType.STAGETYPE_ORIGINAL
     forceXL = true
   elseif name == string.lower('Catacombs XL') then
-    stage = '3a'
+    stage = LevelStage.STAGE2_1
+    stageType = StageType.STAGETYPE_WOTL
     forceXL = true
   elseif name == string.lower('Flooded Caves XL') then
-    stage = '3b'
+    stage = LevelStage.STAGE2_1
+    stageType = StageType.STAGETYPE_AFTERBIRTH
     forceXL = true
   elseif name == string.lower('Mines XL') then
-    stage = '3c'
+    stage = LevelStage.STAGE2_1
+    stageType = StageType.STAGETYPE_REPENTANCE
     forceXL = true
   elseif name == string.lower('Ashpit XL') then
-    stage = '3d'
+    stage = LevelStage.STAGE2_1
+    stageType = StageType.STAGETYPE_REPENTANCE_B
     forceXL = true
   elseif name == string.lower('Caves I (Ascent)') then
-    stage = '3'
+    stage = LevelStage.STAGE2_1
+    stageType = StageType.STAGETYPE_ORIGINAL
     forceXL = nil
     backwardsPath = true
   elseif name == string.lower('Catacombs I (Ascent)') then
-    stage = '3a'
+    stage = LevelStage.STAGE2_1
+    stageType = StageType.STAGETYPE_WOTL
     forceXL = nil
     backwardsPath = true
   elseif name == string.lower('Flooded Caves I (Ascent)') then
-    stage = '3b'
+    stage = LevelStage.STAGE2_1
+    stageType = StageType.STAGETYPE_AFTERBIRTH
     forceXL = nil
     backwardsPath = true
   elseif name == string.lower('Mines I (Ascent)') then
-    stage = '3c'
+    stage = LevelStage.STAGE2_1
+    stageType = StageType.STAGETYPE_REPENTANCE
     forceXL = nil
     backwardsPath = true
   elseif name == string.lower('Ashpit I (Ascent)') then
-    stage = '3d'
+    stage = LevelStage.STAGE2_1
+    stageType = StageType.STAGETYPE_REPENTANCE_B
     forceXL = nil
     backwardsPath = true
   elseif name == string.lower('Caves II') then
-    stage = '4'
+    stage = LevelStage.STAGE2_2
+    stageType = StageType.STAGETYPE_ORIGINAL
   elseif name == string.lower('Catacombs II') then
-    stage = '4a'
+    stage = LevelStage.STAGE2_2
+    stageType = StageType.STAGETYPE_WOTL
   elseif name == string.lower('Flooded Caves II') then
-    stage = '4b'
+    stage = LevelStage.STAGE2_2
+    stageType = StageType.STAGETYPE_AFTERBIRTH
   elseif name == string.lower('Mines II') then
-    stage = '4c'
+    stage = LevelStage.STAGE2_2
+    stageType = StageType.STAGETYPE_REPENTANCE
   elseif name == string.lower('Ashpit II') then
-    stage = '4d'
+    stage = LevelStage.STAGE2_2
+    stageType = StageType.STAGETYPE_REPENTANCE_B
   elseif name == string.lower('Caves II (Ascent)') then
-    stage = '4'
+    stage = LevelStage.STAGE2_2
+    stageType = StageType.STAGETYPE_ORIGINAL
     forceXL = nil
     backwardsPath = true
   elseif name == string.lower('Catacombs II (Ascent)') then
-    stage = '4a'
+    stage = LevelStage.STAGE2_2
+    stageType = StageType.STAGETYPE_WOTL
     forceXL = nil
     backwardsPath = true
   elseif name == string.lower('Flooded Caves II (Ascent)') then
-    stage = '4b'
+    stage = LevelStage.STAGE2_2
+    stageType = StageType.STAGETYPE_AFTERBIRTH
     forceXL = nil
     backwardsPath = true
   elseif name == string.lower('Mines II (Ascent)') then
-    stage = '4c'
+    stage = LevelStage.STAGE2_2
+    stageType = StageType.STAGETYPE_REPENTANCE
     forceXL = nil
     backwardsPath = true
   elseif name == string.lower('Ashpit II (Ascent)') then
-    stage = '4d'
+    stage = LevelStage.STAGE2_2
+    stageType = StageType.STAGETYPE_REPENTANCE_B
     forceXL = nil
     backwardsPath = true
   elseif name == string.lower('Depths I') then
-    stage = '5'
+    stage = LevelStage.STAGE3_1
+    stageType = StageType.STAGETYPE_ORIGINAL
   elseif name == string.lower('Necropolis I') then
-    stage = '5a'
+    stage = LevelStage.STAGE3_1
+    stageType = StageType.STAGETYPE_WOTL
   elseif name == string.lower('Dank Depths I') then
-    stage = '5b'
+    stage = LevelStage.STAGE3_1
+    stageType = StageType.STAGETYPE_AFTERBIRTH
   elseif name == string.lower('Mausoleum I') then
-    stage = '5c'
+    stage = LevelStage.STAGE3_1
+    stageType = StageType.STAGETYPE_REPENTANCE
   elseif name == string.lower('Gehenna I') then
-    stage = '5d'
+    stage = LevelStage.STAGE3_1
+    stageType = StageType.STAGETYPE_REPENTANCE_B
   elseif name == string.lower('Depths XL') then
-    stage = '5'
+    stage = LevelStage.STAGE3_1
+    stageType = StageType.STAGETYPE_ORIGINAL
     forceXL = true
   elseif name == string.lower('Necropolis XL') then
-    stage = '5a'
+    stage = LevelStage.STAGE3_1
+    stageType = StageType.STAGETYPE_WOTL
     forceXL = true
   elseif name == string.lower('Dank Depths XL') then
-    stage = '5b'
+    stage = LevelStage.STAGE3_1
+    stageType = StageType.STAGETYPE_AFTERBIRTH
     forceXL = true
   elseif name == string.lower('Mausoleum XL') then
-    stage = '5c'
+    stage = LevelStage.STAGE3_1
+    stageType = StageType.STAGETYPE_REPENTANCE
     forceXL = true
   elseif name == string.lower('Gehenna XL') then
-    stage = '5d'
+    stage = LevelStage.STAGE3_1
+    stageType = StageType.STAGETYPE_REPENTANCE_B
     forceXL = true
   elseif name == string.lower('Depths I (Ascent)') then
-    stage = '5'
+    stage = LevelStage.STAGE3_1
+    stageType = StageType.STAGETYPE_ORIGINAL
     forceXL = nil
     backwardsPath = true
   elseif name == string.lower('Necropolis I (Ascent)') then
-    stage = '5a'
+    stage = LevelStage.STAGE3_1
+    stageType = StageType.STAGETYPE_WOTL
     forceXL = nil
     backwardsPath = true
   elseif name == string.lower('Dank Depths I (Ascent)') then
-    stage = '5b'
+    stage = LevelStage.STAGE3_1
+    stageType = StageType.STAGETYPE_AFTERBIRTH
     forceXL = nil
     backwardsPath = true
   elseif name == string.lower('Mausoleum I (Ascent)') then
-    stage = '5c'
+    stage = LevelStage.STAGE3_1
+    stageType = StageType.STAGETYPE_REPENTANCE
     forceXL = nil
     backwardsPath = true
   elseif name == string.lower('Gehenna I (Ascent)') then
-    stage = '5d'
+    stage = LevelStage.STAGE3_1
+    stageType = StageType.STAGETYPE_REPENTANCE_B
     forceXL = nil
     backwardsPath = true
   elseif name == string.lower('Depths II') then
-    stage = '6'
+    stage = LevelStage.STAGE3_2
+    stageType = StageType.STAGETYPE_ORIGINAL
   elseif name == string.lower('Necropolis II') then
-    stage = '6a'
+    stage = LevelStage.STAGE3_2
+    stageType = StageType.STAGETYPE_WOTL
   elseif name == string.lower('Dank Depths II') then
-    stage = '6b'
+    stage = LevelStage.STAGE3_2
+    stageType = StageType.STAGETYPE_AFTERBIRTH
   elseif name == string.lower('Mausoleum II') then
-    stage = '6c'
+    stage = LevelStage.STAGE3_2
+    stageType = StageType.STAGETYPE_REPENTANCE
   elseif name == string.lower('Gehenna II') then
-    stage = '6d'
+    stage = LevelStage.STAGE3_2
+    stageType = StageType.STAGETYPE_REPENTANCE_B
   elseif name == string.lower('Mausoleum II (PreAscent)') then
-    stage = '6c'
+    stage = LevelStage.STAGE3_2
+    stageType = StageType.STAGETYPE_REPENTANCE
     backwardsPathInit = true
   elseif name == string.lower('Gehenna II (PreAscent)') then
-    stage = '6d'
+    stage = LevelStage.STAGE3_2
+    stageType = StageType.STAGETYPE_REPENTANCE_B
     backwardsPathInit = true
   elseif name == string.lower('Depths II (Ascent)') then
-    stage = '6'
+    stage = LevelStage.STAGE3_2
+    stageType = StageType.STAGETYPE_ORIGINAL
     forceXL = nil
     backwardsPath = true
   elseif name == string.lower('Necropolis II (Ascent)') then
-    stage = '6a'
+    stage = LevelStage.STAGE3_2
+    stageType = StageType.STAGETYPE_WOTL
     forceXL = nil
     backwardsPath = true
   elseif name == string.lower('Dank Depths II (Ascent)') then
-    stage = '6b'
+    stage = LevelStage.STAGE3_2
+    stageType = StageType.STAGETYPE_AFTERBIRTH
     forceXL = nil
     backwardsPath = true
   elseif name == string.lower('Mausoleum II (Ascent)') then
-    stage = '6c'
+    stage = LevelStage.STAGE3_2
+    stageType = StageType.STAGETYPE_REPENTANCE
     forceXL = nil
     backwardsPath = true
   elseif name == string.lower('Gehenna II (Ascent)') then
-    stage = '6d'
+    stage = LevelStage.STAGE3_2
+    stageType = StageType.STAGETYPE_REPENTANCE_B
     forceXL = nil
     backwardsPath = true
   elseif name == string.lower('Womb I') then
-    stage = '7'
+    stage = LevelStage.STAGE4_1
+    stageType = StageType.STAGETYPE_ORIGINAL
   elseif name == string.lower('Utero I') then
-    stage = '7a'
+    stage = LevelStage.STAGE4_1
+    stageType = StageType.STAGETYPE_WOTL
   elseif name == string.lower('Scarred Womb I') then
-    stage = '7b'
+    stage = LevelStage.STAGE4_1
+    stageType = StageType.STAGETYPE_AFTERBIRTH
   elseif name == string.lower('Corpse I') then
-    stage = '7c'
+    stage = LevelStage.STAGE4_1
+    stageType = StageType.STAGETYPE_REPENTANCE
   elseif name == string.lower('Womb XL') then
-    stage = '7'
+    stage = LevelStage.STAGE4_1
+    stageType = StageType.STAGETYPE_ORIGINAL
     forceXL = true
   elseif name == string.lower('Utero XL') then
-    stage = '7a'
+    stage = LevelStage.STAGE4_1
+    stageType = StageType.STAGETYPE_WOTL
     forceXL = true
   elseif name == string.lower('Scarred Womb XL') then
-    stage = '7b'
+    stage = LevelStage.STAGE4_1
+    stageType = StageType.STAGETYPE_AFTERBIRTH
     forceXL = true
   elseif name == string.lower('Corpse XL') then
-    stage = '7c'
+    stage = LevelStage.STAGE4_1
+    stageType = StageType.STAGETYPE_REPENTANCE
     forceXL = true
   elseif name == string.lower('Womb II') then
-    stage = '8'
+    stage = LevelStage.STAGE4_2
+    stageType = StageType.STAGETYPE_ORIGINAL
   elseif name == string.lower('Utero II') then
-    stage = '8a'
+    stage = LevelStage.STAGE4_2
+    stageType = StageType.STAGETYPE_WOTL
   elseif name == string.lower('Scarred Womb II') then
-    stage = '8b'
+    stage = LevelStage.STAGE4_2
+    stageType = StageType.STAGETYPE_AFTERBIRTH
   elseif name == string.lower('Corpse II') then
-    stage = '8c'
+    stage = LevelStage.STAGE4_2
+    stageType = StageType.STAGETYPE_REPENTANCE
   elseif name == string.lower('???') then
-    stage = '9'
+    stage = LevelStage.STAGE4_3
+    stageType = StageType.STAGETYPE_ORIGINAL
   elseif name == string.lower('Sheol') then
-    stage = '10'
+    stage = LevelStage.STAGE5
+    stageType = StageType.STAGETYPE_ORIGINAL
   elseif name == string.lower('Cathedral') then
-    stage = '10a'
+    stage = LevelStage.STAGE5
+    stageType = StageType.STAGETYPE_WOTL
   elseif name == string.lower('Dark Room') then
-    stage = '11'
+    stage = LevelStage.STAGE6
+    stageType = StageType.STAGETYPE_ORIGINAL
   elseif name == string.lower('Chest') then
-    stage = '11a'
+    stage = LevelStage.STAGE6
+    stageType = StageType.STAGETYPE_WOTL
   elseif name == string.lower('The Void') then
-    stage = '12'
+    stage = LevelStage.STAGE7
+    stageType = StageType.STAGETYPE_ORIGINAL
   elseif name == string.lower('Home') then
-    stage = '13'
+    stage = LevelStage.STAGE8
+    stageType = StageType.STAGETYPE_ORIGINAL
     forceXL = nil
   elseif name == string.lower('Home (Alt)') then
-    stage = '13a'
+    stage = LevelStage.STAGE8
+    stageType = StageType.STAGETYPE_WOTL
     forceXL = nil
   end
   
-  if stage then
+  if stage and stageType then
     if backwardsPath then
       -- try and force treasure rooms to show up, you'll still need to have visited the level first
       game:SetStateFlag(GameStateFlag.STATE_BACKWARDS_PATH, false)
-      mod:stage('7', false) -- womb
+      mod:stage(LevelStage.STAGE4_1, StageType.STAGETYPE_ORIGINAL, false, true) -- womb
     end
     
     mod.forceXL = forceXL
@@ -793,10 +913,7 @@ function mod:goToStage(name)
     game:SetStateFlag(GameStateFlag.STATE_BACKWARDS_PATH_INIT, backwardsPathInit)
     game:SetStateFlag(GameStateFlag.STATE_BACKWARDS_PATH, backwardsPath)
     
-    mod:stage(stage, not mod.state.autoReseed)
-    if mod.state.autoReseed then
-      mod:reseed(true)
-    end
+    mod:stage(stage, stageType, true)
     
     return true
   end
@@ -805,63 +922,83 @@ function mod:goToStage(name)
 end
 
 function mod:goToGreedStage(name)
-  local stage
+  local stage, stageType
   name = string.lower(name)
   
   if name == string.lower('Basement') then
-    stage = '1'
+    stage = LevelStage.STAGE1_GREED
+    stageType = StageType.STAGETYPE_ORIGINAL
   elseif name == string.lower('Cellar') then
-    stage = '1a'
+    stage = LevelStage.STAGE1_GREED
+    stageType = StageType.STAGETYPE_WOTL
   elseif name == string.lower('Burning Basement') then
-    stage = '1b'
+    stage = LevelStage.STAGE1_GREED
+    stageType = StageType.STAGETYPE_AFTERBIRTH
   elseif name == string.lower('Downpour') then
-    stage = '1c' -- doesn't show in the debug console, but works
+    stage = LevelStage.STAGE1_GREED
+    stageType = StageType.STAGETYPE_REPENTANCE -- doesn't show in the debug console, but works
   elseif name == string.lower('Dross') then
-    stage = '1d' -- doesn't show in the debug console, but works
+    stage = LevelStage.STAGE1_GREED
+    stageType = StageType.STAGETYPE_REPENTANCE_B -- doesn't show in the debug console, but works
   elseif name == string.lower('Caves') then
-    stage = '2'
+    stage = LevelStage.STAGE2_GREED
+    stageType = StageType.STAGETYPE_ORIGINAL
   elseif name == string.lower('Catacombs') then
-    stage = '2a'
+    stage = LevelStage.STAGE2_GREED
+    stageType = StageType.STAGETYPE_WOTL
   elseif name == string.lower('Flooded Caves') then
-    stage = '2b'
+    stage = LevelStage.STAGE2_GREED
+    stageType = StageType.STAGETYPE_AFTERBIRTH
   elseif name == string.lower('Mines') then
-    stage = '2c' -- doesn't show in the debug console, but works
+    stage = LevelStage.STAGE2_GREED
+    stageType = StageType.STAGETYPE_REPENTANCE -- doesn't show in the debug console, but works
   elseif name == string.lower('Asphit') then
-    stage = '2d' -- doesn't show in the debug console, but works
+    stage = LevelStage.STAGE2_GREED
+    stageType = StageType.STAGETYPE_REPENTANCE_B -- doesn't show in the debug console, but works
   elseif name == string.lower('Depths') then
-    stage = '3'
+    stage = LevelStage.STAGE3_GREED
+    stageType = StageType.STAGETYPE_ORIGINAL
   elseif name == string.lower('Necropolis') then
-    stage = '3a'
+    stage = LevelStage.STAGE3_GREED
+    stageType = StageType.STAGETYPE_WOTL
   elseif name == string.lower('Dank Depths') then
-    stage = '3b'
+    stage = LevelStage.STAGE3_GREED
+    stageType = StageType.STAGETYPE_AFTERBIRTH
   elseif name == string.lower('Mausoleum') then
-    stage = '3c' -- doesn't show in the debug console, but works
+    stage = LevelStage.STAGE3_GREED
+    stageType = StageType.STAGETYPE_REPENTANCE -- doesn't show in the debug console, but works
   elseif name == string.lower('Gehenna') then
-    stage = '3d' -- doesn't show in the debug console, but works
+    stage = LevelStage.STAGE3_GREED
+    stageType = StageType.STAGETYPE_REPENTANCE_B -- doesn't show in the debug console, but works
   elseif name == string.lower('Womb') then
-    stage = '4'
+    stage = LevelStage.STAGE4_GREED
+    stageType = StageType.STAGETYPE_ORIGINAL
   elseif name == string.lower('Utero') then
-    stage = '4a'
+    stage = LevelStage.STAGE4_GREED
+    stageType = StageType.STAGETYPE_WOTL
   elseif name == string.lower('Scarred Womb') then
-    stage = '4b'
+    stage = LevelStage.STAGE4_GREED
+    stageType = StageType.STAGETYPE_AFTERBIRTH
   elseif name == string.lower('Corpse') then
-    stage = '4c' -- doesn't show in the debug console, but works
+    stage = LevelStage.STAGE4_GREED
+    stageType = StageType.STAGETYPE_REPENTANCE -- doesn't show in the debug console, but works
   elseif name == string.lower('Sheol') then
-    stage = '5' -- the debug console lists 5a and 5b, but they're also sheol
+    stage = LevelStage.STAGE5_GREED
+    stageType = StageType.STAGETYPE_ORIGINAL -- the debug console lists 5a and 5b, but they're also sheol
   elseif name == string.lower('Cathedral') then
-    stage = '5a' -- requires The Cathedral in Greed Mode, otherwise falls back to Sheol
+    stage = LevelStage.STAGE5_GREED
+    stageType = StageType.STAGETYPE_WOTL -- requires The Cathedral in Greed Mode, otherwise falls back to Sheol
   elseif name == string.lower('The Shop') then
-    stage = '6'
+    stage = LevelStage.STAGE6_GREED
+    stageType = StageType.STAGETYPE_ORIGINAL
   elseif name == string.lower('Ultra Greed') then
-    stage = '7'
+    stage = LevelStage.STAGE7_GREED
+    stageType = StageType.STAGETYPE_ORIGINAL
   end
   
-  if stage then
-    mod:stage(stage, false)
-    mod:stage(stage, not mod.state.autoReseed) -- better Alt path in Greed Mode support
-    if mod.state.autoReseed then
-      mod:reseed(true)
-    end
+  if stage and stageType then
+    mod:stage(stage, stageType, false, true)
+    mod:stage(stage, stageType, true) -- better Alt path in Greed Mode support
     
     return true
   end
@@ -869,53 +1006,156 @@ function mod:goToGreedStage(name)
   return false
 end
 
-function mod:goToModdedStage(name)
+function mod:goToModdedStage(nameOrDisplayName, isDisplayName)
   if not StageAPI or not StageAPI.Loaded then
     return false
   end
   
-  local stage
+  local name = nil
   local forceXL = false
-  name = string.lower(name)
+  nameOrDisplayName = string.lower(nameOrDisplayName)
   
-  if name == string.lower('Glacier I') then
-    stage = REVEL and REVEL.STAGE.Glacier
-  elseif name == string.lower('Glacier XL') then
-    stage = REVEL and REVEL.STAGE.Glacier
-    forceXL = true
-  elseif name == string.lower('Glacier II') then
-    stage = REVEL and REVEL.STAGE.GlacierTwo
-  elseif name == string.lower('Tomb I') then
-    stage = REVEL and REVEL.STAGE.Tomb
-  elseif name == string.lower('Tomb XL') then
-    stage = REVEL and REVEL.STAGE.Tomb
-    forceXL = true
-  elseif name == string.lower('Tomb II') then
-    stage = REVEL and REVEL.STAGE.TombTwo
-  elseif name == string.lower('Boiler I') then
-    stage = FFGRACE and FFGRACE.STAGE.Boiler
-  elseif name == string.lower('Boiler XL') then
-    stage = FFGRACE and FFGRACE.STAGE.Boiler
-    forceXL = true
-  elseif name == string.lower('Boiler II') then
-    stage = FFGRACE and FFGRACE.STAGE.BoilerTwo
-  elseif name == string.lower('The Future') then
-    stage = TheFuture and TheFuture.Stage
+  for _, v in ipairs(mod.customStages) do
+    for _, w in ipairs(v.stages) do
+      if (not isDisplayName and nameOrDisplayName == string.lower(w.name)) or
+         (    isDisplayName and nameOrDisplayName == string.lower(w.displayName))
+      then
+        name = w.name
+        forceXL = w.isXL
+        break
+      end
+    end
+    if name then
+      break
+    end
   end
   
-  if stage then
+  if name then
     mod.forceXL = forceXL
     game:SetStateFlag(GameStateFlag.STATE_MAUSOLEUM_HEART_KILLED, false)
     game:SetStateFlag(GameStateFlag.STATE_BACKWARDS_PATH_INIT, false)
     game:SetStateFlag(GameStateFlag.STATE_BACKWARDS_PATH, false)
     
     mod.showLevelName = true
-    StageAPI.GotoCustomStage(stage, false)
+    StageAPI.GotoCustomStage(StageAPI.CustomStages[name], false, not mod.state.autoReseed)
     
     return true
   end
   
   return false
+end
+
+function mod:setupCustomStages()
+  if not StageAPI or not StageAPI.Loaded then
+    return
+  end
+  
+  -- stage api currently supports overwriting: catacombs, necropolis, utero
+  -- it also sets up some default custom stages that we can ignore
+  local ignoreList = {
+    'Catacombs' , 'Catacombs 2' , 'Catacombs XL' , 'Catacombs Greed',
+    'Necropolis', 'Necropolis 2', 'Necropolis XL', 'Necropolis Greed',
+    'Utero'     , 'Utero 2'     , 'Utero XL'     , 'Utero Greed'
+  }
+  
+  local stages = {}
+  
+  for name, v in pairs(StageAPI.CustomStages) do
+    if not mod:tableHasValue(ignoreList, name) and v.Replaces then
+      local title = nil
+      local supportsXL = false
+      
+      -- v.StageNumber appears to be arbitrary
+      -- the level might be generated with v.LevelgenStage
+      -- but the game will report that it's the v.Replaces stage
+      if v.Replaces.OverrideStageType == StageType.STAGETYPE_WOTL then
+        if game:IsGreedMode() then
+          if v.Replaces.GreedMode then
+            if v.Replaces.OverrideStage == LevelStage.STAGE2_GREED then
+              title = 'Stage 2 (Main)'
+            elseif v.Replaces.OverrideStage == LevelStage.STAGE3_GREED then
+              title = 'Stage 3 (Main)'
+            elseif v.Replaces.OverrideStage == LevelStage.STAGE4_GREED then
+              title = 'Stage 4 (Main)'
+            end
+          end
+        else
+          if not v.Replaces.GreedMode then
+            if v.Replaces.OverrideStage == LevelStage.STAGE2_1 then
+              title = 'Stage 2-1 (Main)'
+              supportsXL = true
+            elseif v.Replaces.OverrideStage == LevelStage.STAGE2_2 then
+              title = 'Stage 2-2 (Main)'
+            elseif v.Replaces.OverrideStage == LevelStage.STAGE3_1 then
+              title = 'Stage 3-1 (Main)'
+              supportsXL = true
+            elseif v.Replaces.OverrideStage == LevelStage.STAGE3_2 then
+              title = 'Stage 3-2 (Main)'
+            elseif v.Replaces.OverrideStage == LevelStage.STAGE4_1 then
+              title = 'Stage 4-1 (Main)'
+              supportsXL = true
+            elseif v.Replaces.OverrideStage == LevelStage.STAGE4_2 then
+              title = 'Stage 4-2 (Main)'
+            end
+          end
+        end
+      end
+      
+      if title then
+        if not stages[title] then
+          stages[title] = {}
+        end
+        if not stages[title][name] then -- v.Name
+          stages[title][name] = {}
+        end
+        stages[title][name].displayName = v.DisplayName or name
+        stages[title][name].isXL = stages[title][name].isXL or false
+        stages[title][name].supportsXL = supportsXL
+        
+        if v.XLStage and v.XLStage.Name and not mod:tableHasValue(ignoreList, v.XLStage.Name) then
+          if not stages[title][v.XLStage.Name] then
+            stages[title][v.XLStage.Name] = {}
+          end
+          stages[title][v.XLStage.Name].displayName = v.XLStage.DisplayName or v.XLStage.Name
+          stages[title][v.XLStage.Name].isXL = true
+          stages[title][v.XLStage.Name].supportsXL = supportsXL
+        end
+      end
+    end
+  end
+  
+  mod.customStages = mod:sortCustomStages(stages)
+end
+
+function mod:sortCustomStages(unsorted)
+  local function sortTopLevel(a, b)
+    return a.title < b.title
+  end
+  local function sortStages(a, b)
+    -- sort XL to the end
+    if a.isXL ~= b.isXL then
+      return b.isXL -- not a.isXL
+    end
+    return a.displayName < b.displayName
+  end
+  
+  local sorted = {}
+  
+  for title, v in pairs(unsorted) do
+    local stages = {}
+    for name, w in pairs(v) do
+      if not w.isXL or (w.isXL and w.supportsXL) then
+        table.insert(stages, { name = name, displayName = w.displayName, isXL = w.isXL })
+      end
+    end
+    if #stages > 0 then
+      table.sort(stages, sortStages)
+      table.insert(sorted, { title = title, selectedStage = 1, stages = stages })
+    end
+  end
+  
+  table.sort(sorted, sortTopLevel)
+  return sorted
 end
 
 function mod:goToDimension(dimension, mirror)
@@ -923,46 +1163,63 @@ function mod:goToDimension(dimension, mirror)
   local stage = level:GetStage()
   local stageType = level:GetStageType()
   local isCurse = mod:isCurseOfTheLabyrinth()
+  local isBackwardsPath = game:GetStateFlag(GameStateFlag.STATE_BACKWARDS_PATH)
+  local currentDimension = mod:getCurrentDimension()
   
-  -- use StartRoomTransition rather than ChangeRoom so we can see the boss intro animation
+  -- StageAPI.GetCurrentStage()
+  if StageAPI and StageAPI.CurrentStage and not StageAPI.CurrentStage.NormalStage and StageAPI.CurrentStage.LevelgenStage and not StageAPI.InTestMode then
+    stage = StageAPI.CurrentStage.LevelgenStage.Stage
+    stageType = StageAPI.CurrentStage.LevelgenStage.StageType
+  end
+  
   if dimension == 0 then
     if mirror then
-      if not game:IsGreedMode() and not game:GetStateFlag(GameStateFlag.STATE_BACKWARDS_PATH) and level:GetCurrentRoomIndex() >= 0 and
+      if not game:IsGreedMode() and not isBackwardsPath and level:GetCurrentRoomIndex() >= 0 and (currentDimension == 0 or currentDimension == 1) and
          (stage == LevelStage.STAGE1_2 or (isCurse and stage == LevelStage.STAGE1_1)) and (stageType == StageType.STAGETYPE_REPENTANCE or stageType == StageType.STAGETYPE_REPENTANCE_B)
       then
-        game:StartRoomTransition(level:GetCurrentRoomIndex(), Direction.NO_DIRECTION, RoomTransitionAnim.FADE, nil, dimension)
+        mod:goToRoom(level:GetCurrentRoomIndex(), dimension)
         return true
       end
     else
-      game:StartRoomTransition(level:GetStartingRoomIndex(), Direction.NO_DIRECTION, RoomTransitionAnim.FADE, nil, dimension)
-      return true
+      if not game:IsGreedMode() and isBackwardsPath and stage >= LevelStage.STAGE1_1 and stage <= LevelStage.STAGE3_2 then
+        -- you start in the boss room in the ascent
+        local lastBossRoom = level:GetRooms():Get(level:GetLastBossRoomListIndex())
+        if lastBossRoom and lastBossRoom.SafeGridIndex >= 0 then
+          mod:goToRoom(lastBossRoom.SafeGridIndex, dimension)
+          return true
+        end
+      else
+        mod:goToRoom(level:GetStartingRoomIndex(), dimension)
+        return true
+      end
     end
   elseif dimension == 1 then
-    if not game:IsGreedMode() and not game:GetStateFlag(GameStateFlag.STATE_BACKWARDS_PATH) then
+    if not game:IsGreedMode() and not isBackwardsPath then
       if (stage == LevelStage.STAGE1_2 or (isCurse and stage == LevelStage.STAGE1_1)) and (stageType == StageType.STAGETYPE_REPENTANCE or stageType == StageType.STAGETYPE_REPENTANCE_B) then
         if mirror then
-          if level:GetCurrentRoomIndex() >= 0 then
-            game:StartRoomTransition(level:GetCurrentRoomIndex(), Direction.NO_DIRECTION, RoomTransitionAnim.FADE, nil, dimension)
+          if level:GetCurrentRoomIndex() >= 0 and (currentDimension == 0 or currentDimension == 1) then
+            mod:goToRoom(level:GetCurrentRoomIndex(), dimension)
             return true
           end
         else
-          game:StartRoomTransition(level:GetStartingRoomIndex(), Direction.NO_DIRECTION, RoomTransitionAnim.FADE, nil, dimension)
+          mod:goToRoom(level:GetStartingRoomIndex(), dimension)
           return true
         end
       elseif (stage == LevelStage.STAGE2_2 or (isCurse and stage == LevelStage.STAGE2_1)) and (stageType == StageType.STAGETYPE_REPENTANCE or stageType == StageType.STAGETYPE_REPENTANCE_B) then
         if not mirror then
           -- you can still access the mines escape sequence even if the entrance hasn't spawned
           -- however, if you try to leave the escape sequence via the door, the game will crash
-          game:StartRoomTransition(162, Direction.NO_DIRECTION, RoomTransitionAnim.FADE, nil, dimension)
+          mod:goToRoom(162, dimension)
           return true
         end
       end
     end
   elseif dimension == 2 then
     if not mirror then
-      if mod:getCurrentDimension() == dimension then
-        game:StartRoomTransition(80, Direction.NO_DIRECTION, RoomTransitionAnim.DEATH_CERTIFICATE, nil, dimension)
+      if currentDimension == dimension then
+        mod:goToRoom(80, dimension)
       else
+        -- can't go here directly, we need to make sure the game creates this dimension first
         local player = game:GetPlayer(0)
         player:UseActiveItem(CollectibleType.COLLECTIBLE_DEATH_CERTIFICATE, false, false, true, false, -1, 0)
       end
@@ -973,7 +1230,33 @@ function mod:goToDimension(dimension, mirror)
   return false
 end
 
-function mod:goToBoss(name, stage)
+-- ChangeRoom is easier to use from here
+-- StartRoomTransition would require hooking into onNewRoom, and could trigger a boss cutscene incorrectly
+function mod:goToRoom(roomIdx, dimension)
+  local level = game:GetLevel()
+  local room = level:GetCurrentRoom()
+  
+  -- sometimes reloading the same room causes the game to crash, check for that case
+  if level:GetCurrentRoomIndex() == roomIdx and (dimension == -1 or mod:getCurrentDimension() == dimension) then
+    return
+  end
+  
+  level.LeaveDoor = DoorSlot.NO_DOOR_SLOT
+  game:ChangeRoom(roomIdx, dimension)
+  
+  -- when coming from another dimension, setting LeaveDoor doesn't seem to be reliable, so try again
+  if level:GetCurrentRoomIndex() ~= roomIdx then
+    level.LeaveDoor = DoorSlot.NO_DOOR_SLOT
+    game:ChangeRoom(roomIdx, dimension)
+  end
+  
+  -- play boss animation if it's a boss room
+  if room:GetType() == RoomType.ROOM_BOSS then
+    game:StartRoomTransition(roomIdx, Direction.NO_DIRECTION, RoomTransitionAnim.FADE, nil, dimension)
+  end
+end
+
+function mod:goToBoss(name, stage, stageType)
   local bossRooms
   name = string.lower(name)
   
@@ -1152,16 +1435,13 @@ function mod:goToBoss(name, stage)
   end
   
   if bossRooms then
-    if stage then
+    if stage and stageType then
       mod.forceXL = false
       game:SetStateFlag(GameStateFlag.STATE_MAUSOLEUM_HEART_KILLED, false)
       game:SetStateFlag(GameStateFlag.STATE_BACKWARDS_PATH_INIT, false)
       game:SetStateFlag(GameStateFlag.STATE_BACKWARDS_PATH, false)
       
-      mod:stage(stage, false)
-      if mod.state.autoReseed then
-        mod:reseed(false)
-      end
+      mod:stage(stage, stageType, false)
     end
     
     local bossRoom = bossRooms[mod.rng:RandomInt(#bossRooms) + 1]
@@ -1259,6 +1539,16 @@ function mod:getDimension(roomDesc)
   return -1
 end
 
+function mod:tableHasValue(tbl, val)
+  for _, v in ipairs(tbl) do
+    if v == val then
+      return true
+    end
+  end
+  
+  return false
+end
+
 function mod:seedRng()
   repeat
     local rand = Random()  -- 0 to 2^32
@@ -1288,41 +1578,41 @@ function mod:setupModConfigMenu()
   local stages
   if game:IsGreedMode() then
     stages = {
-               { title = 'Stage 1 (Main)', options = 'greedStage1Options',    option = 'greedStage1Option' },
-               { title = 'Stage 1 (Alt)',  options = 'greedStage1AltOptions', option = 'greedStage1AltOption' },
-               { title = 'Stage 2 (Main)', options = 'greedStage2Options',    option = 'greedStage2Option' },
-               { title = 'Stage 2 (Alt)',  options = 'greedStage2AltOptions', option = 'greedStage2AltOption' },
-               { title = 'Stage 3 (Main)', options = 'greedStage3Options',    option = 'greedStage3Option' },
-               { title = 'Stage 3 (Alt)',  options = 'greedStage3AltOptions', option = 'greedStage3AltOption' },
-               { title = 'Stage 4 (Main)', options = 'greedStage4Options',    option = 'greedStage4Option' },
-               { title = 'Stage 4 (Alt)',  options = 'greedStage4AltOptions', option = 'greedStage4AltOption' },
-               { title = 'Stage 5',        options = 'greedStage5Options',    option = 'greedStage5Option' },
-               { title = 'Stage 6',        options = 'greedStage6Options',    option = 'greedStage6Option' },
-               { title = 'Stage 7',        options = 'greedStage7Options',    option = 'greedStage7Option' }
+               { title = 'Stage 1 (Main)', options = 'greedStage1Options'   , option = 'greedStage1Option' },
+               { title = 'Stage 1 (Alt)' , options = 'greedStage1AltOptions', option = 'greedStage1AltOption' },
+               { title = 'Stage 2 (Main)', options = 'greedStage2Options'   , option = 'greedStage2Option' },
+               { title = 'Stage 2 (Alt)' , options = 'greedStage2AltOptions', option = 'greedStage2AltOption' },
+               { title = 'Stage 3 (Main)', options = 'greedStage3Options'   , option = 'greedStage3Option' },
+               { title = 'Stage 3 (Alt)' , options = 'greedStage3AltOptions', option = 'greedStage3AltOption' },
+               { title = 'Stage 4 (Main)', options = 'greedStage4Options'   , option = 'greedStage4Option' },
+               { title = 'Stage 4 (Alt)' , options = 'greedStage4AltOptions', option = 'greedStage4AltOption' },
+               { title = 'Stage 5'       , options = 'greedStage5Options'   , option = 'greedStage5Option' },
+               { title = 'Stage 6'       , options = 'greedStage6Options'   , option = 'greedStage6Option' },
+               { title = 'Stage 7'       , options = 'greedStage7Options'   , option = 'greedStage7Option' }
              }
   else
     stages = {
-               { title = 'Stage 1-1 (Main)', options = 'stage11Options',    option = 'stage11Option' },
-               { title = 'Stage 1-1 (Alt)',  options = 'stage11AltOptions', option = 'stage11AltOption' },
-               { title = 'Stage 1-2 (Main)', options = 'stage12Options',    option = 'stage12Option' },
-               { title = 'Stage 1-2 (Alt)',  options = 'stage12AltOptions', option = 'stage12AltOption' },
-               { title = 'Stage 2-1 (Main)', options = 'stage21Options',    option = 'stage21Option' },
-               { title = 'Stage 2-1 (Alt)',  options = 'stage21AltOptions', option = 'stage21AltOption' },
-               { title = 'Stage 2-2 (Main)', options = 'stage22Options',    option = 'stage22Option' },
-               { title = 'Stage 2-2 (Alt)',  options = 'stage22AltOptions', option = 'stage22AltOption' },
-               { title = 'Stage 3-1 (Main)', options = 'stage31Options',    option = 'stage31Option' },
-               { title = 'Stage 3-1 (Alt)',  options = 'stage31AltOptions', option = 'stage31AltOption' },
-               { title = 'Stage 3-2 (Main)', options = 'stage32Options',    option = 'stage32Option' },
-               { title = 'Stage 3-2 (Alt)',  options = 'stage32AltOptions', option = 'stage32AltOption' },
-               { title = 'Stage 4-1 (Main)', options = 'stage41Options',    option = 'stage41Option' },
-               { title = 'Stage 4-1 (Alt)',  options = 'stage41AltOptions', option = 'stage41AltOption' },
-               { title = 'Stage 4-2 (Main)', options = 'stage42Options',    option = 'stage42Option' },
-               { title = 'Stage 4-2 (Alt)',  options = 'stage42AltOptions', option = 'stage42AltOption' },
-               { title = 'Stage 4-3',        options = 'stage43Options',    option = 'stage43Option' },
-               { title = 'Stage 5',          options = 'stage5Options',     option = 'stage5Option' },
-               { title = 'Stage 6',          options = 'stage6Options',     option = 'stage6Option' },
-               { title = 'Stage 7',          options = 'stage7Options',     option = 'stage7Option' },
-               { title = 'Stage 8',          options = 'stage8Options',     option = 'stage8Option' }
+               { title = 'Stage 1-1 (Main)', options = 'stage11Options'   , option = 'stage11Option' },
+               { title = 'Stage 1-1 (Alt)' , options = 'stage11AltOptions', option = 'stage11AltOption' },
+               { title = 'Stage 1-2 (Main)', options = 'stage12Options'   , option = 'stage12Option' },
+               { title = 'Stage 1-2 (Alt)' , options = 'stage12AltOptions', option = 'stage12AltOption' },
+               { title = 'Stage 2-1 (Main)', options = 'stage21Options'   , option = 'stage21Option' },
+               { title = 'Stage 2-1 (Alt)' , options = 'stage21AltOptions', option = 'stage21AltOption' },
+               { title = 'Stage 2-2 (Main)', options = 'stage22Options'   , option = 'stage22Option' },
+               { title = 'Stage 2-2 (Alt)' , options = 'stage22AltOptions', option = 'stage22AltOption' },
+               { title = 'Stage 3-1 (Main)', options = 'stage31Options'   , option = 'stage31Option' },
+               { title = 'Stage 3-1 (Alt)' , options = 'stage31AltOptions', option = 'stage31AltOption' },
+               { title = 'Stage 3-2 (Main)', options = 'stage32Options'   , option = 'stage32Option' },
+               { title = 'Stage 3-2 (Alt)' , options = 'stage32AltOptions', option = 'stage32AltOption' },
+               { title = 'Stage 4-1 (Main)', options = 'stage41Options'   , option = 'stage41Option' },
+               { title = 'Stage 4-1 (Alt)' , options = 'stage41AltOptions', option = 'stage41AltOption' },
+               { title = 'Stage 4-2 (Main)', options = 'stage42Options'   , option = 'stage42Option' },
+               { title = 'Stage 4-2 (Alt)' , options = 'stage42AltOptions', option = 'stage42AltOption' },
+               { title = 'Stage 4-3'       , options = 'stage43Options'   , option = 'stage43Option' },
+               { title = 'Stage 5'         , options = 'stage5Options'    , option = 'stage5Option' },
+               { title = 'Stage 6'         , options = 'stage6Options'    , option = 'stage6Option' },
+               { title = 'Stage 7'         , options = 'stage7Options'    , option = 'stage7Option' },
+               { title = 'Stage 8'         , options = 'stage8Options'    , option = 'stage8Option' }
              }
   end
   for i, v in ipairs(stages) do
@@ -1372,63 +1662,48 @@ function mod:setupModConfigMenu()
       }
     )
   end
-  if not game:IsGreedMode() and StageAPI and StageAPI.Loaded then
-    -- it's possible to loop over StageAPI.CustomStages to get a dynamic list, but we'd lose the ability to group by mod
-    -- something to reconsider if this list starts to get too long
-    local mods = {}
-    if REVEL then
-      table.insert(mods, { title = 'Revelations Ch.1', options = 'revelationsCh1Options', option = 'revelationsCh1Option' })
-      table.insert(mods, { title = 'Revelations Ch.2', options = 'revelationsCh2Options', option = 'revelationsCh2Option' })
+  for i, v in ipairs(mod.customStages) do
+    if i ~= 1 then
+      ModConfigMenu.AddSpace(mod.Name, 'Mods')
     end
-    if FFGRACE then
-      table.insert(mods, { title = 'Fall From Grace', options = 'fallFromGraceOptions', option = 'fallFromGraceOption' })
-    end
-    if TheFuture then
-      table.insert(mods, { title = 'The Future', options = 'theFutureOptions', option = 'theFutureOption' })
-    end
-    for i, v in ipairs(mods) do
-      if i ~= 1 then
-        ModConfigMenu.AddSpace(mod.Name, 'Mods')
-      end
-      ModConfigMenu.AddTitle(mod.Name, 'Mods', v.title)
-      ModConfigMenu.AddSetting(
-        mod.Name,
-        'Mods',
-        {
-          Type = ModConfigMenu.OptionType.NUMBER,
-          CurrentSetting = function()
-            return mod[v.option]
-          end,
-          Minimum = 1,
-          Maximum = #mod[v.options],
-          Display = function()
-            return '< ' .. mod[v.options][mod[v.option]] .. ' >'
-          end,
-          OnChange = function(n)
-            mod[v.option] = n
-          end,
-          Info = { 'Select a stage' }
-        }
-      )
-      ModConfigMenu.AddSetting(
-        mod.Name,
-        'Mods',
-        {
-          Type = ModConfigMenu.OptionType.BOOLEAN,
-          CurrentSetting = function()
-            return false
-          end,
-          Display = function()
-            return 'Go!'
-          end,
-          OnChange = function(b)
-            mod:goToModdedStage(mod[v.options][mod[v.option]])
-            ModConfigMenu.CloseConfigMenu()
-          end,
-          Info = { 'Go to selected stage' }
-        }
-      )
-    end
+    ModConfigMenu.AddTitle(mod.Name, 'Mods', v.title)
+    ModConfigMenu.AddSetting(
+      mod.Name,
+      'Mods',
+      {
+        Type = ModConfigMenu.OptionType.NUMBER,
+        CurrentSetting = function()
+          return v.selectedStage
+        end,
+        Minimum = 1,
+        Maximum = #v.stages,
+        Display = function()
+          return '< ' .. v.stages[v.selectedStage].displayName .. ' >'
+        end,
+        OnChange = function(n)
+          v.selectedStage = n
+        end,
+        Info = { 'Select a stage' }
+      }
+    )
+    ModConfigMenu.AddSetting(
+      mod.Name,
+      'Mods',
+      {
+        Type = ModConfigMenu.OptionType.BOOLEAN,
+        CurrentSetting = function()
+          return false
+        end,
+        Display = function()
+          return 'Go!'
+        end,
+        OnChange = function(b)
+          mod:goToModdedStage(v.stages[v.selectedStage].name)
+          ModConfigMenu.CloseConfigMenu()
+        end,
+        Info = { 'Go to selected stage' }
+      }
+    )
   end
   ModConfigMenu.AddTitle(mod.Name, 'Restart', 'Game')
   ModConfigMenu.AddSetting(
@@ -1564,9 +1839,9 @@ function mod:setupModConfigMenu()
     )
   end
   for i, v in ipairs({
-                       { title = 'Main Dimension',                dimension = 0, options = 'mainDimensionOptions',      option = 'mainDimensionOption' },
-                       { title = 'Mirror/Mines Escape Dimension', dimension = 1, options = 'mirrorDimensionOptions',    option = 'mirrorDimensionOption' },
-                       { title = 'Death Certificate Dimension',   dimension = 2, options = 'deathCertDimensionOptions', option = 'deathCertDimensionOption' }
+                       { title = 'Main Dimension'               , dimension = 0, options = 'mainDimensionOptions'     , option = 'mainDimensionOption' },
+                       { title = 'Mirror/Mines Escape Dimension', dimension = 1, options = 'mirrorDimensionOptions'   , option = 'mirrorDimensionOption' },
+                       { title = 'Death Certificate Dimension'  , dimension = 2, options = 'deathCertDimensionOptions', option = 'deathCertDimensionOption' }
                     })
   do
     if i ~= 1 then
@@ -1614,25 +1889,25 @@ function mod:setupModConfigMenu()
   end
   if not game:IsGreedMode() then
     for i, v in ipairs({
-                         { title = 'Basement I',         stage = '1',  options = 'basementBossOptions',        option = 'basementBossOption' },
-                         { title = 'Cellar I',           stage = '1a', options = 'cellarBossOptions',          option = 'cellarBossOption' },
-                         { title = 'Burning Basement I', stage = '1b', options = 'burningBasementBossOptions', option = 'burningBasementBossOption' },
-                         { title = 'Downpour I',         stage = '1c', options = 'downpourBossOptions',        option = 'downpourBossOption' },
-                         { title = 'Dross I',            stage = '1d', options = 'drossBossOptions',           option = 'drossBossOption' },
-                         { title = 'Caves I',            stage = '3',  options = 'cavesBossOptions',           option = 'cavesBossOption' },
-                         { title = 'Catacombs I',        stage = '3a', options = 'catacombsBossOptions',       option = 'catacombsBossOption' },
-                         { title = 'Flooded Caves I',    stage = '3b', options = 'floodedCavesBossOptions',    option = 'floodedCavesBossOption' },
-                         { title = 'Mines I',            stage = '3c', options = 'minesBossOptions',           option = 'minesBossOption' },
-                         { title = 'Ashpit I',           stage = '3d', options = 'ashpitBossOptions',          option = 'ashpitBossOption' },
-                         { title = 'Depths I',           stage = '5',  options = 'depthsBossOptions',          option = 'depthsBossOption' },
-                         { title = 'Necropolis I',       stage = '5a', options = 'necropolisBossOptions',      option = 'necropolisBossOption' },
-                         { title = 'Dank Depths I',      stage = '5b', options = 'dankDepthsBossOptions',      option = 'dankDepthsBossOption' },
-                         { title = 'Mausoleum I',        stage = '5c', options = 'mausoleumBossOptions',       option = 'mausoleumBossOption' },
-                         { title = 'Gehenna I',          stage = '5d', options = 'gehennaBossOptions',         option = 'gehennaBossOption' },
-                         { title = 'Womb I',             stage = '7',  options = 'wombBossOptions',            option = 'wombBossOption' },
-                         { title = 'Utero I',            stage = '7a', options = 'uteroBossOptions',           option = 'uteroBossOption' },
-                         { title = 'Scarred Womb I',     stage = '7b', options = 'scarredWombBossOptions',     option = 'scarredWombBossOption' },
-                         { title = 'Corpse I',           stage = '7c', options = 'corpseBossOptions',          option = 'corpseBossOption' }
+                         { title = 'Basement I'        , stage = LevelStage.STAGE1_1, stageType = StageType.STAGETYPE_ORIGINAL    , options = 'basementBossOptions'       , option = 'basementBossOption' },
+                         { title = 'Cellar I'          , stage = LevelStage.STAGE1_1, stageType = StageType.STAGETYPE_WOTL        , options = 'cellarBossOptions'         , option = 'cellarBossOption' },
+                         { title = 'Burning Basement I', stage = LevelStage.STAGE1_1, stageType = StageType.STAGETYPE_AFTERBIRTH  , options = 'burningBasementBossOptions', option = 'burningBasementBossOption' },
+                         { title = 'Downpour I'        , stage = LevelStage.STAGE1_1, stageType = StageType.STAGETYPE_REPENTANCE  , options = 'downpourBossOptions'       , option = 'downpourBossOption' },
+                         { title = 'Dross I'           , stage = LevelStage.STAGE1_1, stageType = StageType.STAGETYPE_REPENTANCE_B, options = 'drossBossOptions'          , option = 'drossBossOption' },
+                         { title = 'Caves I'           , stage = LevelStage.STAGE2_1, stageType = StageType.STAGETYPE_ORIGINAL    , options = 'cavesBossOptions'          , option = 'cavesBossOption' },
+                         { title = 'Catacombs I'       , stage = LevelStage.STAGE2_1, stageType = StageType.STAGETYPE_WOTL        , options = 'catacombsBossOptions'      , option = 'catacombsBossOption' },
+                         { title = 'Flooded Caves I'   , stage = LevelStage.STAGE2_1, stageType = StageType.STAGETYPE_AFTERBIRTH  , options = 'floodedCavesBossOptions'   , option = 'floodedCavesBossOption' },
+                         { title = 'Mines I'           , stage = LevelStage.STAGE2_1, stageType = StageType.STAGETYPE_REPENTANCE  , options = 'minesBossOptions'          , option = 'minesBossOption' },
+                         { title = 'Ashpit I'          , stage = LevelStage.STAGE2_1, stageType = StageType.STAGETYPE_REPENTANCE_B, options = 'ashpitBossOptions'         , option = 'ashpitBossOption' },
+                         { title = 'Depths I'          , stage = LevelStage.STAGE3_1, stageType = StageType.STAGETYPE_ORIGINAL    , options = 'depthsBossOptions'         , option = 'depthsBossOption' },
+                         { title = 'Necropolis I'      , stage = LevelStage.STAGE3_1, stageType = StageType.STAGETYPE_WOTL        , options = 'necropolisBossOptions'     , option = 'necropolisBossOption' },
+                         { title = 'Dank Depths I'     , stage = LevelStage.STAGE3_1, stageType = StageType.STAGETYPE_AFTERBIRTH  , options = 'dankDepthsBossOptions'     , option = 'dankDepthsBossOption' },
+                         { title = 'Mausoleum I'       , stage = LevelStage.STAGE3_1, stageType = StageType.STAGETYPE_REPENTANCE  , options = 'mausoleumBossOptions'      , option = 'mausoleumBossOption' },
+                         { title = 'Gehenna I'         , stage = LevelStage.STAGE3_1, stageType = StageType.STAGETYPE_REPENTANCE_B, options = 'gehennaBossOptions'        , option = 'gehennaBossOption' },
+                         { title = 'Womb I'            , stage = LevelStage.STAGE4_1, stageType = StageType.STAGETYPE_ORIGINAL    , options = 'wombBossOptions'           , option = 'wombBossOption' },
+                         { title = 'Utero I'           , stage = LevelStage.STAGE4_1, stageType = StageType.STAGETYPE_WOTL        , options = 'uteroBossOptions'          , option = 'uteroBossOption' },
+                         { title = 'Scarred Womb I'    , stage = LevelStage.STAGE4_1, stageType = StageType.STAGETYPE_AFTERBIRTH  , options = 'scarredWombBossOptions'    , option = 'scarredWombBossOption' },
+                         { title = 'Corpse I'          , stage = LevelStage.STAGE4_1, stageType = StageType.STAGETYPE_REPENTANCE  , options = 'corpseBossOptions'         , option = 'corpseBossOption' }
                       })
     do
       if i ~= 1 then
@@ -1670,7 +1945,7 @@ function mod:setupModConfigMenu()
             return 'Go!'
           end,
           OnChange = function(b)
-            mod:goToBoss(mod[v.options][mod[v.option]], v.stage)
+            mod:goToBoss(mod[v.options][mod[v.option]], v.stage, v.stageType)
             ModConfigMenu.CloseConfigMenu()
           end,
           Info = { 'Go to selected boss' }
@@ -1679,12 +1954,12 @@ function mod:setupModConfigMenu()
     end
   end
   for _, v in ipairs({
-                       { name = 'Speed',      cacheFlag = CacheFlag.CACHE_SPEED,     options = 'speedOptions',     option = 'speedOption' },
-                       { name = 'Tears',      cacheFlag = CacheFlag.CACHE_FIREDELAY, options = 'tearsOptions',     option = 'tearsOption' },
-                       { name = 'Damage',     cacheFlag = CacheFlag.CACHE_DAMAGE,    options = 'damageOptions',    option = 'damageOption' },
-                       { name = 'Range',      cacheFlag = CacheFlag.CACHE_RANGE,     options = 'rangeOptions',     option = 'rangeOption' },
+                       { name = 'Speed'     , cacheFlag = CacheFlag.CACHE_SPEED    , options = 'speedOptions'    , option = 'speedOption' },
+                       { name = 'Tears'     , cacheFlag = CacheFlag.CACHE_FIREDELAY, options = 'tearsOptions'    , option = 'tearsOption' },
+                       { name = 'Damage'    , cacheFlag = CacheFlag.CACHE_DAMAGE   , options = 'damageOptions'   , option = 'damageOption' },
+                       { name = 'Range'     , cacheFlag = CacheFlag.CACHE_RANGE    , options = 'rangeOptions'    , option = 'rangeOption' },
                        { name = 'Shot Speed', cacheFlag = CacheFlag.CACHE_SHOTSPEED, options = 'shotSpeedOptions', option = 'shotSpeedOption' },
-                       { name = 'Luck',       cacheFlag = CacheFlag.CACHE_LUCK,      options = 'luckOptions',      option = 'luckOption' }
+                       { name = 'Luck'      , cacheFlag = CacheFlag.CACHE_LUCK     , options = 'luckOptions'     , option = 'luckOption' }
                     })
   do
     ModConfigMenu.AddSetting(
