@@ -1063,40 +1063,112 @@ function mod:setupCustomStages()
   for name, v in pairs(StageAPI.CustomStages) do
     if not mod:tableHasValue(ignoreList, name) and v.Replaces then
       local title = nil
-      local supportsXL = false
       
-      -- v.StageNumber appears to be arbitrary
+      -- v.StageNumber appears to be arbitrary, deals w/ scaling health
       -- the level might be generated with v.LevelgenStage
       -- but the game will report that it's the v.Replaces stage
-      if v.Replaces.OverrideStageType == StageType.STAGETYPE_WOTL then
-        if game:IsGreedMode() then
-          if v.Replaces.GreedMode then
-            if v.Replaces.OverrideStage == LevelStage.STAGE2_GREED then
+      local stage = v.Replaces.OverrideStage
+      local stageType = v.Replaces.OverrideStageType
+      if v.LevelgenStage then
+        stage = v.LevelgenStage.Stage
+        stageType = v.LevelgenStage.StageType
+      end
+      
+      if game:IsGreedMode() then
+        if v.Replaces.GreedMode then
+          if stage == LevelStage.STAGE1_GREED then
+            if stageType == StageType.STAGETYPE_ORIGINAL or stageType == StageType.STAGETYPE_WOTL or stageType == StageType.STAGETYPE_AFTERBIRTH then
+              title = 'Stage 1 (Main)'
+            elseif stageType == StageType.STAGETYPE_REPENTANCE or stageType == StageType.STAGETYPE_REPENTANCE_B then
+              title = 'Stage 1 (Alt)'
+            end
+          elseif stage == LevelStage.STAGE2_GREED then
+            if stageType == StageType.STAGETYPE_ORIGINAL or stageType == StageType.STAGETYPE_WOTL or stageType == StageType.STAGETYPE_AFTERBIRTH then
               title = 'Stage 2 (Main)'
-            elseif v.Replaces.OverrideStage == LevelStage.STAGE3_GREED then
+            elseif stageType == StageType.STAGETYPE_REPENTANCE or stageType == StageType.STAGETYPE_REPENTANCE_B then
+              title = 'Stage 2 (Alt)'
+            end
+          elseif stage == LevelStage.STAGE3_GREED then
+            if stageType == StageType.STAGETYPE_ORIGINAL or stageType == StageType.STAGETYPE_WOTL or stageType == StageType.STAGETYPE_AFTERBIRTH then
               title = 'Stage 3 (Main)'
-            elseif v.Replaces.OverrideStage == LevelStage.STAGE4_GREED then
+            elseif stageType == StageType.STAGETYPE_REPENTANCE or stageType == StageType.STAGETYPE_REPENTANCE_B then
+              title = 'Stage 3 (Alt)'
+            end
+          elseif stage == LevelStage.STAGE4_GREED then
+            if stageType == StageType.STAGETYPE_ORIGINAL or stageType == StageType.STAGETYPE_WOTL or stageType == StageType.STAGETYPE_AFTERBIRTH then
               title = 'Stage 4 (Main)'
+            elseif stageType == StageType.STAGETYPE_REPENTANCE or stageType == StageType.STAGETYPE_REPENTANCE_B then
+              title = 'Stage 4 (Alt)'
             end
+          elseif stage == LevelStage.STAGE5_GREED then
+            title = 'Stage 5'
+          elseif stage == LevelStage.STAGE6_GREED then
+            title = 'Stage 6'
+          elseif stage == LevelStage.STAGE7_GREED then
+            title = 'Stage 7'
           end
-        else
-          if not v.Replaces.GreedMode then
-            if v.Replaces.OverrideStage == LevelStage.STAGE2_1 then
-              title = 'Stage 2-1 (Main)'
-              supportsXL = true
-            elseif v.Replaces.OverrideStage == LevelStage.STAGE2_2 then
-              title = 'Stage 2-2 (Main)'
-            elseif v.Replaces.OverrideStage == LevelStage.STAGE3_1 then
-              title = 'Stage 3-1 (Main)'
-              supportsXL = true
-            elseif v.Replaces.OverrideStage == LevelStage.STAGE3_2 then
-              title = 'Stage 3-2 (Main)'
-            elseif v.Replaces.OverrideStage == LevelStage.STAGE4_1 then
-              title = 'Stage 4-1 (Main)'
-              supportsXL = true
-            elseif v.Replaces.OverrideStage == LevelStage.STAGE4_2 then
-              title = 'Stage 4-2 (Main)'
+        end
+      else
+        -- glacier i/ii is mapped to 1-2/2-1 for levelgen
+        if not v.Replaces.GreedMode then
+          if stage == LevelStage.STAGE1_1 then
+            if stageType == StageType.STAGETYPE_ORIGINAL or stageType == StageType.STAGETYPE_WOTL or stageType == StageType.STAGETYPE_AFTERBIRTH then
+              title = 'Stage 1-1 (Main)'
+            elseif stageType == StageType.STAGETYPE_REPENTANCE or stageType == StageType.STAGETYPE_REPENTANCE_B then
+              title = 'Stage 1-1 (Alt)'
             end
+          elseif stage == LevelStage.STAGE1_2 then
+            if stageType == StageType.STAGETYPE_ORIGINAL or stageType == StageType.STAGETYPE_WOTL or stageType == StageType.STAGETYPE_AFTERBIRTH then
+              title = 'Stage 1-2 (Main)'
+            elseif stageType == StageType.STAGETYPE_REPENTANCE or stageType == StageType.STAGETYPE_REPENTANCE_B then
+              title = 'Stage 1-2 (Alt)'
+            end
+          elseif stage == LevelStage.STAGE2_1 then
+            if stageType == StageType.STAGETYPE_ORIGINAL or stageType == StageType.STAGETYPE_WOTL or stageType == StageType.STAGETYPE_AFTERBIRTH then
+              title = 'Stage 2-1 (Main)'
+            elseif stageType == StageType.STAGETYPE_REPENTANCE or stageType == StageType.STAGETYPE_REPENTANCE_B then
+              title = 'Stage 2-1 (Alt)'
+            end
+          elseif stage == LevelStage.STAGE2_2 then
+            if stageType == StageType.STAGETYPE_ORIGINAL or stageType == StageType.STAGETYPE_WOTL or stageType == StageType.STAGETYPE_AFTERBIRTH then
+              title = 'Stage 2-2 (Main)'
+            elseif stageType == StageType.STAGETYPE_REPENTANCE or stageType == StageType.STAGETYPE_REPENTANCE_B then
+              title = 'Stage 2-2 (Alt)'
+            end
+          elseif stage == LevelStage.STAGE3_1 then
+            if stageType == StageType.STAGETYPE_ORIGINAL or stageType == StageType.STAGETYPE_WOTL or stageType == StageType.STAGETYPE_AFTERBIRTH then
+              title = 'Stage 3-1 (Main)'
+            elseif stageType == StageType.STAGETYPE_REPENTANCE or stageType == StageType.STAGETYPE_REPENTANCE_B then
+              title = 'Stage 3-1 (Alt)'
+            end
+          elseif stage == LevelStage.STAGE3_2 then
+            if stageType == StageType.STAGETYPE_ORIGINAL or stageType == StageType.STAGETYPE_WOTL or stageType == StageType.STAGETYPE_AFTERBIRTH then
+              title = 'Stage 3-2 (Main)'
+            elseif stageType == StageType.STAGETYPE_REPENTANCE or stageType == StageType.STAGETYPE_REPENTANCE_B then
+              title = 'Stage 3-2 (Alt)'
+            end
+          elseif stage == LevelStage.STAGE4_1 then
+            if stageType == StageType.STAGETYPE_ORIGINAL or stageType == StageType.STAGETYPE_WOTL or stageType == StageType.STAGETYPE_AFTERBIRTH then
+              title = 'Stage 4-1 (Main)'
+            elseif stageType == StageType.STAGETYPE_REPENTANCE or stageType == StageType.STAGETYPE_REPENTANCE_B then
+              title = 'Stage 4-1 (Alt)'
+            end
+          elseif stage == LevelStage.STAGE4_2 then
+            if stageType == StageType.STAGETYPE_ORIGINAL or stageType == StageType.STAGETYPE_WOTL or stageType == StageType.STAGETYPE_AFTERBIRTH then
+              title = 'Stage 4-2 (Main)'
+            elseif stageType == StageType.STAGETYPE_REPENTANCE or stageType == StageType.STAGETYPE_REPENTANCE_B then
+              title = 'Stage 4-2 (Alt)'
+            end
+          elseif stage == LevelStage.STAGE4_3 then
+            title = 'Stage 4-3'
+          elseif stage == LevelStage.STAGE5 then
+            title = 'Stage 5'
+          elseif stage == LevelStage.STAGE6 then
+            title = 'Stage 6'
+          elseif stage == LevelStage.STAGE7 then
+            title = 'Stage 7'
+          elseif stage == LevelStage.STAGE8 then
+            title = 'Stage 8'
           end
         end
       end
@@ -1110,7 +1182,7 @@ function mod:setupCustomStages()
         end
         stages[title][name].displayName = v.DisplayName or name
         stages[title][name].isXL = stages[title][name].isXL or false
-        stages[title][name].supportsXL = supportsXL
+        stages[title][name].supportsXL = stages[title][name].supportsXL or false
         
         if v.XLStage and v.XLStage.Name and not mod:tableHasValue(ignoreList, v.XLStage.Name) then
           if not stages[title][v.XLStage.Name] then
@@ -1118,7 +1190,7 @@ function mod:setupCustomStages()
           end
           stages[title][v.XLStage.Name].displayName = v.XLStage.DisplayName or v.XLStage.Name
           stages[title][v.XLStage.Name].isXL = true
-          stages[title][v.XLStage.Name].supportsXL = supportsXL
+          stages[title][v.XLStage.Name].supportsXL = stages[title][name].isXL and stages[title][name].supportsXL or not v.IsSecondStage
         end
       end
     end
