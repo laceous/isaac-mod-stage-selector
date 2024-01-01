@@ -912,6 +912,7 @@ function mod:goToStage(name)
     game:SetStateFlag(GameStateFlag.STATE_MAUSOLEUM_HEART_KILLED, mausoleumHeartKilled)
     game:SetStateFlag(GameStateFlag.STATE_BACKWARDS_PATH_INIT, backwardsPathInit)
     game:SetStateFlag(GameStateFlag.STATE_BACKWARDS_PATH, backwardsPath)
+    game:SetStateFlag(GameStateFlag.STATE_HEAVEN_PATH, false)
     
     mod:stage(stage, stageType, true)
     
@@ -1035,6 +1036,7 @@ function mod:goToModdedStage(nameOrDisplayName, isDisplayName)
     game:SetStateFlag(GameStateFlag.STATE_MAUSOLEUM_HEART_KILLED, false)
     game:SetStateFlag(GameStateFlag.STATE_BACKWARDS_PATH_INIT, false)
     game:SetStateFlag(GameStateFlag.STATE_BACKWARDS_PATH, false)
+    game:SetStateFlag(GameStateFlag.STATE_HEAVEN_PATH, false)
     
     mod.showLevelName = true
     StageAPI.GotoCustomStage(StageAPI.CustomStages[name], false, not mod.state.autoReseed)
@@ -1512,6 +1514,7 @@ function mod:goToBoss(name, stage, stageType)
       game:SetStateFlag(GameStateFlag.STATE_MAUSOLEUM_HEART_KILLED, false)
       game:SetStateFlag(GameStateFlag.STATE_BACKWARDS_PATH_INIT, false)
       game:SetStateFlag(GameStateFlag.STATE_BACKWARDS_PATH, false)
+      game:SetStateFlag(GameStateFlag.STATE_HEAVEN_PATH, false)
       
       mod:stage(stage, stageType, false)
     end
