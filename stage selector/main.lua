@@ -307,6 +307,10 @@ end
 -- usage: stage-selector-victory-lap
 -- usage: stage-selector-dimension 0
 function mod:onExecuteCmd(cmd, parameters)
+  if not mod:isInGame() then
+    return
+  end
+  
   cmd = string.lower(cmd)
   
   if cmd == 'stage-selector' then
@@ -420,6 +424,14 @@ function mod:onExecuteCmd(cmd, parameters)
       print('"' .. parameters .. '" is not valid in the current context.')
     end
   end
+end
+
+function mod:isInGame()
+  if REPENTOGON then
+    return Isaac.IsInGame()
+  end
+  
+  return true
 end
 
 function mod:getSeedCharIndex(c)
@@ -1614,6 +1626,20 @@ function mod:getDimension(roomDesc)
   return -1
 end
 
+function mod:concatTables(...)
+  local tbl = {}
+  
+  for _, v in ipairs({...}) do
+    for _, w in ipairs(v) do
+      if not mod:tableHasValue(tbl, w) then
+        table.insert(tbl, w)
+      end
+    end
+  end
+  
+  return tbl
+end
+
 function mod:tableHasValue(tbl, val)
   for _, v in ipairs(tbl) do
     if v == val then
@@ -2180,3 +2206,61 @@ mod:AddCallback(ModCallbacks.MC_EVALUATE_CACHE, mod.onCacheEval)
 mod:AddCallback(ModCallbacks.MC_EXECUTE_CMD, mod.onExecuteCmd)
 
 mod:setupModConfigMenu()
+
+if REPENTOGON then
+  function mod:onConsoleAutocomplete(cmd, parameters)
+    cmd = string.lower(cmd)
+    
+    if cmd == 'stage-selector' then
+      if game:IsGreedMode() then
+        return mod:concatTables(
+                                 mod.greedStage1Options, mod.greedStage1AltOptions,
+                                 mod.greedStage2Options, mod.greedStage2AltOptions,
+                                 mod.greedStage3Options, mod.greedStage3AltOptions,
+                                 mod.greedStage4Options, mod.greedStage4AltOptions,
+                                 mod.greedStage5Options,
+                                 mod.greedStage6Options,
+                                 mod.greedStage7Options
+                               )
+      else
+        return mod:concatTables(
+                                 mod.stage11Options, mod.stage11AltOptions, mod.stage12Options, mod.stage12AltOptions,
+                                 mod.stage21Options, mod.stage21AltOptions, mod.stage22Options, mod.stage22AltOptions,
+                                 mod.stage31Options, mod.stage31AltOptions, mod.stage32Options, mod.stage32AltOptions,
+                                 mod.stage41Options, mod.stage41AltOptions, mod.stage42Options, mod.stage42AltOptions,
+                                 mod.stage43Options,
+                                 mod.stage5Options,
+                                 mod.stage6Options,
+                                 mod.stage7Options,
+                                 mod.stage8Options
+                               )
+      end
+    elseif cmd == 'stage-selector-boss' then
+      return mod:concatTables(
+                               mod.basementBossOptions, mod.cellarBossOptions, mod.burningBasementBossOptions,
+                               mod.downpourBossOptions, mod.drossBossOptions,
+                               mod.cavesBossOptions, mod.catacombsBossOptions, mod.floodedCavesBossOptions,
+                               mod.minesBossOptions, mod.ashpitBossOptions,
+                               mod.depthsBossOptions, mod.necropolisBossOptions, mod.dankDepthsBossOptions,
+                               mod.mausoleumBossOptions, mod.gehennaBossOptions,
+                               mod.wombBossOptions, mod.uteroBossOptions, mod.scarredWombBossOptions,
+                               mod.corpseBossOptions
+                             )
+    elseif cmd == 'stage-selector-dimension' then
+      return { { '0', 'Main dimension' }, { '1', 'Mirror dimension/Mines escape sequence' }, { '2', 'Death certificate dimension' }, { 'mirror', 'Flip between 0 and 1' } }
+    end
+  end
+  
+  function mod:registerCommands()
+    Console.RegisterCommand('stage-selector', 'Go to a stage by name', 'Go to a stage by name', false, AutocompleteType.CUSTOM)
+    Console.RegisterCommand('stage-selector-boss', 'Practice against a boss', 'Practice against a boss', false, AutocompleteType.CUSTOM)
+    Console.RegisterCommand('stage-selector-restart', 'Restart with a random seed', 'Restart with a random seed', false, AutocompleteType.NONE)
+    Console.RegisterCommand('stage-selector-seed', 'Start a new run with the given seed (permissive formatting)', 'Start a new run with the given seed (permissive formatting)', false, AutocompleteType.NONE)
+    Console.RegisterCommand('stage-selector-reseed', 'Reseed and keep XL state', 'Reseed and keep XL state', false, AutocompleteType.NONE)
+    Console.RegisterCommand('stage-selector-victory-lap', 'Start a new victory lap', 'Start a new victory lap', false, AutocompleteType.NONE)
+    Console.RegisterCommand('stage-selector-dimension', 'Switch to a new dimension', 'Switch to a new dimension', false, AutocompleteType.CUSTOM)
+  end
+  
+  mod:registerCommands()
+  mod:AddCallback(ModCallbacks.MC_CONSOLE_AUTOCOMPLETE, mod.onConsoleAutocomplete)
+end
