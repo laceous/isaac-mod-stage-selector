@@ -1204,7 +1204,11 @@ function mod:setupCustomStages()
           end
           stages[title][v.XLStage.Name].displayName = v.XLStage.DisplayName or v.XLStage.Name
           stages[title][v.XLStage.Name].isXL = true
-          stages[title][v.XLStage.Name].supportsXL = stages[title][name].isXL and stages[title][name].supportsXL or not v.IsSecondStage
+          if stages[title][name].isXL then
+            stages[title][v.XLStage.Name].supportsXL = stages[title][name].supportsXL
+          else
+            stages[title][v.XLStage.Name].supportsXL = not v.IsSecondStage
+          end
         end
       end
     end
