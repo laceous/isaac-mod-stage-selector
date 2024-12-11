@@ -1394,7 +1394,7 @@ function mod:goToBoss(name, stage, stageType)
     bossRooms = { '5230', '5231', '5232' }
   elseif name == string.lower('Min-Min') then
     bossRooms = { '5280', '5281', '5282' }
-  elseif name == string.lower('Clog)') then
+  elseif name == string.lower('Clog') then
     bossRooms = { '5190', '5191', '5192', '5193', '5194' }
   elseif name == string.lower('Colostomia') then
     bossRooms = { '5330' }
